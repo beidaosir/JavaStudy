@@ -1,8 +1,11 @@
 package com.hnu.bean;
+
+import java.io.Serializable;
+
 /*
 商家模型
  */
-public class Business {
+public class Business implements Serializable {
 
     private Integer businessId; //商家编号
     private String password;//密码

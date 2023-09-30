@@ -1,6 +1,11 @@
 package com.hnu.bean;
 
-public class Admin {
+import java.io.Serializable;
+
+/*
+管理员模型
+ */
+public class Admin implements Serializable {
     private Integer adminId;//管理员账号
     private String adminName;//管理员名字
     private String password;//密码

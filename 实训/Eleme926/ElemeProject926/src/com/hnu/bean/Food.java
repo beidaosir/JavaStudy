@@ -1,11 +1,13 @@
 package com.hnu.bean;
 
-public class Food {
-    private Integer foodId;
-    private String foodName;
-    private String foodExplain;
-    private Double foodPrice;
-    private Integer businessId;
+import java.io.Serializable;
+
+public class Food implements Serializable {
+    private Integer foodId;//食品编号
+    private String foodName;//名称
+    private String foodExplain;//介绍
+    private Double foodPrice;//价格
+    private Integer businessId;//商家编号
 
     public Food() {
 
