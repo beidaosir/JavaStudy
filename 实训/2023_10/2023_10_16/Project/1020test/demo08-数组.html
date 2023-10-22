@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组</title>
+</head>
+<body>
+    <script>
+        //1、创建数组时不指定长度
+        let arr1 = new Array();  
+        arr1[0] = '张三';
+        arr1[4] = '里斯';
+        console.log(arr1); 
+        console.log(arr1[1]);
+        //2、创建数组时指定长度（一般不使用）
+        let arr2 = new Array(5);  
+        arr2[3] = 'hello';
+        console.log(arr2);
+        //3、创建数组时直接赋值
+        let arr3 = new Array(10,20,30); 
+        console.log(arr3);  
+        //4、创建数组时直接赋值
+        let arr4 = [66,80,90,77,59];
+        console.log(arr4);
+
+
+        //赋值取值   arr[下标]    arr[下标] = 值
+
+
+        console.log(arr1.length,arr2.length,arr3.length,arr4.length);
+
+        for(let i = 0;i<arr4.length;i++){
+            console.log(arr4[i]);
+        }
+
+    </script>
+</body>
+</html>

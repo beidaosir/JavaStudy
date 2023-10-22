@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let nameArr = new Array();
+        nameArr.push('张三');
+        let newlen = nameArr.push('李四'); //添加到最后
+        console.log(newlen);
+
+        console.log(nameArr);
+
+        nameArr.unshift('韩梅梅'); //添加到最前面
+        console.log(nameArr);
+
+        console.log(nameArr.pop());  //删除最后一个并返回
+        console.log(nameArr);
+
+        console.log(nameArr.shift()); //删除第一个并返回
+        console.log(nameArr);
+
+
+        //排序
+        let arr1 = ['SMITH','WARD','MARTIN','CLARK','TURNER'];
+        arr1.sort();
+        console.log(arr1); 
+
+        //比较规则
+        function rule(num1,num2){
+            return num2-num1;
+        }
+
+        let arr2 = [55,3,89,9,11];
+        arr2.sort(rule); //将比较规则传递到sort方法中
+        
+        console.log(arr2);
+
+
+        let arrStr = arr2.join('***');
+        console.log(arrStr);
+    </script>
+</body>
+</html>

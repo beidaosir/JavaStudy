@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数</title>
+</head>
+<body>
+    <script>
+
+        //函数的声明
+        function show(){
+            console.log('我叫张三，来自河南');
+        }
+
+        //函数的调用
+        show();
+
+        //函数的另一种声明方式
+        let showName = function(){
+            console.log('我叫李四，来自北京');
+        }
+
+        //函数的调用
+        showName();
+
+        //有参数
+        function sum(num1,num2){
+            //console.log(num1+num2);
+            return num1+num2;
+        }
+
+        //调用函数接收返回值
+        let he = sum(1,5);
+        console.log(he);
+
+
+    </script>
+</body>
+</html>
