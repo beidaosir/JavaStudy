@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="one">这是一个p标签</p>
+    <p class="first">这是一个p标签</p>
+    <p class="first">这是一个p标签</p>
+    <p name="username">这是一个p标签</p>
+    <p name="username">这是一个p标签</p>
+    <script>
+        let oneObj = document.getElementById('one');
+        console.log(oneObj);
+        
+        oneObj.style.color = 'red';     //只有第一个p标签字体变红色
+        oneObj.style.backgroundColor = 'yellow';
+
+        let pArr = document.getElementsByTagName('p');
+        console.log(pArr);
+        console.log(pArr.length);       //获取所有p标签对象，是数组，长度为5
+
+
+        let firstArr = document.getElementsByClassName('first');
+        console.log(firstArr);
+        console.log(firstArr.length);   //获取所有class为first的对象，是数组，长度为2
+        
+        
+        let userArr = document.getElementsByName('username');
+        console.log(userArr);
+        console.log(userArr.length);    //获取所有name属性为user的对象，是数组，长度为2
+
+
+        //通过name="username"获取到的段落 取其中第一个  将文字设置成红色
+        userArr[0].style.color = 'red';
+
+
+        
+    </script>
+</body>
+</html>
