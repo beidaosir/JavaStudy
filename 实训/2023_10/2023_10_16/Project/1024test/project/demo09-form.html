@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>登陆</h3>
+<form>
+  用户名：<input type="text" id="userName"><br>
+  密码：<input type="password" id="password"><br>
+  <input type="button" value="提交" onclick="checkForm()">
+</form>
+<script>
+  function checkForm(){
+    let userName = document.getElementById('userName');
+    let password = document.getElementById('password');
+    //用户名非空验证
+    if(userName.value==''){
+      alert('用户名不能为空！');
+      return;
+    }
+    //密码非空验证
+    if(password.value==''){
+      alert('密码不能为空！');
+      return;
+    }
+    //密码长度必须为六位
+    if(password.value.length!=6){
+      alert('密码长度必须为6位！');
+      return;
+    }
+    //密码必须全部为数字
+    if(isNaN(password.value)){
+      alert('密码必须全部为数字！');
+      return;
+    }
+    alert('提交');
+  }
+</script>
+</body>
+</html>

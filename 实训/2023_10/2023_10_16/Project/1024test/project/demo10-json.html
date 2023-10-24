@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //json --- 对象    键值对
+        let stu = {
+            sId:1001,
+            sname:'zhansgan',
+            age:20,
+            major:'Java',
+            address: {
+                province: '河南省',
+                city: '新乡市'
+            }
+        }
+
+        console.log(stu);
+
+        //从对象中获取属性值
+        console.log(stu.sId,stu.sname,stu.age,stu.major);
+
+        //给对象添加属性
+        stu.gender = '男';
+
+        console.log(stu);
+
+        //当属性值是对象时
+        console.log('省份：',stu.address.province);
+        console.log('城市：',stu.address.city);
+    </script>
+</body>
+</html>
