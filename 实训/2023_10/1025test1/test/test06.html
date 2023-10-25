@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 使用对话框获取网址
+        var url = prompt("请输入一个网址：");
+
+        // 如果用户没有输入网址，就不进行跳转
+        if (url !== null) {
+            // 设置3秒后跳转
+            window.setTimeout(function() {
+                window.location.href = url;
+            }, 3000);
+        }
+    </script>
+        
+</body>
+</html>

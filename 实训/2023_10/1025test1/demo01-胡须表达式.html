@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 文本渲染 胡须表达式-->
+
+        <p>{{msg}}</p>
+
+        <!-- 文本渲染 使用指令 -->
+
+        <p v-html="msg"></p>
+        <p v-text="msg"></p>
+
+        <!-- 使用场景 -->
+
+        <p>我想跟你说{{message}},你有什么跟我说的吗？</p>
+        <p v-text="message">之前的内容，会被覆盖吗？</p>
+
+
+    </div>
+
+    <script src="./js/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    msg:'<h2 style="color:red">Hello World</h2>',
+                    message:'hello'
+                }
+            },
+        }).mount('#app')
+    </script>
+
+</body>
+</html>

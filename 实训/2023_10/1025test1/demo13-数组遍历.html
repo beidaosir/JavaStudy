@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <h1>数组遍历</h1>
+
+        <ul>
+            <li v-for="(item,index) in numArr">{{index}}--{{item}}</li>
+        </ul>
+
+        <ul>
+            <li v-for="(a,b) in nameArr">{{b}}--{{a}}</li>
+        </ul>
+
+        <ul>
+            <li v-for="(item,index) in userArr">{{index}}--{{item.userId}}--{{item.userName}}--{{item.gender}}</li>
+        </ul>
+
+        <table border="1" style="width: 400px;">
+            <tr>
+                <th>序号</th>
+                <th>用户ID</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="(item,index) in userArr">
+                <td>{{index+1}}</td>
+                <td>{{item.userId}}</td>
+                <td>{{item.userName}}</td>
+                <td>{{item.gender}}</td>
+                <td>
+                    <button>修改</button>
+                    <button>删除</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script src="js/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+
+            data() {
+                return {
+                    msg: '循环遍历',
+                    user: {
+                        userId: 1001,
+                        userName: '张三',
+                        gender: '男'
+                    },
+                    numArr: [23,45,12,78,99],
+                    nameArr: ['张三','李四','王五','韩梅梅'],
+                    userArr: [
+                        {
+                            userId: 1001,
+                            userName: '张三',
+                            gender: '男'
+                        },
+                        {
+                            userId: 1002,
+                            userName: '李四',
+                            gender: '女'
+                        },
+                        {
+                            userId: 1003,
+                            userName: '王五',
+                            gender: '女'
+                        }
+                    ]
+                }
+            },
+
+        }).mount('#app')
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2>{{msg}}</h2>
+        <h2>{{user}}</h2>
+        <h2>{{user.userId}}--{{user.userName}}--{{user.gender}}</h2>
+
+        <hr>
+
+        <h1>针对对象遍历</h1>
+        <ul>
+            <li v-for="(v,k,i) in user">{{i}}--{{k}}--{{v}}</li>
+        </ul>
+
+        <ol>
+            <li v-for="value in user">{{value}}</li>
+        </ol>
+
+        <ol style="list-style:circle;">
+            <li v-for="(a,b) in user">{{b}}</li>
+        </ol>
+
+        <hr>
+
+        <h1>数组遍历</h1>
+
+        <ul>
+            <li v-for="(item,index) in numArr">{{index}}--{{item}}</li>
+        </ul>
+
+        <ul style="list-style:circle;">
+            <li v-for="(item, index) in nameArr"> {{index}}:{{item}}</li>
+        </ul>
+
+    </div>
+    <script src="js/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+
+            data() {
+                return {
+                    msg: '循环遍历',
+                    user: {
+                        userId: 1001,
+                        userName: '张三',
+                        gender: '男'
+                    },
+                    numArr: [23,45,12,78,99],
+                    nameArr: ['张三','李四','王五','韩梅梅']
+                }
+            },
+
+        }).mount('#app')
+    </script>
+</body>
+</html>

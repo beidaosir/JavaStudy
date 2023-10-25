@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生管理综合案例</title>
+    <style>
+
+        /***********************表格样式***********************/
+
+        .tableTitle{
+            text-align: center; /*标题中的文字居中*/
+        }
+
+        table.stuTable{
+            width: 70%;  /*表格宽度占父元素的70%*/
+            margin: 0 auto;  /* 表格在父元素中居中 */
+        }
+
+        /*表格、表格中的单元格th和td  设置边框   合并*/
+        table.stuTable, table.stuTable td, table.stuTable th{
+            border: solid 1px blue;
+            border-collapse: collapse;  /*边框合并*/
+        }
+
+        /*************************对话框样式部分***************************/
+        .dialog{
+            background-color: aliceblue;  
+            width: 260px;
+            padding: 20px;  /*内边距  内容和边框之间的距离*/
+            position: absolute;  /*设置为绝对定位  脱离文档流*/
+            top: 100px;  /*距离窗口上面的位置*/
+            left: 37%; /*距离窗口左边的位置*/
+        }
+
+        /*对话框上的关闭按钮*/
+        .dialog .closeBt{
+            position: absolute;  /*关闭按钮所在的对话框是绝对定位  自己也是绝对定位  位置设置就是根据父元素来设置*/
+            right: 0;
+            top: 0;
+        }
+
+        /*表格上方添加按钮   点击之后弹出添加学生的对话框*/
+        .addBt{
+            margin-left: 15%;  /*左外边距  设置目的是为了和表格左对齐*/
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 表格标题 -->
+        <h1 class="tableTitle">{{title}}</h1>
+
+        <!-- 添加学生按钮 点击弹出对话框 -->
+        <button class="addBt" @click="addDialogIsShow=true">添加学生信息</button>
+        
+        <!-- 学生信息的表格  显示所有学生的信息 -->
+        <table class="stuTable">
+            <tr>
+                <th>序号</th>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>专业</th>
+                <th>操作</th>
+            </tr>
+
+            <tr v-for="(stu,index) in stuArr" :key="stu.stuId">
+                <td>{{index+1}}</td>
+                <td>{{stu.stuId}}</td>
+                <td>{{stu.stuName}}</td>
+                <td>{{stu.stuAge}}</td>
+                <td>{{stu.gender}}</td>
+                <td>{{stu.major}}</td>
+                <td>
+                    <button>修改</button>
+                    <button>删除</button>
+                </td>
+            </tr>
+        </table>
+
+        <!-- 添加学生信息的对话框 -->
+        <div class="dialog" v-show="addDialogIsShow">
+            <button class="closeBt" @click="addDialogIsShow=false">X</button>
+            <h3>添加学生信息</h3>
+            <form>
+                学生姓名：<input type="text" v-model="sname"><br>
+                学生年龄：<input type="number" v-model="sage"><br>
+                学生性别：<input type="radio" name="gender" v-model="sgender" value="男">男
+                        <input type="radio" name="gender" v-model="sgender" value="女">女<br>
+                所学专业：
+                <select v-model="smajor">
+                    <option >Java</option>
+                    <option >Python</option>
+                    <option >C++</option>
+                    <option >前端</option>
+                </select>
+                <br>
+                <input type="button" value="确认添加" @click="addStu">
+            </form>
+        </div>
+    </div>
+
+    <script src="js/vue.global.js"></script>
+
+    <script>
+        Vue.createApp({
+
+            //数据
+            data() {
+                return {
+                    title: '学生信息表',
+                    stuArr: [
+                        {
+                            stuId: 1001,
+                            stuName: '张三',
+                            stuAge: 20,
+                            gender: '男',
+                            major: 'Java'
+                        },
+                    ],
+                    //添加学生窗口是否显示
+                    addDialogIsShow: false,
+                    //收集表单数据
+                    sname: '',
+                    sage: 0,
+                    sgender: '男',
+                    smajor: 'Java'
+                }
+            },
+
+            //函数
+            methods: {
+                //添加学生的函数
+                addStu(){
+
+                    let stu = {
+                        stuName: this.sname,
+                        stuAge: this.sage,
+                        gender: this.sgender,
+                        major: this.smajor
+                    }
+
+                    //关于学生的id  不能重复的整数  从1001开始
+                    if(this.stuArr.length==0){
+                        stu.stuId = 1001;
+                    }else{
+                        //从集合中获取最后一个学生的id   加1  赋给当前要添加的学生
+                        stu.stuId = this.stuArr[this.stuArr.length-1].stuId+1
+                    }
+
+                    console.log(stu);
+
+                    //将当前要添加的学生加入集合
+                    this.stuArr.push(stu);
+
+                    //关闭添加的对话框
+                    this.addDialogIsShow = false;
+
+                    //清空表单数据
+                    this.sname = '';
+                    this.sage = 0;
+                    this.sgender = '男';
+                    this.smajor = 'Java';
+                }
+            },
+
+        }).mount('#app');
+    </script>
+</body>
+</html>
