@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .colorRed{
+            color: red;
+        }
+        .bgColor{
+            background-color: palegoldenrod;
+        }
+        .fontSize{
+            font-size: 28px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="colorRed bgColor fontSize">同时应用了三个class</div>
+        <div class="bgColor fontSize">我只用了两个</div>
+
+        <div :class="{colorRed:useColorRed,bgColor:useBgColor,fontSize:useFontSize}">自由变换使用的class的个数</div>
+    
+        <!-- 可以做一个扩展：
+           三个样式的使用通过选择框来控制
+        -->
+        <input type="checkbox"> 使用背景色
+        <input type="checkbox"> 使用字体大小
+        <input type="checkbox"> 使用文字颜色
+    </div>
+
+    <script src="js/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    useColorRed: true,
+                    useBgColor: true,
+                    useFontSize: true
+                }
+            },
+        }).mount('#app')
+    </script>
+</body>
+</html>

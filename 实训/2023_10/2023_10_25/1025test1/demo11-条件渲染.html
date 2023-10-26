@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div v-if="isShow">我是第一个div</div>
+        <div v-else>我是第二个div</div>
+        <button @click="isShow=!isShow" >显示/隐藏</button>
+
+        <hr>
+
+        <h1>分数：{{score}}</h1>
+        <button @click="score+=10">成绩增加</button>
+        <button @click="score-=10">成绩减少</button>
+
+        <p v-if="score>=90">优秀</p>
+        <p v-else-if="score>=70">良好</p>
+        <p v-else-if="score>=60">及格</p>
+        <p v-else>不及格</p>
+
+    </div>
+
+    <script src="js/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    isShow: false,
+                    score: 0
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
