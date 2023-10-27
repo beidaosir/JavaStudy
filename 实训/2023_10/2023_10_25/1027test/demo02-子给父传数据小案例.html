@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+
+        子给父传数据
+         1、父组件上使用子组件
+         2、父组件在子组件的标签上声明自定义事件
+         3、给自定义事件编写回调函数【收到子组件发送的数据之后要干嘛】
+         4、子组件中触发父组件自定义事件即可  this.$emit('父组件的自定义事件名称',传递的参数)
+
+    -->
+    <div id='app'> 
+        <school></school>
+    </div> 
+
+    <template id="schoolTemplate">
+        <div style="background-color: aquamarine;width: 300px;padding: 20px;">
+            <h1>{{schoolName}}</h1>
+            <!-- 父组件使用子组件 
+                添加自定义事件   自定义事件被触发之后执行回调函数   回调函数就定义在父组件中
+            -->
+            <student @getsname="receiveStuName"></student>
+        </div>
+    </template>
+
+    <template id="studentTemplate">
+        <div style="background-color: antiquewhite;width: 250px;padding: 10px;">
+            <h2>{{stuName}}</h2>
+            <input type="text" v-model="stuName" @blur="sendName">
+            <button @click="sendName">发送姓名给父组件</button>
+        </div>
+    </template>
+
+    <script src='js/vue.global.js'></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                }
+            },
+            //定义一个组件
+            components: {
+                school: {
+                    template: '#schoolTemplate',
+                    data() {
+                        return {
+                            schoolName: '河南师范大学'
+                        }
+                    },
+                    methods: {
+                        //自定义函数触发的回调参数由触发者传递
+                        receiveStuName(sname){
+                            alert('我们学校竟然有一个学生叫：'+sname);
+                        }
+                    },
+                    //定义一个子组件
+                    components: {
+                        student: {
+                            template: '#studentTemplate',
+                            data() {
+                                return {
+                                    stuName: '张三'
+                                }
+                            },
+                            methods: {
+                                sendName(){
+                                    //发送姓名给父组件   触发父组件的自定义事件getsname
+                                    this.$emit('getsname',this.stuName);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

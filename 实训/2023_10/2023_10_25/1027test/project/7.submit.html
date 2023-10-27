@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="submitForm">
+        <input type="text">
+        <input type="submit" value="提交">
+    </form>
+    
+    <script>
+    document.getElementById('submitForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 阻止表单的默认提交行为
+        alert('表单被提交了！');
+    });
+    </script>
+</body>
+</html>
