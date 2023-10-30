@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>
+            <button @click="toHome">首页</button>
+            <button @click="toNews">新闻</button>
+            <button @click="toLogin">登陆</button>
+            <button @click="doForward1">前进</button>
+            <button @click="doForward2">前进</button>
+            <button @click="doBack1">后退</button>
+            <button @click="doBack2">后退</button>
+        </p>
+        <router-view></router-view>
+    </div>
+
+    <script src="https://unpkg.com/vue@3.0.11"></script>
+    <script src="https://unpkg.com/vue-router@4.0.6"></script>
+
+    <script type="text/javascript">
+        const Home = {
+            template: '<div>首页</div>'
+        }
+        const News = {
+            template: '<div>新闻：{{$route.query.id}},{{$route.query.name}}</div>'
+        }
+        const Login = {
+            template: '<div>登陆</div>'
+        }
+
+        const routes = [
+            {
+                path: '/',
+                redirect: '/home'
+            }, {
+                path: '/home',
+                component: Home
+            }, {
+                path: '/news',
+                component: News
+            }, {
+                path: '/login',
+                component: Login
+            }
+        ]
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes: routes
+        })
+
+        Vue.createApp({
+            data() {
+                return {
+                    id: 1,
+                    name: 'zhangsan'
+                }
+            },
+            methods: {
+                toHome() {
+                    //无参数时，push方法中直接写路由地址
+                    this.$router.push('/home');
+                },
+                toNews() {
+                    //有参数时，push方法中写一个json对象
+                    this.$router.push({ path: '/news', query: { id:this.id, name:this.name } });
+                },
+                toLogin() {
+                    this.$router.push('/login');
+                },
+                doForward1() {
+                    this.$router.forward();
+                },
+                doForward2() {
+                    this.$router.go(1);
+                },
+                doBack1() {
+                    this.$router.back();
+                },
+                doBack2() {
+                    this.$router.go(-1);
+                }
+            }
+        }).use(router).mount('#app');
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>路由</title>
+</head>
+<body>
+    <div id='app'>  
+        <!-- 5、页面应用  链接和view -->
+        <!-- 路由链接 -->
+        <router-link to="/home">首页</router-link>&nbsp;&nbsp;&nbsp;&nbsp;
+        <router-link to="/news">新闻</router-link>
+
+        <!-- 组件显示的区域 -->
+        <router-view></router-view>
+        
+    </div> 
+
+
+    <template id="homeTemplate">
+        <div>
+            <h1>{{title}}{{number}}</h1>
+            <button @click="number++">number++</button>
+        </div>
+    </template>
+
+    <template id="newsTemplate">
+        <div>
+            <ul>
+                <li v-for="(item,index) in newsArr" :key="index"><a href="">{{item}}</a></li>
+            </ul>
+        </div>
+    </template>
+
+
+    </template>
+
+    <script src='js/vue.global.js'></script>
+    <script src="js/vue-router.global.js"></script>
+    <script>
+
+        // 1、定义（路由）组件。
+        const Welcome={
+            template:'<h1>欢迎来到学生管理系统</h1>',
+        
+        }
+        const Home = {
+            template:  '#homeTemplate',
+            data() {
+                return {
+                    title: '这是首页',
+                    number: 0
+                }
+            },
+        }
+        const News = {
+            template: '#newsTemplate',
+            data() {
+                return {
+                    newsArr: ['在屠宰场夜半找花猪，开发出白癜风新药',
+                    '史上最快半导体大幅提升计算机芯片速度',
+                    '美海军陆战队快速反应部队正向地中海东部移动']
+                }
+            },
+        }
+
+        //2、定义路由规则
+        const routes = [
+            {
+                path:'/',
+                component:Welcome
+            },
+            {
+                path: '/home',
+                component: Home
+            },
+            {
+                path: '/news',
+                component: News
+            }
+        ]
+
+        //3、创建路由对象
+        const router = VueRouter.createRouter({
+            //配置路由模式
+            history: VueRouter.createWebHashHistory(),
+            //配置路由规则（当路由规则对象也为routes时，可简写为：routes）
+            routes: routes     
+        })
+
+        //4、在vue实例上应用路由对象
+        Vue.createApp({
+            data() {
+                return {
+                }
+            },
+        }).use(router).mount('#app')
+    </script>
+</body>
+</html>

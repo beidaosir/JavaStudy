@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>
+            <router-link to="/home">home</router-link>&nbsp;
+            <!--<router-link :to="{name:'News',params:{id:id,name:name}}">news</router-link>-->
+            <router-link to="/news/100/lisi">news</router-link>
+        </p>
+        <router-view></router-view>
+    </div>
+
+    <script src="https://unpkg.com/vue@3.0.11"></script>
+    <script src="https://unpkg.com/vue-router@4.0.6"></script>
+
+    <script type="text/javascript">
+        const Home = {
+            template: '<div>首页</div>'
+        }
+        const News = {
+            template: `<div>新闻;  
+				        参数1：{{$route.params.id}}； 
+						参数2：{{$route.params.name}}
+					</div>`
+        }
+
+        const routes = [
+            {
+                path: '/',
+                redirect: '/home'
+            }, {
+                path: '/home',
+                name: 'Home',              //每个路由规则中必须要有一个name属性
+                component: Home
+            }, {
+                path: '/news/:id/:name',
+                name: 'News',
+                component: News
+            }
+        ]
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes: routes
+        })
+
+        Vue.createApp({
+            data() {
+                return {
+                    id:1,
+			        name:'zhangsan'
+                }
+            }
+        }).use(router).mount('#app');
+    </script>
+</body>
+</html>
