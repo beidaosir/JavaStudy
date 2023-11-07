@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="static/system/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="static/system/css/font-awesome.min.css">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+    <!-- Essential javascripts for application to work-->
+    <script src="static/system/js/jquery-3.3.1.min.js"></script>
+    <script src="static/system/js/popper.min.js"></script>
+    <script src="static/system/js/bootstrap.min.js"></script>
+    <script src="static/system/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="static/system/js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <script type="text/javascript" src="static/system/js/plugins/chart.js"></script>
+    
+    <!-- Google analytics script-->
+    <script type="text/javascript">
+        if(document.location.hostname == 'pratikborsadiya.in') {
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          ga('create', 'UA-72504830-1', 'auto');
+          ga('send', 'pageview');
+        }
+    </script>
+  </body>
+</html>
