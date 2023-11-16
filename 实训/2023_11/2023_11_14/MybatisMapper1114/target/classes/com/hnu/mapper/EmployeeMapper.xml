@@ -9,9 +9,69 @@ namespace 名称空间 ： 接口的全限定名   cn.neusoft.mapper.EmployeeMap
 -->
 <mapper namespace="com.hnu.mapper.EmployeeMapper">
 
+<!--  获取自增主键  -->
+<!--    <insert id="add" parameterType="Employee" useGeneratedKeys="true" keyProperty="empno">-->
+<!--        insert into emp(ename,job,mgr,hiredate,sal,comm,deptno)-->
+<!--        values(#{ename},#{job},#{mgr},#{hiredate},#{sal},#{comm},#{deptno})-->
+<!--    </insert>-->
+
+<!--  获取自增主键的另一种方法  -->
+    <!--<insert id="add" parameterType="Employee">
+        <selectKey keyProperty="empno" resultType="int" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into emp(ename,job,mgr,hiredate,sal,comm,deptno)
+        values(#{ename},#{job},#{mgr},#{hiredate},#{sal},#{comm},#{deptno})
+    </insert>-->
+
+    <!-- trim标签 -->
     <insert id="add" parameterType="Employee">
-        insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno)
-        values(#{empno},#{ename},#{job},#{mgr},#{hiredate},#{sal},#{comm},#{deptno})
+        insert into emp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            ename,
+            <if test="job!=null and job!=''">
+                job,
+            </if>
+            <if test="mgr!=null">
+                mgr,
+            </if>
+            <if test="hiredate!=null">
+                hiredate,
+            </if>
+            <if test="sal!=null">
+                sal,
+            </if>
+            <if test="comm!=null">
+                comm,
+            </if>
+            <if test="deptno!=null">
+                deptno,
+            </if>
+
+        </trim>
+
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            #{ename},
+            <if test="job!=null and job!=''">
+                #{job},
+            </if>
+            <if test="mgr!=null">
+                #{mgr},
+            </if>
+            <if test="hiredate!=null">
+                #{hiredate},
+            </if>
+            <if test="sal!=null">
+                #{sal},
+            </if>
+            <if test="comm!=null">
+                #{comm},
+            </if>
+            <if test="deptno!=null">
+                #{deptno},
+            </if>
+        </trim>
+
     </insert>
 
     <update id="update" parameterType="Employee">
@@ -36,10 +96,32 @@ namespace 名称空间 ： 接口的全限定名   cn.neusoft.mapper.EmployeeMap
         ename like CONCAT('%',#{enameCondition},'%');
     </select>
 
-    <select id="getByCondition" parameterType="com.hnu.query.EmployeeQuery" resultType="Employee">
+<!--    <select id="getByCondition" parameterType="com.hnu.query.EmployeeQuery" resultType="Employee">
         select empno,ename,job,mgr,hiredate,sal,comm,deptno from emp where
             ename like CONCAT('%',#{ename},'%') and deptno = #{deptno}
         and sal between #{lowSal} and #{highSal};
+    </select>-->
+
+    <select id="getByCondition" parameterType="com.hnu.query.EmployeeQuery" resultType="Employee">
+        select empno,ename,job,mgr,hiredate,sal,comm,deptno from emp
+        <where>
+        <if test="ename != null and ename != ''">
+            and ename like CONCAT('%',#{ename},'%')
+        </if>
+
+        <if test="deptno != null">
+            and deptno = #{deptno}
+        </if>
+
+        <if test="lowSal != null">
+            and sal >= #{lowSal}
+        </if>
+
+        <if test="highSal != null">
+            and Sal &lt;= #{highSal}
+        </if>
+        </where>
+
     </select>
 
     <select id="getCount" resultType="int">
@@ -49,5 +131,60 @@ namespace 名称空间 ： 接口的全限定名   cn.neusoft.mapper.EmployeeMap
     <select id="getByEmpno" resultType="java.lang.String">
         select ename from emp where empno=#{empno}
     </select>
+
+
+    <!--
+    动态sql
+    choose -->
+    <select id="listEmp" parameterType="com.hnu.query.EmployeeQuery" resultType="Employee">
+        select * from emp
+        <where>
+            <choose>
+                <when test="ename!=null and ename!=''">
+                    and ename like concat('%',#{ename},'%')
+                </when>
+                <when test="deptno!=null">
+                    and deptno = #{deptno}
+                </when>
+                <otherwise>
+                    and sal &gt; 2000
+                </otherwise>
+            </choose>
+        </where>
+        order by empno
+    </select>
+
+
+    <!-- 动态sql测试set标签 -->
+    <update id="updateEmp" parameterType="Employee">
+        update emp
+        <set>
+            ename = #{ename},
+            <if test="job!=null and job!=''">
+                job=#{job},
+            </if>
+            <if test="sal!=null">
+                sal=#{sal},
+            </if>
+        </set>
+        where empno=#{empno}
+    </update>
+
+    <delete id="delBatch">
+        delete
+        from emp
+        where empno in
+        <foreach collection="array" item="empno" open="(" close= ")" separator=",">
+            #{empno}
+        </foreach>
+    </delete>
+
+    <insert id="addBatch">
+        insert into emp(ename,job,mgr,hiredate,sal,comm,deptno)
+        values
+            <foreach collection="list" item="emp" separator=",">
+                (#{emp.ename},#{emp.job},#{emp.mgr},#{emp.hiredate},#{emp.sal},#{emp.comm},#{emp.deptno})
+            </foreach>
+    </insert>
 
 </mapper>

@@ -8,6 +8,8 @@ import com.hnu.util.MybatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EmployeeMapperTest {
@@ -67,6 +69,101 @@ public class EmployeeMapperTest {
         EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
         String ename = mapper.getByEmpno(1111);
         System.out.println("姓名为："+ename);
+    }
+
+    @Test
+    public void testAdd(){
+        SqlSession session = MybatisUtil.getSession();
+        EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+        Employee employee = new Employee(null, "麦克", "销售", 7788, new Date(), 6000.0, 1000.0, 30);
+        int add = mapper.add(employee);
+        session.commit();
+        System.out.println(add);
+        System.out.println(employee.getEmpno());
+
+    }
+
+    @Test
+    public void testGetByCondition2(){
+        SqlSession session = MybatisUtil.getSession();
+        EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+        EmployeeQuery query = new EmployeeQuery();
+        query.setHighSal(2500.0);
+        query.setDeptno(30);
+        List<Employee> list = mapper.getByCondition(query);
+        for (Employee employee:list) {
+            System.out.println(employee);
+        }
+    }
+
+
+    //测试条件查询  choose
+    @Test
+    public void testListEmp(){
+        SqlSession session = MybatisUtil.getSession();
+        EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+        EmployeeQuery query = new EmployeeQuery();
+//        query.setEname("A");
+        query.setDeptno(30);
+        List<Employee> list = mapper.listEmp(query);
+        for (Employee employee:list) {
+            System.out.println(employee);
+        }
+    }
+
+    /*
+    测试添加
+     */
+    @Test
+    public void testAdd2(){
+        SqlSession session = MybatisUtil.getSession();
+        EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+        Employee employee = new Employee();
+        employee.setEname("Rose");
+        employee.setHiredate(new Date());
+        int add = mapper.add(employee);
+        session.commit();
+        System.out.println(add);
+    }
+
+    @Test
+    public void testUpdateEmp(){
+        SqlSession session = MybatisUtil.getSession();
+        EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+        Employee employee = new Employee();
+        employee.setEname("Rose");
+        employee.setJob("销售");
+        employee.setSal(5000.0);
+        employee.setEmpno(7939);
+        int i = mapper.updateEmp(employee);
+        session.commit();
+        System.out.println(i);
+    }
+
+    @Test
+    public void testDelBatch(){
+        SqlSession session = MybatisUtil.getSession();
+        EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+        int[] ids = {7937,7938,7939};
+        int i = mapper.delBatch(ids);
+        session.commit();
+        System.out.println(i);
+    }
+
+    @Test
+    public void testAddBatch(){
+        SqlSession session = MybatisUtil.getSession();
+        EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+        List<Employee> employeeList = new ArrayList<>();
+        employeeList.add(new Employee(null,"张三","销售",7788,
+                new Date(),8000.0,1000.0,10));
+        employeeList.add(new Employee(null,"李四","销售",7788,
+                new Date(),8000.0,1000.0,10));
+        employeeList.add(new Employee(null,"王五","销售",7788,
+                new Date(),8000.0,1000.0,10));
+        int i = mapper.addBatch(employeeList);
+        session.commit();
+        System.out.println(i);
     }
 
 }

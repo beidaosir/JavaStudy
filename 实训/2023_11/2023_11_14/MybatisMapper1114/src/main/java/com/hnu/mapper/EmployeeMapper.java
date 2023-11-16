@@ -23,4 +23,17 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
     //传入一个员工编号  得到一个员工姓名
     String getByEmpno(Integer empno);
 
+    //条件查询
+    List<Employee> listEmp(EmployeeQuery query);
+
+    //动态sql  测试set标签
+    int updateEmp(Employee employee);
+
+    //批量删除  []
+    int delBatch(int[] ids);
+
+    //批量添加
+    int addBatch(List<Employee> employeeList);
+
+
 }

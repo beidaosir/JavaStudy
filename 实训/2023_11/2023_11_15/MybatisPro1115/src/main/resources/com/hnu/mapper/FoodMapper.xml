@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hnu.mapper.FoodMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="foodId">
+        insert into t_food(foodName,foodExplain,foodPrice,businessId)
+        values(#{foodName},#{foodExplain},#{foodPrice},#{businessId})
+    </insert>
+
+    <update id="update">
+        update t_food set foodName=#{foodName},foodExplain=#{foodExplain},foodPrice=#{foodPrice}
+        where foodId=#{foodId}
+    </update>
+
+    <delete id="del">
+        delete from t_food where foodId=#{foodId}
+    </delete>
+
+    <!--
+    关联查询这样写
+      可以手动配置字段和类中属性的对应关系
+      如果字段和属性名称相同  使用autoMapping="true"进行自动映射
+     -->
+    <resultMap id="foodMap" type="Food" autoMapping="true">
+        <!--<id column="foodId" property="foodId"/>
+        <result column="foodName" property="foodName"/>
+        <result column="foodExplain" property="foodExplain"/>
+        <result column="foodPrice" property="foodPrice"/>-->
+        <!-- 配置多对一  关联对应的一个实体-->
+        <association property="business" javaType="Business" autoMapping="true">
+            <!--<id column="bid" property="bid"/>
+            <result column="businessName" property="businessName"/>-->
+        </association>
+    </resultMap>
+
+    <!--
+    关联查询
+    根据id查询 查询到了food表中的字段值，关联的商家名称拿不到
+    resultType="实体类"  自动匹配  将查询到字段名称和实体类属性名相同的进行设置
+    关联查询会出现无法直接匹配的字段  比如 bid 、businessName 需要匹配到business对象的bid、businessName属性上
+    所以我们需要编写resultMap
+    -->
+    <select id="getById" resultMap="foodMap">
+        select f.foodId,f.foodName,f.foodExplain,f.foodPrice,b.bid,b.businessName from t_food f,t_business b
+        where f.businessId=b.bid
+        and f.foodId=#{foodId}
+    </select>
+
+    <!--<select id="getAll" resultMap="foodMap">
+        select f.foodId,f.foodName,f.foodExplain,f.foodPrice,b.bid,b.businessName from t_food f,t_business b
+        where f.businessId=b.bid
+    </select>-->
+
+    <!--
+
+    分开两次查询
+      前面使用的是关联查询   使用一个查询语句查到两张表的数据
+      查询可以拆分
+      select foodId,....,businessId from t_food where foodId=113
+        查到businessId为10021
+      select businessName from t_business where bid=10021  ***》调用BusinessMapper.xml中的getById
+
+     -->
+    <resultMap id="foodMap1" type="Food" autoMapping="true">
+        <association property="business" javaType="Business"
+                     select="com.hnu.mapper.BusinessMapper.getById" column="businessId">
+        </association>
+    </resultMap>
+    <select id="getAll" resultMap="foodMap1">
+        select foodId,foodName,foodExplain,foodPrice,businessId from t_food
+    </select>
+
+    <sql id="selCondition">
+        select f.foodId,f.foodName,f.foodExplain,f.foodPrice,b.bid,b.businessName from t_food f,t_business b
+        <where>
+            f.businessId=b.bid
+            <if test="foodName!=null and foodName!=''">
+                and foodName like CONCAT('%',#{foodName},'%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 在关联查询及条件筛选之后再进行统计 -->
+    <select id="getCount" resultType="int">
+       select count(foodId) from
+        (<include refid="selCondition"></include>) a
+    </select>
+
+    <select id="getByPage" resultMap="foodMap">
+        <include refid="selCondition"></include>
+        order by f.foodId
+        limit #{startIndex},#{pageNumber}
+    </select>
+
+</mapper>
