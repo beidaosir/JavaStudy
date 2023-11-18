@@ -14,4 +14,6 @@ public interface BusinessService extends BaseService<Business>{
 //    PageBean<Business> getByPage(BaseQuery baseQuery);
 //    boolean addBatch(List<Business> list);
 //    boolean delBatch(Integer[] ids);
+
+    Business login(String username,String password);
 }

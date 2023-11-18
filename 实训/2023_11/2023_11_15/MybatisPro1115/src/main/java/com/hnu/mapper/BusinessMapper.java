@@ -1,6 +1,7 @@
 package com.hnu.mapper;
 
 import com.hnu.po.Business;
+import org.apache.ibatis.annotations.Param;
 
 public interface BusinessMapper extends BaseMapper<Business>,PageMapper<Business>{
 
@@ -11,4 +12,7 @@ public interface BusinessMapper extends BaseMapper<Business>,PageMapper<Business
 //    List<Business> getAll();
 //    int getCount(BaseQuery baseQuery);
 //    List<Business> getByPage(BaseQuery baseQuery);
+
+    Business getByCondition(@Param("businessAccount") String username,@Param("password") String password);
+
 }

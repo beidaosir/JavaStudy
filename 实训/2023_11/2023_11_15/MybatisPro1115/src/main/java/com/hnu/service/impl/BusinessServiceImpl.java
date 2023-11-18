@@ -224,4 +224,22 @@ public class BusinessServiceImpl implements BusinessService {
         }
         return false;
     }
+
+    @Override
+    public Business login(String username, String password) {
+
+        if (username==null || "".equals(username) || password==null || "".equals(password)){
+            return null;
+        }
+
+        try {
+            return mapper.getByCondition(username, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return null;
+    }
 }

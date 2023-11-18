@@ -59,4 +59,12 @@ public class BusinessServiceTest {
         System.out.println(b);
     }
 
+    @Test
+    public void testLogin(){
+        Business login = businessService.login("11111111", "111111");
+        System.out.println(login);
+    }
+
+
+
 }

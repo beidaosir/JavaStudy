@@ -36,7 +36,8 @@ public class FoodMapperTest {
         SqlSession session = MybatisUtil.getSession();
         FoodMapper mapper = session.getMapper(FoodMapper.class);
         FoodQuery baseQuery = new FoodQuery();
-        baseQuery.setFoodName("馄饨");
+        baseQuery.setBusinessId(10001);
+        //baseQuery.setFoodName("馄饨");
         List<Food> foodList = mapper.getByPage(baseQuery);
         for (Food food: foodList) {
             System.out.println(food);

@@ -57,4 +57,9 @@
         limit #{startIndex},#{pageNumber}
     </select>
 
+    <select id="getByCondition" resultType="Business">
+        <include refid="selSql"></include>
+        where businessAccount = #{businessAccount} and password = #{password}
+    </select>
+
 </mapper>

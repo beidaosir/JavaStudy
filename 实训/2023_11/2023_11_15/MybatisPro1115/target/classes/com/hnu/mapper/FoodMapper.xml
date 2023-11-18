@@ -53,7 +53,7 @@
         where f.businessId=b.bid
     </select>-->
 
-    <!--
+     <!--
 
     分开两次查询
       前面使用的是关联查询   使用一个查询语句查到两张表的数据
@@ -76,6 +76,9 @@
         select f.foodId,f.foodName,f.foodExplain,f.foodPrice,b.bid,b.businessName from t_food f,t_business b
         <where>
             f.businessId=b.bid
+            <if test="businessId != null">
+                and businessId=#{businessId}
+            </if>
             <if test="foodName!=null and foodName!=''">
                 and foodName like CONCAT('%',#{foodName},'%')
             </if>
