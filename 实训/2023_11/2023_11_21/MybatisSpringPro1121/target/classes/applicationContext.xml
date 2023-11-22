@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+		https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+		https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 引入jdbc.properties -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--
+     * Mybatis和Spring整合点有哪些？
+         * 1、连接池的创建
+         * 2、SqlSessionFactory
+         * 3、mapper的代理对象
+         * 4、service层的事务处理
+      c3p0
+      dbcp
+      druid 选择   alibaba
+        引入依赖
+        全限定名
+        注入哪些属性值
+      hikari
+    -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+        <property name="initialSize" value="${initialSize}"/>
+        <property name="maxActive" value="${maxActive}"/>
+    </bean>
+
+    <!--
+     SqlSessionFactory的创建
+     获取会话   事务处理
+     获取mapper代理对象
+     -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="cn.neusoft.po"/>
+        <property name="mapperLocations" value="classpath:cn/neusoft/mapper/*Mapper.xml"/>
+    </bean>
+
+    <!-- 获取mapper代理对象 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.neusoft.mapper"/>
+    </bean>
+
+    <!-- 注解扫描 -->
+    <context:component-scan base-package="cn.neusoft.service"/>
+
+
+    <!-- 配置事务处理 -->
+    <!-- 创建事务处理的切面类的对象 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 开启事务注解驱动 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>
