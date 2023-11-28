@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hnu.mapper.EmployeeMapper">
+
+
+    <sql id="conditionSql">
+        <where>
+            <if test="ename!=null and ename!=''">
+                and ename like CONCAT('%',#{ename},'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="getCount" resultType="int">
+        select count(empno) from emp
+        <include refid="conditionSql"/>
+    </select>
+
+    <select id="getByPage" resultType="com.hnu.po.Employee">
+        select empno,ename,job,hiredate,sal from emp
+        <include refid="conditionSql"/>
+        limit #{startIndex},#{pageNumber}
+    </select>
+
+</mapper>
