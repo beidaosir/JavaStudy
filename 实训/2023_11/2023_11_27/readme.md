@@ -1,3 +1,3 @@
 基于员工表的前后端分离学习
 
-前端使用vue/element
+前端使用vue/element/axios
