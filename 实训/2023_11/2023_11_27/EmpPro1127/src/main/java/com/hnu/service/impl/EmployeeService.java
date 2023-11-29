@@ -99,4 +99,22 @@ public class EmployeeService implements IEmployeeService {
 
         return employeePageBean;
     }
+
+    @Transactional
+    @Override
+    public boolean delBatch(Integer[] empnos) throws Exception {
+
+        if (empnos==null || empnos.length==0){
+            return false;
+        }
+
+        for (Integer empno:empnos ) {
+            int del = employeeMapper.del(empno);
+            if (del<=0){
+                throw new Exception(empno+"删除失败，需要回滚");
+            }
+        }
+
+        return true;
+    }
 }

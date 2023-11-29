@@ -22,8 +22,9 @@
     </select>
 
     <select id="getByPage" resultType="com.hnu.po.Employee">
-        select empno,ename,job,hiredate,sal from emp
+        select empno,ename,job,hiredate,sal,pic from emp
         <include refid="conditionSql"/>
+        order by empno desc
         limit #{startIndex},#{pageNumber}
     </select>
 

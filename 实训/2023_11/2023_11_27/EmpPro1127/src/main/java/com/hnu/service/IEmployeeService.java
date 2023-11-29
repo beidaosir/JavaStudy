@@ -16,4 +16,6 @@ public interface IEmployeeService {
     Employee findById(Integer empno);
     List<Employee> findAll();
     PageBean<Employee> findByPage(EmployeeQuery query);
+    boolean delBatch(Integer[] empnos) throws Exception;
+
 }

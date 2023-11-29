@@ -42,4 +42,9 @@ public class EmployeeController {
         return employeeService.findByPage(query);
     }
 
+    @PostMapping("/delBatch")
+    public String delBatch(@RequestBody Integer[] empnos) throws Exception {
+        boolean b = employeeService.delBatch(empnos);
+        return b?"success":"fail";
+    }
 }

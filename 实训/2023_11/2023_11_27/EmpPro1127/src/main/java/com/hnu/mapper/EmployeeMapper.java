@@ -11,10 +11,10 @@ import java.util.List;
 
 public interface EmployeeMapper {
 
-    @Insert("insert into emp(ename,job,hiredate,sal) values(#{ename},#{job},#{hiredate},#{sal})")
+    @Insert("insert into emp(ename,job,hiredate,sal,pic) values(#{ename},#{job},#{hiredate},#{sal},#{pic})")
     int add(Employee employee);
 
-    @Update("update emp set ename=#{ename},job=#{job},hiredate=#{hiredate},sal=#{sal} where empno=#{empno}")
+    @Update("update emp set ename=#{ename},job=#{job},hiredate=#{hiredate},sal=#{sal},pic=#{pic} where empno=#{empno}")
     int update(Employee employee);
 
     @Select("select empno,ename,job,hiredate,sal from emp where empno = #{empno}")

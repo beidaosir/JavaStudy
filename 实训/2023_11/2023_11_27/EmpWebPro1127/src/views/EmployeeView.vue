@@ -15,7 +15,11 @@
                 <el-button type="primary" @click="showAddDialog">添加员工</el-button>
             </el-col>
             <el-col :span="2">
-                <el-button type="primary" @click="delbatch">批量删除</el-button>
+                <el-popconfirm title="您确定要删除吗？" @confirm="delbatch">
+                    <template #reference>
+                        <el-button type="primary">批量删除</el-button>
+                    </template>
+                </el-popconfirm>
             </el-col>
         </el-row>
 
@@ -146,6 +150,18 @@ export default {
         },
         //批量删除
         delbatch(){
+
+            //检查数据
+            if(this.empnoArr==null || this.empnoArr.length==0){
+
+                this.$message({
+                    type:'info',
+                    message:'您还没有选中任何一项，无法删除！'
+                });
+
+                return;
+            }
+
             axios({
                 method:'post',
                 url:'http://localhost:8080/emp/delBatch',
