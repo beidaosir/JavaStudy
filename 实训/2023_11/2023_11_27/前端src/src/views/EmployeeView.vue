@@ -27,13 +27,8 @@
                     <el-table-column prop="sal" label="工资收入" />
                     <el-table-column label="操作">
                         <template #default="scope">
-                            <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
-                            >编辑</el-button>
-                            <el-button
-                                size="small"
-                                type="danger"
-                                @click="handleDelete(scope.$index, scope.row)"
-                            >删除</el-button>
+                            <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                            <el-button size="small" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -117,6 +112,50 @@ export default {
         }
     },
     methods: {
+        //删除
+        handleDelete(row) {
+            console.log("row----", row.empno);
+            this.$confirm('您确定要删除吗?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+
+                //点击确定之后执行这个位置   发送删除请求
+                axios({
+                    method: 'delete',
+                    url: 'http://localhost:8080/emp/'+row.empno
+                }).then(res=>{
+                   if( res.data == "success"){
+                        //删除成功 重新查询
+                        this.getPageData();
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                   }else{
+                        this.$message({
+                            type: 'info',
+                            message: '删除失败请重试'
+                        });
+                   }
+                })
+
+                
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        handleEdit(row){
+            console.log("row---",row);
+            this.form=Object.assign({},row);
+            this.dialogTitle='修改员工信息表'
+            this.dialogSubmitBt='确认修改'
+            this.dialogVisible=true
+        },
         //添加或修改
         save(){
             //发送请求
