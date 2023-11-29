@@ -14,7 +14,7 @@
     <h1>文件上传版本二</h1>
     <el-upload
       class="avatar-uploader"
-      action="http://localhost:8080/up"
+      action="http://localhost:8080/up1"
       name="upFile"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"

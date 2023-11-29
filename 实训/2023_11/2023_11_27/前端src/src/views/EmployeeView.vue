@@ -11,20 +11,29 @@
                 <el-input v-model="ename" class="w-50 m-2" placeholder="姓名搜索" />
             </el-col>
             <el-col :span="1"><el-button type="primary" @click="getPageData">搜索</el-button></el-col>
-            <el-col :span="4">
+            <el-col :span="2">
                 <el-button type="primary" @click="showAddDialog">添加员工</el-button>
+            </el-col>
+            <el-col :span="2">
+                <el-button type="primary" @click="delbatch">批量删除</el-button>
             </el-col>
         </el-row>
 
         <el-row>
             <el-col :span="3"></el-col>
             <el-col :span="18">
-                <el-table :data="tableData" style="width: 100%">
+                <el-table :data="tableData" style="width: 100%" @select="selOne">
+                    <el-table-column type="selection" width="80" />
                     <el-table-column prop="empno" label="员工编号" />
                     <el-table-column prop="ename" label="员工姓名" />
                     <el-table-column prop="job" label="工作岗位" />
                     <el-table-column prop="hiredate" label="入职日期" />
                     <el-table-column prop="sal" label="工资收入" />
+                    <el-table-column label="员工头像">
+                        <template #default="scope">
+                            <el-image style="width: 50px; height: 50px" :src="scope.row.pic" />
+                            </template>
+                    </el-table-column>
                     <el-table-column label="操作">
                         <template #default="scope">
                             <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
@@ -69,11 +78,23 @@
                     <el-form-item label="入职日期">
                         <el-date-picker
                             v-model="form.hiredate"
-                            type="date"
-                        />
+                            type="date"/>
                     </el-form-item>
                     <el-form-item label="员工工资">
                         <el-input-number v-model="form.sal" :step="1000" />
+                    </el-form-item>
+                    <el-form-item label="员工头像">
+                        <el-upload
+                            class="avatar-uploader"
+                            action="http://localhost:8080/up1"
+                            name="upFile"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload"
+                            >
+                            <img v-if="form.pic" :src="form.pic" class="avatar" />
+                            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+                        </el-upload>
                     </el-form-item>
                 </el-form>    
             </div>
@@ -107,11 +128,34 @@ export default {
                 ename: '',
                 job: '',
                 sal: 0,
-                hiredate: ''
-            }
+                hiredate: '',
+                pic:''
+            },
+            //批量删除的empno数组
+            empnoArr:[]
         }
     },
     methods: {
+        //当用户手动勾选数据行的check box时触发的事件
+        selOne(selArr,row){
+            this.empnoArr=[]
+            selArr.forEach(emp=>{
+                this.empnoArr.push(emp.empno);
+            });
+            console.log(this.empnoArr);
+        },
+        //批量删除
+        delbatch(){
+            axios({
+                method:'post',
+                url:'http://localhost:8080/emp/delBatch',
+                data:this.empnoArr
+            }).then(res=>{
+                if(res.data == "success"){
+                    this.getPageData();
+                }
+            })
+        },
         //删除
         handleDelete(row) {
             console.log("row----", row.empno);
@@ -178,7 +222,8 @@ export default {
                 ename: '',
                 job: '',
                 sal: 0,
-                hiredate: ''
+                hiredate: '',
+                pic:''
             }
             this.dialogVisible = true
         },
@@ -205,4 +250,34 @@ export default {
 } 
 </script>
 
-<style></style>
+
+<style scoped>
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>
+
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+</style>
