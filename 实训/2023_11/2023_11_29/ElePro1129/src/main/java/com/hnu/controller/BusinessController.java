@@ -49,4 +49,9 @@ public class BusinessController {
     public ResponseObj checkAcount(@PathVariable("account") String account){
         return businessService.checkAcount(account)?ResponseObj.SUCCESS("canuse"):ResponseObj.ERROR(500,"cannotuse");
     }
+
+    @PostMapping("/batch")
+    public ResponseObj delBatch(@RequestBody Integer[] bids) throws Exception {
+        return businessService.delBatch(bids)?ResponseObj.SUCCESS():ResponseObj.ERROR(500,"批量删除失败");
+    }
 }

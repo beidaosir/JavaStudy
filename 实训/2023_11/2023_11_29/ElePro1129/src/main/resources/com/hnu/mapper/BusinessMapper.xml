@@ -54,6 +54,7 @@
     <select id="getByPage" resultType="Business">
         <include refid="selSql"></include>
         <include refid="querySql"></include>
+        order by bid desc
         limit #{startIndex},#{pageNumber}
     </select>
 
