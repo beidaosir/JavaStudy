@@ -29,4 +29,14 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 拦截所有层次路径    -->
+            <mvc:mapping path="/**"/>
+            <!-- 除了 /log/in不拦截 -->
+            <mvc:exclude-mapping path="/log/in"/>
+            <bean class="com.hnu.interceptor.LogInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>
