@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #myDiv{
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+            text-align: center;
+            line-height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="myDiv">
+        请按下鼠标
+    </div>
+    <script>
+
+        let divElem = document.getElementById('myDiv');
+
+        //鼠标移入
+        divElem.onmousedown = function(){
+            divElem.innerHTML = '松开吧';
+            divElem.style.backgroundColor = 'pink';
+        }
+
+        //鼠标移出
+        divElem.onmouseup = function(){
+            divElem.innerHTML = '请按下鼠标';
+            divElem.style.backgroundColor = 'aqua';
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 隐藏的时候 在html中直接删除掉了 -->
+        <div v-if="isShow">使用的是v-if指令</div>
+        <button @click="isShow=!isShow" >显示/隐藏</button>
+        <!-- 隐藏显示 是在修改display属性值  none -->
+        <div v-show="isShow">使用的是v-show指令</div>
+    </div>
+
+    <script src="js/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    isShow: false
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

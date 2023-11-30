@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*哪个显示更靠上层   z轴上   数字越大显示越靠前*/
+        .one{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+            top:0;
+            z-index: 111111;
+        }
+        .two{
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            position: absolute;
+            left: 100px;
+            top:100px;
+            z-index: 11111111111;
+            
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="one"></div>
+    <div class="two"></div>
+</body>
+</html>

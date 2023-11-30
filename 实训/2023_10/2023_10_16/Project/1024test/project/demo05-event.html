@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .myDiv{
+            width: 400px;
+            height: 400px;
+            background-color: aquamarine;
+            margin-left: 300px;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <button id="bt">点我啊</button>
+
+    <div class="myDiv"></div>
+
+    <script>
+
+        document.getElementById('bt').onclick = function(event){
+            //获取事件源
+            event.target.innerHTML = '谁让你点的';
+        }
+
+    </script>
+</body>
+</html>

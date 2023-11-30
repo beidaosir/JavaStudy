@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 约束
+     dtd   简单
+     schema   复杂
+ -->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- xml文件有且只有一个根标签 -->
+<configuration>
+
+<!--  引入属性文件  -->
+    <properties resource="jdbc.properties"></properties>
+    
+<!--  配置别名  -->
+    <typeAliases>
+        <typeAlias type="com.hnu.po.Employee" alias="emp"></typeAlias>
+    </typeAliases>
+
+
+    <!-- 环境 数据库连接信息 可以配置多组   default指定使用哪一组 id值-->
+    <environments default="development">
+        <!-- 一组连接信息 每一组可以通过ID属性来区分-->
+        <environment id="development">
+            <!-- 使用事务管理 -->
+            <transactionManager type="JDBC"/>
+            <!-- 数据源的配置  使用连接池 -->
+            <dataSource type="POOLED">
+                <!-- 驱动类 -->
+                <property name="driver" value="${driver}"/>
+                <!-- url  jdbc:mysql://localhost:3306/test -->
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+<!--  引入映射配置文件  -->
+    <mappers>
+        <mapper resource="mapper/EmployeeMapper.xml"/>
+    </mappers>
+</configuration>

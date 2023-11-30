@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 空格  选后代(儿子孙子....)   */
+        /*#div1 div{
+            border:solid 1px red; 边框线 solid实线   1px 粗细  red颜色
+        }*/
+        /* 选中子级标签  选儿子 */
+        #div1 > span{
+            border:solid 1px red; /*边框线 solid实线   1px 粗细  red颜色*/
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="div1">
+        这是一个父级div
+        <span>这是一个子级span</span>
+        <div>这是一个子级div</div>
+        <div>
+            这是一个子级div
+            <div>这是子级段落中的div</div>
+            <span>这是一个孙子级span</span>
+        </div>
+    </div>
+
+    <div id="div2">
+        这是一个父级div
+        <div>这是一个子级div</div>
+        <p>这是一个子级p</p>
+    </div>
+
+</body>
+</html>

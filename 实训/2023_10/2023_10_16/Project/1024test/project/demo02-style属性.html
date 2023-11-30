@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .dialog{
+            width: 200px;
+            padding: 10px;
+            border: solid 1px blue;
+            background-color: azure;
+            position: absolute;
+            top: 100px;
+            left: 45%;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <a href="javascript:;" id="addBt">添加学生信息</a>
+
+    <div class="dialog" id="addDialog">
+        <button class="closeBt">关闭</button>
+        添加学生的对话框<br>
+        学生姓名<input type="text">
+    </div>
+
+    <script>
+        //给添加学生的链接添加监听  点击之后弹出对话框
+        document.getElementById('addBt').onclick = function(){
+            document.getElementById('addDialog').style.display = 'block';
+        }
+
+        //给关闭按钮添加监听   点击之后关闭对话框
+        let closeBtElem = document.getElementById('addDialog').getElementsByClassName('closeBt')[0];
+        console.log(closeBtElem);
+
+        closeBtElem.onclick = function(){
+            document.getElementById('addDialog').style.display = 'none';
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //等窗口元素全部加载完毕之后再执行回调函数中的内容
+        window.onload = function(){
+            let divElem = document.getElementById("one");
+            console.log(divElem);
+        }
+        
+     </script>
+</head>
+<body>
+    <div id="one">这是一个div</div>
+    <script>
+        //习惯于这个写法 推荐
+    </script>
+</body>
+</html>

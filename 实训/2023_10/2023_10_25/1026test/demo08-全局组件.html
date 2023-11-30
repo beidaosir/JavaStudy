@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>    
+        <hellocomponent></hellocomponent>
+        <mycomponent></mycomponent>
+        <hellocomponent></hellocomponent>
+        <mycomponent></mycomponent>
+    </div> 
+
+    <!--
+    <div id="app1">
+        <hellocomponent></hellocomponent>
+        <hellocomponent></hellocomponent>
+    </div>
+    -->
+   
+    <script src='js/vue.global.js'></script>
+    <script>
+           let app = Vue.createApp({});  //Vue实例
+        
+           //全局组件   挂载在Vue实例身上  Vue实例可以和任何根组件进行挂载
+           app.component('hellocomponent',{
+               template: `<h1 style="color:red">hello 组件</h1>
+                            <h2>{{msg}}</h2>
+                            <h3>{{number}}</h3>
+                            <h3>{{newNum}}</h3>
+                            <button @click="plus">++</button>`,
+               data() {
+                return {
+                    msg: '我是hello全局组件中的消息',
+                    number: 0
+                }
+               },
+               computed:{
+                 newNum(){
+                    return this.number*5;
+                 }
+               },
+               methods: {
+                 plus(){
+                    this.number++;
+                 }
+               },
+           });
+
+           app.component('mycomponent',{
+              template: '<div style="border:solid 1px blue">这是mycomponent组件</div>'
+           })
+            
+           let vm = app.mount('#app');  //根组件   完成挂载就会有根组件  
+    </script>
+</body>
+</html>
