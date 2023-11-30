@@ -22,6 +22,12 @@
                         </template>
                     </el-input>
                 </el-form-item>
+                <el-form-item prop="role">
+                    <el-radio-group v-model="param.role" >
+                        <el-radio label="manager" >管理员</el-radio>
+                        <el-radio label="business">商家</el-radio>
+                    </el-radio-group>
+                </el-form-item>
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm()">登录</el-button>
                 </div>
@@ -37,7 +43,8 @@ export default {
         return {
             param: {
                 username: "admin",
-                password: "123123"
+                password: "admin",
+                role: 'manager'
             },
             rules: {
                 username: [
@@ -54,11 +61,27 @@ export default {
     },
     methods: {
         submitForm() {
+            //规则校验
             this.$refs.login.validate(valid => {
                 if (valid) {
-                    this.$message.success("登录成功");
-                    localStorage.setItem("ms_username", this.param.username);
-                    this.$router.push("/");
+                    //校验通过 发送登录请求
+                    this.$axios({
+                        method: 'post',
+                        url: '/log/in',
+                        data: {
+                            username: this.param.username,
+                            password: this.param.password,
+                            role: this.param.role
+                        }
+                    }).then(res=>{
+                        if(res.data.code == 200){
+                            this.$message.success("登录成功");
+                            //将登录成功的用户对象转成json字符串存到本地存储
+                            localStorage.setItem("loginUser", JSON.stringify(res.data.data));
+                            this.$router.push("/");
+                        }
+                    })
+
                 } else {
                     this.$message.error("请输入账号和密码");
                     return false;

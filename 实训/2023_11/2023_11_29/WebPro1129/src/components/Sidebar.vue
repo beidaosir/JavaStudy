@@ -54,6 +54,32 @@
 export default {
     data() {
         return {
+            //管理员菜单
+            managerItems: [
+                {
+                    icon: "el-icon-lx-home",
+                    index: "dashboard",
+                    title: "系统首页"
+                },
+                {
+                    icon: "el-icon-lx-cascades",
+                    index: "business",
+                    title: "商家管理"
+                }
+            ],
+            //商家菜单
+            businessItems: [
+                {
+                    icon: "el-icon-lx-home",
+                    index: "dashboard",
+                    title: "系统首页"
+                },
+                {
+                    icon: "el-icon-lx-cascades",
+                    index: "food",
+                    title: "餐品管理"
+                }
+            ],
             items: [
                 {
                     icon: "el-icon-lx-home",
@@ -164,7 +190,13 @@ export default {
         collapse(){
             return this.$store.state.collapse
         }
-    }
+    },
+    mounted() {
+        //获取loginUser
+       const loginUser = JSON.parse(localStorage.getItem('loginUser'));
+       //根据角色选择使用哪个菜单
+       this.items = loginUser.role=="manager"?this.managerItems:this.businessItems
+    },
 };
 </script>
 

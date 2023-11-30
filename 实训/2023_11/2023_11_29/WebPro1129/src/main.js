@@ -9,11 +9,35 @@ import axios from 'axios'
 
 const app = createApp(App)
 
-axios.defaults.baseURL = "http://localhost:8080"
-//配置全局axios
-app.config.globalProperties.$axios = axios;
-
 app.use(ElementPlus)
     .use(store)
     .use(router)
-    .mount('#app')
+
+axios.defaults.baseURL = "http://localhost:8080"
+//携带cookie
+axios.defaults.withCredentials = true
+
+//配置全局axios
+app.config.globalProperties.$axios = axios;
+
+/*
+配置axios统一处理响应
+所有axios请求得到响应都会进行以下处理
+*/
+axios.interceptors.response.use(res=>{
+    console.log('统一处理后端返回的数据---',res,res.data.code);
+    if(res.data.code == 501){
+        router.push({
+            path: "/login"
+        });
+    }else{
+        return res;
+    }
+    
+},error=>{
+    return Promise.reject(error);
+})
+
+
+
+app.mount('#app')
