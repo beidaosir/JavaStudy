@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let mydate = new Date();
+        console.log(mydate);  //Tue Aug 04 2020 17:15:22 GMT+0800 (中国标准时间)
+
+        function getCurDate() {
+            let now = new Date();
+            let year = now.getFullYear();
+            let month = now.getMonth() + 1;
+            let day = now.getDate();
+            month = month < 10 ? "0" + month : month;
+            day = day < 10 ? "0" + day : day;
+            return year + "-" + month + "-" + day;
+        }
+        console.log(getCurDate());
+
+
+        console.log('------------------Math------------------------');
+        console.log(Math.abs(-23));
+        console.log(Math.max(4,8));
+        console.log(Math.random()*10);
+        console.log(Math.round( 25.4 ));
+        console.log(Math.ceil( 25.5 ));
+        console.log(Math.floor( 25.5 ));
+        console.log(Math.sqrt(9));
+
+        eval('console.log("使用eval方法解析输出字符串打印的")');
+        let num = eval(5*6+3*8/2);
+        console.log(num);
+
+
+        console.log(eval(5+3*4)+eval(3+4*5));
+       
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <mycomponent></mycomponent>
+    </div>
+
+    <!-- 父组件模板 -->
+    <template id="mytemplate">
+        <div>
+            <h3>我是父组件，接收子组件传递过来的数据：{{msg}}</h3>
+            <!-- 
+                注册了一个自定义事件
+                @childmsg="get" 
+                   @childmsg 是一个自定义事件
+                   该事件被触发 get回调函数执行
+            -->
+            <subcomponents @childmsg="get" :msg="welcome"></subcomponents>
+        </div>
+    </template>
+
+    <script src="js/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            components: {
+                //父组件
+                mycomponent: {
+                    template: '#mytemplate',
+                    data() {
+                        return {
+                            welcome: 'hello world!',
+                            msg:''
+                        }
+                    },
+                    //父组件的函数
+                    methods: {
+                        //get函数中的参数msg从哪来？  触发childmsg事件的时候传递的
+                        get(msg) {
+                            //this.msg = msg;
+                            alert('子组件传递的数据：'+msg);
+                        }
+                    },
+                    components: {          //声明子组件
+                        //子组件
+                        subcomponents: {
+                            template: `<div>
+						                   我是子组件，我能获取父组件传递的数据：{{msg}}
+							               <input type="button" value="给父组件发数据" @click="send">
+						               </div>`,
+                            props: ['msg'],
+                            data() {
+                                return {
+                                    message: '我是子组件的数据'
+                                }
+                            },
+                            methods: {
+                                send() {
+                                    //this表示的是当前组件实例
+                                    //$emit 函数   触发事件  自定事件
+                                    this.$emit('childmsg', this.message);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

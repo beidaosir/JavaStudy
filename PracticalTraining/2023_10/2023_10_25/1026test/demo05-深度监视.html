@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <h1>{{num.a}}</h1>
+        <h1>{{num.b}}</h1>
+        <button @click="num.a++">a++</button>
+        <button @click="num.b++">b++</button>
+        <button @click="changeNum">改变num</button>
+    </div>
+
+
+    <script src="js/vue.global.js"></script>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    num:{
+                        a:0,
+                        b:0
+                    }
+                }
+            },
+            methods: {
+                changeNum(){
+                    this.num = {a:2,b:3};
+                }
+            },
+            //监视a和b的变化
+
+            watch:{
+                num:{
+                    handler(newValue,oldValue){
+                        console.log(newValue,oldValue);
+                    },
+                    //深度监视
+                    deep:true
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

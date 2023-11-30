@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>
+            <router-link to="/home">home</router-link>&nbsp;
+            <router-link to="/news">news</router-link>&nbsp;
+            <router-link to="/login">login</router-link>
+        </p>
+        <router-view></router-view>
+    </div>
+
+    <script src="https://unpkg.com/vue@3.0.11"></script>
+    <script src="https://unpkg.com/vue-router@4.0.6"></script>
+
+    <script type="text/javascript">
+        const Home = {
+            template: '<div>首页</div>'
+        }
+        const News = {
+            template: '<div>新闻</div>'
+        }
+        const Login = {
+            template: '<div>登录</div>'
+        }
+
+        const routes = [
+            {
+                path: '/',
+                redirect: '/login'
+            }, {
+                path: '/home',
+                component: Home
+            }, {
+                path: '/news',
+                component: News
+            }, {
+                path: '/login',
+                component: Login
+            }
+        ]
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes: routes
+        })
+
+        Vue.createApp({
+            data() {
+                return { }
+            }
+        }).use(router).mount('#app');
+
+        // 添加全局路由守卫
+        router.beforeEach((to, from, next) => {
+            //创建守卫规则集合(这里表示'/home'与'/news'路径是需要权限验证的)
+            const nextRoute = ['/home', '/news'];
+            // 使用isLogin来模拟是否登录
+            let isLogin = true;
+            // 判断to.path(要跳转的路径)是否是需要权限验证的
+            if (nextRoute.indexOf(to.path) >= 0) {
+                if (!isLogin) {
+                    router.push({
+                        path: '/login'
+                    })
+                    //location.reload(); 
+                }
+            }
+            next(); //必须要有
+        });
+    </script>
+</body>
+</html>

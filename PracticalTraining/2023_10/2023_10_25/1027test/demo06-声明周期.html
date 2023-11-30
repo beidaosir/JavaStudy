@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <mycomponent v-if="isShow"></mycomponent>
+        <button @click="change">隐藏</button>
+    </div>
+
+    <script src="js/vue.global.js"></script>
+
+    <script type="text/javascript">
+        let app = Vue.createApp({
+            data(){
+                return {
+                    isShow: true
+                }
+            },
+            methods:{
+                change(){
+                    this.isShow = false;
+                }
+            }
+        });
+
+        app.component('mycomponent', {
+            template: `<p>
+                           {{num}} <button @click="add">加</button>
+                       </p>`,
+            data(){
+                return {
+                    num: 1
+                }
+            },           
+            //Vue实例创建前
+            beforeCreate() {
+                console.log('beforeCreate Vue实例创建前');
+                debugger;
+            },
+            //Vue实例创建后
+            created() {
+                console.log('created Vue实例创建后');
+                debugger;
+            },
+            //挂载DOM前
+            beforeMount() {
+                console.log('beforeMount 挂载DOM前');
+                debugger;
+            },
+            //挂载DOM后
+            mounted() {
+                console.log('mounted 挂载DOM后');
+                debugger;
+            },
+            //数据更新前
+            beforeUpdate() {
+                console.log('beforeUpdate 数据更新前');
+                debugger;
+            },
+            //数据更新后
+            updated() {
+                console.log('updated 数据更新后');
+                debugger;
+            },
+            //实例销毁前
+            beforeUnmount() {
+                console.log('beforeUnmount 实例销毁前');
+                debugger;
+            },
+            //实例销毁后
+            unmounted() {
+                console.log('unmounted 实例销毁后');
+                debugger;
+            },
+            methods: {
+                //改变数据，可以演示beforeUpdate与updated
+                add() {
+                    this.num++;
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>

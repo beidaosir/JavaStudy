@@ -1,0 +1,19 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>自动跳转网页</title>  
+    <script type="text/javascript">  
+        function redirectToUrl() {  
+            var url = prompt("请输入网址:");  
+            if (url != null && url != "") {  
+                setTimeout(function() {  
+                    window.location.href = url;  
+                }, 3000); // 3秒后跳转  
+            }  
+        }  
+    </script>  
+</head>  
+<body onload="redirectToUrl()">  
+    <h1>3秒后自动跳转到输入的网址</h1>  
+</body>  
+</html>

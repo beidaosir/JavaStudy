@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <!-- 
+
+    事件编写的三种方式
+     1、 <div onclick='回调函数调用'></div>
+     2、 document.getXXX('').onXXX = function(){}
+     3、 document.getXXX('').addEventListener('事件名称',function(){})
+
+     onclick  onmouseover  onmouseout   onmousedown  onmouseup
+     onchange  onfocus  onblur   
+     onload
+  -->
+    <input type="text" id="nameInput">
+    <span id="showMsg"></span>
+
+    <button id="mySubmit">提交</button>
+    <script>
+
+      /*
+        目前：失焦之后会进行判断和在span中设置提示语句
+        添加需求：
+          聚焦时，清空span中的提示语句
+      */
+
+       let nameInput = document.getElementById('nameInput');
+       let spanElem = document.getElementById('showMsg');
+       //添加失焦的监听
+      //  nameInput.onblur = function(){
+      //     if(nameInput.value.length >= 6){
+      //       spanElem.style.color = 'green';
+      //       spanElem.innerText = 'ok';
+      //     }else{
+      //       spanElem.style.color = 'red';
+      //       spanElem.innerText = 'error';
+      //     }
+      //  }
+       nameInput.addEventListener('blur',function(){
+        if(nameInput.value.length >= 6){
+            spanElem.style.color = 'green';
+            spanElem.innerText = 'ok';
+          }else{
+            spanElem.style.color = 'red';
+            spanElem.innerText = 'error';
+          }
+       })
+
+       //添加聚焦的监听
+      //  nameInput.onfocus = function(){
+      //    spanElem.innerHTML = '';
+      //  }
+
+      nameInput.addEventListener('focus',function(){
+        spanElem.innerHTML = '';
+      })
+
+       //使用第三种方式给按钮添加点击监听
+       document.getElementById('mySubmit').addEventListener('click',function(){
+          confirm('您确定要提交吗？');
+       })
+
+    </script>
+</body>
+</html>

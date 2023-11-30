@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <!-- pointme就是点击事件的处理函数 -->
+        <button v-on:click="pointme">点击我</button>
+        <!-- v-on指令的简写 -->
+        <button @click="pointyou">点击你</button>
+
+    </div>
+
+    <script src="js/vue.global.js"></script>
+    <script>
+        /*
+           Vue.createApp(参数是对象)
+
+           {
+              template: '模板 就是html 一般只有组件才写',
+              data(){   // 数据
+                return {
+
+                }
+              },
+              //函数  方法
+              methods: {
+                add(){
+
+                },
+                jian(){
+
+                }
+              }
+
+           }
+        */
+        Vue.createApp({
+            //methods:此处声明Vue方法
+            methods: {
+                pointme() {
+                    alert('点击了我');
+                },
+                pointyou() {
+                    alert('点击了你');
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

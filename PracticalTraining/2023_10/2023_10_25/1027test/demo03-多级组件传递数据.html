@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <mycomponent></mycomponent>
+    </div>
+
+    <template id="mytemplate">
+        <div>
+            <subcomponents></subcomponents>
+        </div>
+    </template>
+
+    <script src="js/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            components: {
+                mycomponent: {
+                    template: '#mytemplate',
+                    data() {
+                        return {
+                            num: 10
+                        }
+                    },
+                    provide() {
+                        return {
+                            num: this.num
+                        }
+                    },
+                    components: {          //声明子组件
+                        subcomponents: {
+                            template: `<subsubcomponents/>`,
+                            components: {
+                                subsubcomponents: {
+                                    template: `<div>孙子组件：{{num}}</div>`,
+                                    inject: ['num']
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

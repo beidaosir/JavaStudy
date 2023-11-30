@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #mydiv{
+            width: 300px;
+            height: 300px;
+            background-color: antiquewhite;
+            background-image: url(img/eg_cute.gif);
+            background-repeat: repeat-y;
+            /*background-size: 100% 100%;*/
+            /*background-position: 80% 20%;*/
+        }
+    </style>
+</head>
+<body>
+    <div style="font-family: Garamond">fdakjhsfasdsajdlak</div>
+    <div style="font-family:'Lucida Console'">fdakjhsfasdsajdlak</div>
+    <div style="font-family: '微软雅黑';">我爱学习Java Html Css</div>
+    <div style="font-family: '宋体';">我爱学习Java Html Css</div>
+
+    <h1 style="font-size: 48px;">这是标题 1</h1>
+    <h2 style="font-size: 15px;">这是标题 2</h2>
+    <p style="font-size: 20px;font-style: italic;">这是一个段落。</p>
+    <p style="font-size: 1em;">这是一个段落。</p>
+
+
+    <p style="font-weight: normal;">1111这是一个段落。</p>
+    <p style="font-weight: 400;">这是一个段落。</p>
+    <p style="font-weight: bolder;font-size: 28px;">这是一个段落。</p>
+    <p style="font-weight: bold;font-size: 28px;">这是一个段落。</p>
+    <p style="font-weight: 900;font-size: 28px;">这是一个段落。</p>
+
+    <p style="font:italic bold 36px '宋体'">通过font一次性设置所有字体属性</p>
+
+
+    <h1>文本样式</h1>
+    <p style="text-align: center;">文本对齐方式</p>
+    <p style="text-align: right;">文本对齐方式</p>
+    <p style="text-align: justify;">文本对齐方式</p>
+
+
+    <p >垂直对齐方式<img src="img/eg_cute.gif" style="vertical-align: top;"></p>
+    <p >垂直对齐方式<img src="img/eg_cute.gif" style="vertical-align: middle;"></p>
+    <p >垂直对齐方式<img src="img/eg_cute.gif" style="vertical-align: bottom;"></p>
+
+
+    <!-- 
+        line-height 行高  和 height 高 一致的情况下  只有一行文字就会垂直居中
+      -->
+    <div style="width: 100px; height: 100px;background-color: antiquewhite;text-align: center;line-height: 100px;">
+        我爱学习
+    </div>
+
+    <!-- 去掉下划线 -->
+    <a href="#" style="text-decoration:none;width: 100px;height: 100px;display: block" >去百度</a>
+
+    <img src="img/eg_cute.gif" style="width: 200px;">
+
+    <!--
+        display
+        块元素  block
+        行内元素
+           行内块 inline-block   img
+           内联元素 inline     无法设置宽高  a  span
+
+    -->
+
+    <ul style="list-style: decimal">
+        <li>这是一个列表项</li>
+        <li>这是一个列表项</li>
+        <li>这是一个列表项</li>
+        <li>这是一个列表项</li>
+    </ul>
+
+    <div id="mydiv">
+        这是一个div
+    </div>
+</body>
+</html>

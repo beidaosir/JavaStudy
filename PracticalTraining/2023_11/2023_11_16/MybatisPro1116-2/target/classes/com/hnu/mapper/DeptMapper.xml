@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hnu.mapper.DeptMapper">
+    <!--
+      查询一个部门信息时同时查到该部门所有的员工并且装入List<Employee>集合中
+      联查
+        select deptno,dname,loc,e.xxx,e.xxx from dept d,emp e where d.deptno=e.deptno and d.deptno=10
+    -->
+    <resultMap id="deptMap1" type="Dept">
+        <id column="deptno" property="deptno"/>
+        <result column="dname" property="dname"/>
+        <result column="loc" property="loc"/>
+        <!-- 集合信息如何装配 -->
+        <collection property="empList" ofType="Employee" autoMapping="true">
+        </collection>
+    </resultMap>
+    <select id="getById" resultMap="deptMap1">
+        select d.deptno,d.dname,d.loc,e.empno,e.ename,e.job,e.sal from dept d,emp e where d.deptno=e.deptno and d.deptno=#{deptno}
+    </select>
+
+    <!--
+      分两次查询
+      select deptno,dname,loc from dept
+      select empno,ename,job,sal from emp where deptno=10
+    -->
+    <resultMap id="deptMap2" type="Dept">
+        <id column="deptno" property="deptno"/>
+        <result column="dname" property="dname"/>
+        <result column="loc" property="loc"/>
+        <collection property="empList" ofType="Employee"
+                    select="com.hnu.mapper.EmployeeMapper.getByDeptno" column="deptno" fetchType="lazy">
+        </collection>
+    </resultMap>
+    <select id="getAll" resultMap="deptMap2">
+        select deptno,dname,loc from dept
+    </select>
+
+
+
+</mapper>

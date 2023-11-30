@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div v-if="isShow">DOM元素的样式绑定</div>
+        <button @click="isShow=!isShow" >显示/隐藏</button>
+    </div>
+
+    <script src="js/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    isShow: false
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

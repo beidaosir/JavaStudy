@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .div1{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+        .div2{
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="app">
+        <!-- @contextmenu.prevent  禁止默认行为  禁止右键弹出系统菜单
+          @click.stop  停止冒泡
+        -->
+        <div class="div1" @click="divEvent1" @contextmenu.prevent>
+            <div class="div2" @click.stop="divEvent2"></div>
+        </div>
+    </div>
+
+    <script src="js/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                   
+                }
+            },
+            methods: {
+                divEvent1() {
+                    alert('outer')
+                },
+                divEvent2() {
+                   //event.stopPropagation();
+                   //event.cancelBubble = true;
+                   console.log(event);
+                    alert('inner')
+                },
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

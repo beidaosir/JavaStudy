@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1 style="color: red;">学生管理系统</h1>
+        这是一个div
+    </div>
+    <script>
+       let divElem = document.getElementsByTagName('div')[0];
+       
+       console.log(divElem);
+
+       //获取div中包裹的内容
+       console.log(divElem.innerHTML);
+
+       console.log(divElem.innerText);
+       //能识别标签
+       divElem.innerHTML = '<ul><li>新闻</li><li>电影</li></ul>';
+       //不能识别标签，识别成文本
+       divElem.innerText = '<ul><li>新闻</li><li>电影</li></ul>';
+    </script>
+</body>
+</html>

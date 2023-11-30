@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>右键菜单项1</li>
+        <li>右键菜单项2</li>
+        <li>右键菜单项3</li>
+      </ul>
+      <script>
+        let ulObj = document.getElementsByTagName('ul')[0];
+        ulObj.style.border = 'solid 1px #666';
+        ulObj.style.width = '100px';
+        ulObj.style.position = 'absolute';
+        ulObj.style.display = 'none';
+
+        //整个文档对象监听一个鼠标右键点击
+        document.oncontextmenu = function(event){
+          ulObj.style.display = 'block';
+          //获取鼠标在窗口上的坐标  设置给ul小窗口
+          ulObj.style.left = event.clientX+'px';
+          ulObj.style.top = event.clientY+'px';
+
+          //禁止原来的鼠标右键弹出菜单
+          event.preventDefault();
+        }
+        ulObj.onclick = function(){
+          this.style.display = 'none';
+        }
+      </script>
+</body>
+</html>

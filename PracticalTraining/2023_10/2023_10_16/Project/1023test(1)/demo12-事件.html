@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    请输入您的名字：<input type="text" id="fname" onchange="myFunction()">
+    请选择您所在的省份
+    <select id="provinceSel">
+        <option>河南省</option>
+        <option>河北省</option>
+        <option>湖南省</option>
+        <option>陕西省</option>
+    </select>
+    <script>
+        function myFunction(){
+           let inputElem = document.getElementById('fname');
+           console.log(inputElem.value);
+           //inputElem.value = inputElem.value.toUpperCase();
+        }
+
+        document.getElementById('provinceSel').onchange = function(){
+           let myProvince = document.getElementById('provinceSel').value;
+           console.log(myProvince);
+        }
+    </script>
+</body>
+</html>

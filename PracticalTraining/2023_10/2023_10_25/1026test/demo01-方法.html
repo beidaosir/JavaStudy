@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>原数据：{{msg}}</p>
+        <p>反转之后的数据：{{fanzhuan()}}</p>
+        <!--<button @click="fanzhuan">反转字符串</button>-->
+    </div>
+
+    <script src="js/vue.global.js"></script>
+    <script>
+        console.log('hello'.split('').reverse().join(''));
+        Vue.createApp({
+            data() {
+                return {
+                    msg: 'hello world!'
+                }
+            },
+            //需求：将msg字符串反转过来
+            methods: {
+                //使用带返回值的函数
+                fanzhuan() {
+                    return this.msg.split('').reverse().join('');
+                }
+            },
+
+
+            // computed: {
+            //     reversedMsg() {
+            //         return this.msg.split('').reverse().join('');
+            //     }
+            // }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

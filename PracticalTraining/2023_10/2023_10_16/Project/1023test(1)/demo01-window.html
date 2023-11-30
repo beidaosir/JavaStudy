@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        给按钮添加点击监听
+        onclick="调用函数"
+     -->
+    <button onclick="showAlert()">点我弹出对话框</button>
+
+    <script>
+        //只是一个提示信息的弹窗
+       // window.alert('你今天足够努力了吗？');
+       //alert('努力之前先吃饱');
+
+       //带确认和取消按钮的弹窗   取消返回false   确认返回true
+       //let isdel = window.confirm('您确定要删除吗？');
+       //console.log(isdel);
+
+        //let name = window.prompt("请输入姓名");
+        //console.log(name);
+
+        //调用之后弹出一个对话框
+        function showAlert(){
+            alert('弹出来了，你有啥事？');
+        }
+
+    </script>
+</body>
+</html>

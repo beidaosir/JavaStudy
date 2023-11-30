@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>    
+        <h1>{{msg}}</h1>
+        <!-- 使用局部组件  局部组件创建时声明在哪个组件上 就在哪个组件上使用 目前在根组件 -->
+        <school></school>
+    </div> 
+
+    <!-- 组件模板可以编写在html中 -->
+    <template id="schoolTemplate">
+        <div style='background-color:peachpuff;width:300px;padding:20px'>
+            <h2>学校名称：{{schoolName}}</h2>
+            <h3>学校地址：{{address}}</h3>
+            <img style='width: 250px;' :src='mainImg'>
+        </div>
+    </template>
+
+    <script src='js/vue.global.js'></script>
+    <script>
+         Vue.createApp({
+            data() {
+                return {
+                    msg: '这章讲的是局部组件'
+                }
+            },
+
+            //声明创建局部组件
+            components: {
+                school: {
+                    template: '#schoolTemplate',
+                    data() {
+                        return {
+                            schoolName: '河南师范大学',
+                            address: '河南省新乡市红旗区',
+                            mainImg: 'img/hsd.png'
+                        }
+                    },
+                }
+
+            }
+
+         }).mount('#app');  //根组件   完成挂载就会有根组件  
+    </script>
+</body>
+</html>

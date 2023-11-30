@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .one{
+            background-color: aqua;
+            color: red;
+            font-size: 32px;
+        }
+        .two{
+            background-color: burlywood;
+            color: blue;
+            font-size: 28px;
+        }
+    </style>
+</head>
+<body>
+
+    <p id="mp">这是美好的一天</p>
+    <button id="changeBt">切换class</button>
+
+    <script>
+        let mpElem = document.getElementById('mp');
+        console.log(mpElem);
+
+        //设置class属性值
+        mpElem.className = 'one';
+
+        //给按钮添加点击监听
+        document.getElementById('changeBt').onclick = function(){
+            if(mpElem.className == 'one'){
+                mpElem.className = 'two';
+            }else{
+                mpElem.className = 'one';
+            }
+        }
+
+        mpElem.onmouseover = function(){
+            mpElem.className = 'two';
+        }
+
+        mpElem.onmouseout = function(){
+            mpElem.className = 'one';
+        }
+
+    </script>
+</body>
+</html>

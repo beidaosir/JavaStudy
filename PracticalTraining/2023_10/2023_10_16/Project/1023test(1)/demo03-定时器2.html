@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        let callback = function(){
+            let now = new Date();
+           let shi = now.getHours();
+           let fen = now.getMinutes();
+           let miao = now.getSeconds();
+           console.log(shi+':'+fen+':'+miao);
+        }
+
+        setInterval(callback,1000);
+
+        /*
+        setInterval  每隔一段时间调用一次回调方法
+        setTimeout  过一段时间调用一次回调方法
+        */
+    </script>
+</body>
+</html>

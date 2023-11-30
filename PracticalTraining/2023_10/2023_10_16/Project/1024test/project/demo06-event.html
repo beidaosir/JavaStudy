@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+          div{
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            margin: 100px;
+          }
+        </style>    
+      </head>
+      <body>
+        <div><div>    
+          <script>
+            document.getElementsByTagName('div')[0].onmousemove = function(event){
+              console.log('相对视口坐标：'+event.clientX+','+event.clientY);
+              console.log('相对触发事件对象坐标：'+event.offsetX+','+event.offsetY);
+            }
+          </script>
+        </body>
+</html>

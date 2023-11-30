@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生管理综合案例</title>
+    <style>
+
+        /***********************表格样式***********************/
+
+        .tableTitle{
+            text-align: center; /*标题中的文字居中*/
+        }
+
+        table.stuTable{
+            width: 70%;  /*表格宽度占父元素的70%*/
+            margin: 0 auto;  /* 表格在父元素中居中 */
+        }
+
+        /*表格、表格中的单元格th和td  设置边框   合并*/
+        table.stuTable, table.stuTable td, table.stuTable th{
+            border: solid 1px blue;
+            border-collapse: collapse;  /*边框合并*/
+        }
+
+        /*************************对话框样式部分***************************/
+        .dialog{
+            background-color: aliceblue;  
+            width: 260px;
+            padding: 20px;  /*内边距  内容和边框之间的距离*/
+            position: absolute;  /*设置为绝对定位  脱离文档流*/
+            top: 100px;  /*距离窗口上面的位置*/
+            left: 37%; /*距离窗口左边的位置*/
+        }
+
+        /*对话框上的关闭按钮*/
+        .dialog .closeBt{
+            position: absolute;  /*关闭按钮所在的对话框是绝对定位  自己也是绝对定位  位置设置就是根据父元素来设置*/
+            right: 0;
+            top: 0;
+        }
+
+        /*表格上方添加按钮   点击之后弹出添加学生的对话框*/
+        .addBt{
+            margin-left: 15%;  /*左外边距  设置目的是为了和表格左对齐*/
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 表格标题 -->
+        <h1 class="tableTitle">{{title}}</h1>
+
+        <!-- 添加学生按钮 点击弹出对话框 -->
+        <button class="addBt" @click="addDialogIsShow=true">添加学生信息</button>
+        
+        <!-- 学生信息的表格  显示所有学生的信息 -->
+        <table class="stuTable">
+            <tr>
+                <th>序号</th>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>专业</th>
+                <th>操作</th>
+            </tr>
+
+            <tr v-for="(stu,index) in stuArr" :key="stu.stuId">
+                <td>{{index+1}}</td>
+                <td>{{stu.stuId}}</td>
+                <td>{{stu.stuName}}</td>
+                <td>{{stu.stuAge}}</td>
+                <td>{{stu.gender}}</td>
+                <td>{{stu.major}}</td>
+                <td>
+                    <button @click="modifyStu(index)">修改</button>
+                    <button @click="delStu(index)">删除</button>
+                </td>
+            </tr>
+        </table>
+
+        <!-- 添加学生信息的对话框 -->
+        <div class="dialog" v-show="addDialogIsShow">
+            <button class="closeBt" @click="addDialogIsShow=false">X</button>
+            <h3>添加学生信息</h3>
+            <form>
+                学生姓名：<input type="text" v-model="sname"><br>
+                学生年龄：<input type="number" v-model="sage"><br>
+                学生性别：<input type="radio" name="gender" v-model="sgender" value="男">男
+                        <input type="radio" name="gender" v-model="sgender" value="女">女<br>
+                所学专业：
+                <select v-model="smajor">
+                    <option >Java</option>
+                    <option >Python</option>
+                    <option >C++</option>
+                    <option >前端</option>
+                </select>
+                <br>
+                <input type="button" value="确认添加" @click="addStu">
+            </form>
+        </div>
+    </div>
+
+    <script src="js/vue.global.js"></script>
+
+    <script>
+        Vue.createApp({
+
+            //数据
+            data() {
+                return {
+                    title: '学生信息表',
+                    stuArr: [
+                        {
+                            stuId: 1001,
+                            stuName: '张三',
+                            stuAge: 20,
+                            gender: '男',
+                            major: 'Java'
+                        },
+                    ],
+                    //添加学生窗口是否显示
+                    addDialogIsShow: false,
+                    //收集表单数据
+                    sname: '',
+                    sage: 0,
+                    sgender: '男',
+                    smajor: 'Java'
+                }
+            },
+
+            //函数
+            methods: {
+                //添加学生的函数
+                addStu(){
+
+                    //1、构建当前正在添加的学生对象   根据表单收集的数据
+                    let stu = {
+                        stuName: this.sname,
+                        stuAge: this.sage,
+                        gender: this.sgender,
+                        major: this.smajor
+                    }
+
+                    //2、生成学生的id  不能重复的整数  从1001开始
+                    //2.1 判断集合中是否存在学生  学号设置方式不同
+                    if(this.stuArr.length==0){
+                        //第一个学生的学号为1001
+                        stu.stuId = 1001;
+                    }else{
+                        //从集合中获取最后一个学生的id   加1  赋给当前要添加的学生
+                        stu.stuId = this.stuArr[this.stuArr.length-1].stuId+1
+                    }
+
+                    console.log(stu);
+
+                    //3、将当前要添加的学生加入集合   集合更新  页面随之更新
+                    this.stuArr.push(stu);
+
+                    //4、关闭添加的对话框
+                    this.addDialogIsShow = false;
+
+                    //5、清空表单数据   下次打开里面没有之前填写的内容
+                    this.sname = '';
+                    this.sage = 0;
+                    this.sgender = '男';
+                    this.smajor = 'Java';
+                },
+                //删除学生的函数  参数：指定要删除的学生对象的下标
+                delStu(index){
+                    if(confirm('您确认要删除吗？')){
+                        //splice 参数：第一个 指定开始操作的下标  第二个 要删除的数量
+                        this.stuArr.splice(index,1);
+                    }
+                },
+                //修改学生的函数  弹出修改学生的对话框
+                modifyStu(index){
+                    //1、根据指定的下标从集合中获取该学生对象
+                    //2、弹出一个修改学生的对话框
+                    //3、将该学生的信息显示到对话框上
+                    
+                },
+                //真正修改学生信息的函数   点击确认修改按钮
+                changeStu(index){
+                    //1、收集新的学生信息构建一个对象
+                    //2、根据对应的下标更新到集合中  提示  使用：splice(index,1,新学生对象)
+
+                }
+            },
+
+        }).mount('#app');
+    </script>
+</body>
+</html>

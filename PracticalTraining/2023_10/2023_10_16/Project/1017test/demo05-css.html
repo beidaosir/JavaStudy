@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    
+
+    <!-- 
+
+        throws 异常类 声明异常   throw 异常对象
+        Collection 接口  Collections 工具类
+        final   finally try catch finally块(一定会执行)  finalize  方法销毁之前会被调用
+
+        equals == 区别
+
+
+        NullPointerException
+        ArrayIndexOutOfBounds。。。
+        StringIndexOut.....
+        ClassCastException
+        ArithMa....
+
+
+        IOException  FileNotFound...
+        
+        String str = "abcdefg";
+
+        Map<String,Integer> map = new HashMap<>();
+
+
+        for(int i = 0;i<str.length();i++){
+           String c =  str.chatAt(i)+"";
+           if(map.containsKey(c)){
+              Integer number = map.get(c);
+              map.put(c,number+1);
+           }else{
+              map.put(c,1);
+           }
+        }
+        
+        
+        List<Student> stuList = new ArrayList<>();
+            stuList.add(new Student("张三"));
+            stuList.remove(1);
+         Parent p = new Son();
+         p.eat();
+
+         Son son = (Son)p;   //ClassCastException   运行时    check异常 检查异常
+
+         main(){
+
+            int i = 5;
+            test(i);
+
+            Person p = new Person("zhangsan",20);
+            p.name
+
+            int[] num = {1,2,3};
+            num[0]
+         }
+
+        public void test(int i){
+            i = 3;
+        }
+
+        public void test(Person p){
+            p.name = "lisi"
+        }
+
+        public void test(int[] num){
+            num[0] = 10;
+        }
+
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*选中div中的p标签中的第一个*/
+        div p:first-of-type{
+            color: blue;
+            font-size: 28px;
+        }
+
+        /* 选中该组中最后一个 */
+        div p:last-of-type{
+            color: green;
+            font-size: 28px;
+        }
+
+        /* 通过指定的索引对应的元素 */
+        div p:nth-of-type(2){
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <p>dsfsdgfdsgdfg</p>
+        <p>dsfsdgfdsgdfg</p>
+        <p>dsfsdgfdsgdfg</p>
+    </div>
+</body>
+</html>

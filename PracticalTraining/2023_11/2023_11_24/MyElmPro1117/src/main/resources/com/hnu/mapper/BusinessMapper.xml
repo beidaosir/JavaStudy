@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hnu.mapper.BusinessMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="bid">
+        INSERT INTO t_business(businessAccount,`password`,businessName,businessAddress,businessExplain,startPrice,deliveryPrice,role)
+        VALUES(#{businessAccount},#{password},#{businessName},#{businessAddress},#{businessExplain},#{startPrice},#{deliveryPrice},#{role})
+    </insert>
+
+    <update id="update">
+        update t_business set businessAccount=#{businessAccount},businessName=#{businessName},
+                              businessAddress=#{businessAddress},businessExplain=#{businessExplain},
+                              startPrice=#{startPrice},deliveryPrice=#{deliveryPrice} where bid=#{bid}
+    </update>
+
+    <delete id="del">
+        delete from t_business where bid=#{bid}
+    </delete>
+
+    <!-- 查询表的语句中都用到这一段  所以提取引用即可 -->
+    <sql id="selSql">
+        select bid,businessAccount,`password`,businessName,businessAddress,businessExplain,startPrice,deliveryPrice,role
+        from t_business
+    </sql>
+
+    <select id="getById" resultType="Business">
+        <include refid="selSql"></include>
+        where bid=#{bid}
+    </select>
+
+    <select id="getAll" resultType="Business">
+        <include refid="selSql"></include>
+    </select>
+
+    <!-- 这一段条件在统计和分页查询中都需要使用  所以提取出来 在sql中可以通过include来引用 -->
+    <sql id="querySql">
+        <where>
+            <if test="businessAccount!=null and businessAccount!=''">
+                and businessAccount=#{businessAccount}
+            </if>
+            <if test="businessName!=null and businessName!=''">
+                and businessName like CONCAT('%',#{businessName},'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="getCount" resultType="int">
+        select count(bid) from t_business
+        <include refid="querySql"></include>
+    </select>
+
+    <select id="getByPage" resultType="Business">
+        <include refid="selSql"></include>
+        <include refid="querySql"></include>
+        limit #{startIndex},#{pageNumber}
+    </select>
+
+    <select id="getByCondition" resultType="Business">
+        <include refid="selSql"></include>
+        where businessAccount = #{businessAccount} and password = #{password}
+    </select>
+
+</mapper>

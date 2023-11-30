@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #mouseoutDiv{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="mouseoutDiv">
+        鼠标从我上面移走
+    </div>
+
+    <script>
+        document.getElementById('mouseoutDiv').addEventListener('mouseout',function () {
+            alert('你把鼠标从我上面移走了！');
+        })
+    </script>
+
+</body>
+</html>
