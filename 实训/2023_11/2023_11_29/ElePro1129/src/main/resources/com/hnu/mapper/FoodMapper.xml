@@ -5,12 +5,13 @@
 <mapper namespace="com.hnu.mapper.FoodMapper">
 
     <insert id="add" useGeneratedKeys="true" keyProperty="foodId">
-        insert into t_food(foodName,foodExplain,foodPrice,businessId)
-        values(#{foodName},#{foodExplain},#{foodPrice},#{businessId})
+        insert into t_food(foodName,foodPrice,foodPic,businessId)
+        values(#{foodName},#{foodPrice},#{foodPic},#{businessId})
     </insert>
 
     <update id="update">
-        update t_food set foodName=#{foodName},foodExplain=#{foodExplain},foodPrice=#{foodPrice}
+        update t_food set
+                          foodName=#{foodName},foodPic=#{foodPic},foodPrice=#{foodPrice}
         where foodId=#{foodId}
     </update>
 
@@ -43,9 +44,9 @@
     所以我们需要编写resultMap
     -->
     <select id="getById" resultMap="foodMap">
-        select f.foodId,f.foodName,f.foodExplain,f.foodPrice,b.bid,b.businessName from t_food f,t_business b
+        select f.foodId,f.foodName,f.foodPrice,b.bid,b.businessName from t_food f,t_business b
         where f.businessId=b.bid
-        and f.foodId=#{foodId}
+          and f.foodId=#{foodId}
     </select>
 
     <!--<select id="getAll" resultMap="foodMap">
@@ -53,7 +54,7 @@
         where f.businessId=b.bid
     </select>-->
 
-     <!--
+    <!--
 
     分开两次查询
       前面使用的是关联查询   使用一个查询语句查到两张表的数据
@@ -69,14 +70,14 @@
         </association>
     </resultMap>
     <select id="getAll" resultMap="foodMap1">
-        select foodId,foodName,foodExplain,foodPrice,businessId from t_food
+        select foodId,foodName,foodPrice,businessId from t_food
     </select>
 
     <sql id="selCondition">
-        select f.foodId,f.foodName,f.foodExplain,f.foodPrice,b.bid,b.businessName from t_food f,t_business b
+        select f.foodId,f.foodName,f.foodPrice,b.bid,b.businessName from t_food f,t_business b
         <where>
             f.businessId=b.bid
-            <if test="businessId != null">
+            <if test="businessId!=null">
                 and businessId=#{businessId}
             </if>
             <if test="foodName!=null and foodName!=''">
@@ -87,7 +88,7 @@
 
     <!-- 在关联查询及条件筛选之后再进行统计 -->
     <select id="getCount" resultType="int">
-       select count(foodId) from
+        select count(foodId) from
         (<include refid="selCondition"></include>) a
     </select>
 

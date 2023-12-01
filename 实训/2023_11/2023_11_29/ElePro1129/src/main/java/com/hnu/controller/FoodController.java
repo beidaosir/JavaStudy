@@ -39,5 +39,17 @@ public class FoodController {
     public ResponseObj page(@RequestBody FoodQuery businessQuery){
         return ResponseObj.SUCCESS(foodService.getByPage(businessQuery));
     }
-    
+
+    @PostMapping("/explain")
+    public ResponseObj updateExplain(@RequestBody Food food){
+        return foodService.updateExplain(food)?ResponseObj.SUCCESS():ResponseObj.ERROR();
+    }
+
+    @GetMapping("/explain/{id}")
+    public ResponseObj getExplain(@PathVariable("id") Integer foodId){
+        ResponseObj success = ResponseObj.SUCCESS();
+        success.setData(foodService.getExplain(foodId));
+        return success;
+    }
+
 }

@@ -1,12 +1,13 @@
 package com.hnu.po;
 
-public class Food {
+public class Food{
 
     private Integer foodId;
     private String foodName;
     private String foodExplain;
     private Double foodPrice;
     private Integer businessId;
+    private String foodPic;
 
     private Business business;  //多的一方维护一个一的一方的实例
 
@@ -19,6 +20,14 @@ public class Food {
         this.foodExplain = foodExplain;
         this.foodPrice = foodPrice;
         this.businessId = businessId;
+    }
+
+    public String getFoodPic() {
+        return foodPic;
+    }
+
+    public void setFoodPic(String foodPic) {
+        this.foodPic = foodPic;
     }
 
     public Integer getFoodId() {
@@ -77,6 +86,7 @@ public class Food {
                 ", foodExplain='" + foodExplain + '\'' +
                 ", foodPrice=" + foodPrice +
                 ", businessId=" + businessId +
+                ", foodPic='" + foodPic + '\'' +
                 ", business=" + business +
                 '}';
     }
