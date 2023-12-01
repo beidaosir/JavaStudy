@@ -1,15 +1,15 @@
 <template>
     <div>
-        <div class="crumbs">
+        <!-- <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
                     <i class="el-icon-lx-calendar"></i> 表单
                 </el-breadcrumb-item>
                 <el-breadcrumb-item>图片上传</el-breadcrumb-item>
             </el-breadcrumb>
-        </div>
+        </div> -->
         <div class="container">
-            <div class="content-title">支持拖拽</div>
+            <!-- <div class="content-title">支持拖拽</div>
             <div class="plugins-tips">
                 Element UI自带上传组件。
                 访问地址：
@@ -32,9 +32,9 @@
                 <template #tip>
                     <div class="el-upload__tip">只能上传 jpg/png 文件，且不超过 500kb</div>
                 </template>
-            </el-upload>
+            </el-upload> -->
 
-            <div class="content-title">支持裁剪</div>
+            <!-- <div class="content-title">支持裁剪</div>
             <div class="plugins-tips">
                 vue-cropperjs：一个封装了 cropperjs 的 Vue 组件。
                 访问地址：
@@ -42,7 +42,8 @@
                     href="https://github.com/Agontuk/vue-cropperjs"
                     target="_blank"
                 >vue-cropperjs</a>
-            </div>
+            </div> -->
+            
             <div class="crop-demo">
                 <img :src="cropImg" class="pre-img" />
                 <div class="crop-demo-btn">
@@ -69,7 +70,7 @@
                 <template #footer>
                     <span class="dialog-footer">
                         <el-button @click="cancelCrop">取 消</el-button>
-                        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                        <el-button type="primary" @click="imageuploaded">确 定</el-button>
                     </span>
                 </template>
             </el-dialog>
@@ -78,6 +79,7 @@
 </template>
 
 <script>
+import base64ToFile from '../api/commons'
 import VueCropper from "vue-cropperjs";
 import "cropperjs/dist/cropper.css";
 export default {
@@ -85,6 +87,7 @@ export default {
     data() {
         return {
             defaultSrc: require("../assets/img/img.jpg"),
+            fileName: '',
             fileList: [],
             imgSrc: "",
             cropImg: "",
@@ -94,9 +97,13 @@ export default {
     components: {
         VueCropper
     },
+    //接收父组件传值
+    props: ['imageUrl'],
     methods: {
         setImage(e) {
             const file = e.target.files[0];
+            console.log('file----',file)
+            this.fileName = file.name;
             if (!file.type.includes("image/")) {
                 return;
             }
@@ -114,10 +121,35 @@ export default {
         },
         cancelCrop() {
             this.dialogVisible = false;
-            this.cropImg = this.defaultSrc;
+            // this.cropImg = this.defaultSrc;
         },
-        imageuploaded(res) {
-            console.log(res);
+        //**********上传图片********** */
+        imageuploaded() {
+            console.log('imageuploaded----');
+            this.dialogVisible = false
+
+            let fname = this.fileName.substring(0,this.fileName.lastIndexOf('.'));
+            let upFile = base64ToFile(this.cropImg,fname);
+
+            const formData = new FormData();
+            formData.append('upFile',upFile);
+
+            this.$axios({
+                method: 'post',
+                url: '/up',
+                headers: {
+                    'Content-Type':'multipart/form-data'
+                },
+                data: formData
+            }).then(res=>{
+                console.log(res.data)
+                if(res.data.code == 200){
+                    //发送数据
+                   console.log('-----触发getFoodPic--------',res.data.msg) 
+                   this.$emit('getFoodPic',res.data.msg);
+                }
+            })
+
         },
         handleError() {
             this.$notify.error({
@@ -126,8 +158,9 @@ export default {
             });
         }
     },
-    created() {
-        this.cropImg = this.defaultSrc;
+    mounted() {
+        //使用父组件的传值回显图片
+        this.cropImg = this.imageUrl?this.imageUrl:this.defaultSrc;
     }
 };
 </script>

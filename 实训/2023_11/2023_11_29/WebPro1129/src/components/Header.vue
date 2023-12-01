@@ -23,7 +23,7 @@
                 </div>
                 <!-- 用户头像 -->
                 <div class="user-avator">
-                    <img src="../assets/img/photo.jpg" />
+                    <img src="../assets/img/img.jpg" />
                 </div>
                 <!-- 用户名下拉菜单 -->
                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">
@@ -55,8 +55,13 @@ export default {
     },
     computed: {
         username() {
-            let username = localStorage.getItem("ms_username");
-            return username ? username : this.name;
+            let loginUser = JSON.parse(localStorage.getItem("loginUser"));
+            console.log('loginUser*****',loginUser);
+            if(loginUser.role == 'manager'){
+                return loginUser.adminName;
+            }else if(loginUser.role == 'business'){
+                return loginUser.businessAccount;
+            }
         },
         collapse() {
             return this.$store.state.collapse;
@@ -66,8 +71,16 @@ export default {
         // 用户名下拉菜单选择事件
         handleCommand(command) {
             if (command == "loginout") {
-                localStorage.removeItem("ms_username");
-                this.$router.push("/login");
+
+                this.$axios({
+                    method: 'get',
+                    url: '/log/out'
+                }).then(res=>{
+                    if(res.data.code == 200){
+                        localStorage.removeItem("loginUser");
+                        this.$router.push("/login");
+                    }
+                })
             }
         },
         // 侧边栏折叠

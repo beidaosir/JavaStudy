@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
-                    <i class="el-icon-lx-cascades"></i> 商家表格
+                    <i class="el-icon-lx-cascades"></i> 餐品表格
                 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -17,11 +17,10 @@
                     @click="delAllSelection"
                 >批量删除</el-button>
 
-                <el-input v-model="query.businessAccount" placeholder="账号搜" class="handle-input mr10"></el-input>
-                <el-input v-model="query.businessName" placeholder="名称搜" class="handle-input mr10"></el-input>
+                <el-input v-model="query.foodName" placeholder="名称搜" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
 
-                <el-button type="primary" @click="showAddDialog">添加商家</el-button>
+                <el-button type="primary" @click="showAddDialog">添加餐品</el-button>
             </div>
 
             <el-table
@@ -32,16 +31,18 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                <el-table-column prop="bid" label="ID" width="70" align="center"></el-table-column>
-                <el-table-column prop="businessAccount" label="账号"></el-table-column>
-                <el-table-column prop="businessName" label="商家名称"></el-table-column>
-                <el-table-column prop="businessAddress" label="商家地址"></el-table-column>
-                <el-table-column prop="businessExplain" label="商家简介"></el-table-column>
-                <el-table-column label="起送价">
-                    <template #default="scope">￥{{ scope.row.startPrice }}</template>
+                <el-table-column prop="foodId" label="ID" width="70" align="center"></el-table-column>
+                <el-table-column prop="foodName" label="名称"></el-table-column>
+                <el-table-column label="简介">
+                    <template #default="scope">
+                        <el-button link type="primary" size="small" @click="editExplain(scope.row.foodId)">详情介绍</el-button>
+                    </template>
                 </el-table-column>
-                <el-table-column label="配送费">
-                    <template #default="scope">￥{{ scope.row.deliveryPrice }}</template>
+                <el-table-column label="价格">
+                    <template #default="scope">￥{{ scope.row.foodPrice }}</template>
+                </el-table-column>
+                <el-table-column label="商家名称">
+                    <template #default="scope">{{ scope.row.business.businessName }}</template>
                 </el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template #default="scope">
@@ -74,25 +75,20 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="编辑商家信息" v-model="editVisible" width="30%">
+        <el-dialog title="编辑商家信息" v-model="editVisible" width="40%">
             <el-form ref="form" :model="form" label-width="70px">
-                <el-form-item label="账号">
-                    <el-input v-model="form.businessAccount"></el-input>
+                <el-form-item label="餐品名称">
+                    <el-input v-model="form.foodName"></el-input>
                 </el-form-item>
-                <el-form-item label="名称">
-                    <el-input v-model="form.businessName"></el-input>
+                <el-form-item label="餐品简介">
+                    <el-input v-model="form.foodExplain"></el-input>
                 </el-form-item>
-                <el-form-item label="地址">
-                    <el-input v-model="form.businessAddress"></el-input>
+                <el-form-item label="价格">
+                    <el-input-number v-model="form.foodPrice" :step="5" />
                 </el-form-item>
-                <el-form-item label="简介">
-                    <el-input v-model="form.businessExplain"></el-input>
-                </el-form-item>
-                <el-form-item label="起送价">
-                    <el-input-number v-model="form.startPrice" :step="5" />
-                </el-form-item>
-                <el-form-item label="配送费">
-                    <el-input-number v-model="form.deliveryPrice" :step="2" />
+                <el-form-item label="图片">
+                    <!-- 使用上传组件 -->
+                    <Upload :imageUrl="form.foodPic" @getFoodPic="getFoodPic"></Upload>
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -106,15 +102,19 @@
 </template>
 
 <script>
+//引入上传组件
+import Upload from './Upload.vue';
 export default {
-    name: "BusinessTable",
+    name: "FoodTable",
+    //注册上传组件
+    components:{Upload},
     data() {
         return {
             query: {
-                businessAccount: "",
-                businessName: "",
+                foodName: '',
                 pageIndex: 1,  //当前页
-                pageSize: 10   //每页显示的记录数
+                pageSize: 10,   //每页显示的记录数
+                businessId: null
             },
             tableData: [],
             multipleSelection: [],
@@ -122,50 +122,63 @@ export default {
             editVisible: false,
             pageTotal: 0,  //总记录数
             form: {
-                businessAccount: '',
-                businessName: '',
-                businessAddress: '',
-                businessExplain: '',
-                startPrice: 0,
-                deliveryPrice: 0
+                foodName: '',
+                foodExplain: '',
+                foodPrice: 0,
+                foodPic: ''
             },
         };
     },
-    mounted() {
-        this.getData();
+    mounted(){
+        //从本地存储中获取登录的用户
+       const loginUser = JSON.parse(localStorage.getItem('loginUser'));
+       //将商家id放入查询条件中
+       this.query.businessId = loginUser.bid;
+       //查询
+       this.getData();
     },
     methods: {
+        //编辑详情
+        editExplain(foodId){
+            console.log(foodId)
+            this.$router.push({ path: '/editExplain', query: { foodId:foodId } });
+        },
+        getFoodPic(picUrl){
+            console.log('触发了getFoodPic,接收到',picUrl)
+            this.form.foodPic = picUrl;
+        },
         //显示添加对话框
         showAddDialog(){
             this.form = {
-                businessAccount: '',
-                businessName: '',
-                businessAddress: '',
-                businessExplain: '',
-                startPrice: 0,
-                deliveryPrice: 0
+                foodName: '',
+                foodExplain: '',
+                foodPrice: 0,
+                foodPic: ''
             }
             this.editVisible = true
         },
         // 从服务端获取分页数据
         getData() {
-            this.$axios({
-                method:'post',
-                url:'/business/page',
-                data: {
+            //准备查询条件
+            let data = {
                     currentPage: this.query.pageIndex,
                     pageNumber: this.query.pageSize,
-                    businessAccount: this.query.businessAccount,
-                    businessName: this.query.businessName,
+                    foodName: this.query.foodName,
                 }
+            
+            //如果存在businessId带入到查询条件中
+            if(this.query.businessId){
+                data.businessId = this.query.businessId
+            }
+
+            console.log('准备好的查询条件：',data);
+
+            this.$axios({
+                method:'post',
+                url:'/food/page',
+                data: data
             }).then(res=>{
                 console.log(res);
-                /*
-                  如果未登录直接访问business就会被登录拦截器拦截
-                  返回一个ResponseObj [501 "未登录"]
-                  需要做判断 如果未登录 跳转到登录组件
-                  以上 ，每个axios请求都需要做
-                */
                 this.tableData = res.data.data.data;
                 this.pageTotal = res.data.data.totalRows;
             })

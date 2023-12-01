@@ -29,6 +29,23 @@ const routes = [
                 /* webpackChunkName: "table" */
                 "../views/BusinessTable.vue")
             },{
+                path: "/food",
+                name: "foodtable",
+                meta: {
+                    title: '餐品表格'
+                },
+                component: () => import (
+                /* webpackChunkName: "table" */
+                "../views/FoodTable.vue")
+            },{
+                path: "/editExplain",
+                name: "editExplain",
+                meta: {
+                    title: '文本编辑'
+                },
+                component: () => import (
+                "../views/EditExplain.vue")
+            },{
                 path: "/table",
                 name: "basetable",
                 meta: {
@@ -145,12 +162,11 @@ const router = createRouter({
     routes
 });
 
+//路由守卫
 router.beforeEach((to, from, next) => {
     document.title = `${to.meta.title} | vue-manage-system`;
-    
     //从本地存储获取loginUser
     const loginUser = localStorage.getItem('loginUser');
-    
     //未登录且访问的不是登录组件  跳转到登录组件
     if (!loginUser && to.path !== '/login') {
         next('/login');
