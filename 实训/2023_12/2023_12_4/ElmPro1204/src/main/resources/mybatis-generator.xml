@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!-- MyBatis3Simple:只生成简单的增删改查 -->
+    <context id="MySqlTables"  targetRuntime="MyBatis3Simple">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!--<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>-->
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/><!-- 阻止成成注释 -->
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/><!-- 阻止生成的注释包含时间戳 -->
+        </commentGenerator>
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/test?useSSL=false&amp;characterEncoding=utf8" userId="root" password="11111">
+        </jdbcConnection>
+        <!--默认为false，把JDBC DECIMAL 和NUMERIC类型解析为Integer，为true时
+	        把JDBC DECIMAL 和NUMERIC类型解析为java.math.BigDecimal-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置-->
+        <javaModelGenerator targetPackage="com.hnu.po" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="com.hnu.mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hnu.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+        <table tableName="t_address" domainObjectName="Address">
+            <!-- 实体类的属性名称和数据库表的字段名称一致 -->
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="addressId" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="t_cart" domainObjectName="Cart">
+            <!-- 实体类的属性名称和数据库表的字段名称一致 -->
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="cartId" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="t_cart_item" domainObjectName="Cart">
+            <!-- 实体类的属性名称和数据库表的字段名称一致 -->
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="itemId" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="t_order" domainObjectName="Order">
+            <!-- 实体类的属性名称和数据库表的字段名称一致 -->
+            <property name="useActualColumnNames" value="true"/>
+            <!--<generatedKey column="orderId" sqlStatement="MySql" identity="true"/>-->
+        </table>
+
+        <table tableName="t_order_detail" domainObjectName="OrderDetail">
+            <!-- 实体类的属性名称和数据库表的字段名称一致 -->
+            <property name="useActualColumnNames" value="true"/>
+            <!--<generatedKey column="orderId" sqlStatement="MySql" identity="true"/>-->
+        </table>
+        <table tableName="t_user" domainObjectName="User">
+            <!-- 实体类的属性名称和数据库表的字段名称一致 -->
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="userId" sqlStatement="MySql" identity="true"/>
+        </table>
+        <!--<table tableName="goods" domainObjectName="Goods">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="stu"
+               domainObjectName="Student" enableCountByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+                enableDeleteByExample="false">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>-->
+    </context>
+</generatorConfiguration>
