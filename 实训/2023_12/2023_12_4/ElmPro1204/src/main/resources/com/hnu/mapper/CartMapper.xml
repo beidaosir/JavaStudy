@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hnu.mapper.CartMapper">
+  <resultMap id="BaseResultMap" type="com.hnu.po.Cart">
+    <id column="itemId" jdbcType="INTEGER" property="itemId" />
+    <result column="foodId" jdbcType="INTEGER" property="foodId" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="cartId" jdbcType="INTEGER" property="cartId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_cart_item
+    where itemId = #{itemId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hnu.po.Cart">
+    <selectKey keyProperty="itemId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_cart_item (foodId, number, cartId
+      )
+    values (#{foodId,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, #{cartId,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hnu.po.Cart">
+    update t_cart_item
+    set foodId = #{foodId,jdbcType=INTEGER},
+      number = #{number,jdbcType=INTEGER},
+      cartId = #{cartId,jdbcType=INTEGER}
+    where itemId = #{itemId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select itemId, foodId, number, cartId
+    from t_cart_item
+    where itemId = #{itemId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select itemId, foodId, number, cartId
+    from t_cart_item
+  </select>
+  <resultMap id="BaseResultMap" type="com.hnu.po.Cart">
+    <id column="cartId" jdbcType="INTEGER" property="cartId" />
+    <result column="businessId" jdbcType="INTEGER" property="businessId" />
+    <result column="userId" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_cart
+    where cartId = #{cartId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hnu.po.Cart">
+    <selectKey keyProperty="cartId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_cart (businessId, userId)
+    values (#{businessId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hnu.po.Cart">
+    update t_cart
+    set businessId = #{businessId,jdbcType=INTEGER},
+      userId = #{userId,jdbcType=INTEGER}
+    where cartId = #{cartId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select cartId, businessId, userId
+    from t_cart
+    where cartId = #{cartId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select cartId, businessId, userId
+    from t_cart
+  </select>
+</mapper>

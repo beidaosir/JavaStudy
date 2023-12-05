@@ -15,7 +15,6 @@
   </properties>
 
   <dependencies>
-    <!-- 单元测试 -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -23,116 +22,15 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- 数据库驱动 -->
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.29</version>
-    </dependency>
-
-    <!-- mybatis依赖 -->
+    <!-- mybatis的依赖 -->
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
-      <version>3.5.10</version>
-    </dependency>
-
-    <!-- 日志相关的包 -->
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
-    </dependency>
-
-    <!-- 日志相关的包 -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>2.0.5</version>
-    </dependency>
-
-    <!-- 引入spring的依赖 -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>5.3.22</version>
-    </dependency>
-
-    <!-- 引入druid连接池的依赖 -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>druid</artifactId>
-      <version>1.2.9</version>
-    </dependency>
-
-    <!-- mybatis和spring的整合包 -->
-    <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis-spring</artifactId>
-      <version>2.0.7</version>
-    </dependency>
-
-    <!-- spring对jdbc的支持 -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
-      <version>5.3.22</version>
-    </dependency>
-
-    <!-- spring对事务处理的支持 -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-tx</artifactId>
-      <version>5.3.22</version>
-    </dependency>
-
-    <!-- 切面相关依赖 -->
-    <dependency>
-      <groupId>aopalliance</groupId>
-      <artifactId>aopalliance</artifactId>
-      <version>1.0</version>
-    </dependency>
-
-    <!-- spring整合单元测试  要求junit在4.12以上-->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <version>5.3.22</version>
-    </dependency>
-
-    <!-- springmvc的依赖   依赖了web -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-      <version>5.3.22</version>
-    </dependency>
-
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>4.0.1</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>2.13.3</version>
-    </dependency>
-
-    <!-- 文件上传的依赖 -->
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>1.4</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.qiniu</groupId>
-      <artifactId>qiniu-java-sdk</artifactId>
-      <version>7.10.4</version>
+      <version>3.5.9</version>
     </dependency>
 
   </dependencies>
+
   <build>
     <plugins>
       <plugin>

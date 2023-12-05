@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hnu.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.hnu.po.Order">
+    <id column="orderId" jdbcType="BIGINT" property="orderId" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="sumPrice" jdbcType="DECIMAL" property="sumPrice" />
+    <result column="foodNumber" jdbcType="INTEGER" property="foodNumber" />
+    <result column="deliveryPrice" jdbcType="DECIMAL" property="deliveryPrice" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="userId" jdbcType="INTEGER" property="userId" />
+    <result column="businessId" jdbcType="INTEGER" property="businessId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_order
+    where orderId = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hnu.po.Order">
+    insert into t_order (orderId, createTime, sumPrice, 
+      foodNumber, deliveryPrice, status, 
+      userId, businessId)
+    values (#{orderId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{sumPrice,jdbcType=DECIMAL}, 
+      #{foodNumber,jdbcType=INTEGER}, #{deliveryPrice,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
+      #{userId,jdbcType=INTEGER}, #{businessId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hnu.po.Order">
+    update t_order
+    set createTime = #{createTime,jdbcType=TIMESTAMP},
+      sumPrice = #{sumPrice,jdbcType=DECIMAL},
+      foodNumber = #{foodNumber,jdbcType=INTEGER},
+      deliveryPrice = #{deliveryPrice,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      userId = #{userId,jdbcType=INTEGER},
+      businessId = #{businessId,jdbcType=INTEGER}
+    where orderId = #{orderId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select orderId, createTime, sumPrice, foodNumber, deliveryPrice, status, userId, 
+    businessId
+    from t_order
+    where orderId = #{orderId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select orderId, createTime, sumPrice, foodNumber, deliveryPrice, status, userId, 
+    businessId
+    from t_order
+  </select>
+</mapper>
