@@ -1,14 +1,16 @@
 <template>
+  <!-- header部分 -->
+  <Header></Header>
   <router-view/>
   <TabBar></TabBar>
 </template>
 
 <script>
+import Header from '@/components/Header.vue';
 import TabBar from '@/components/TabBar.vue';
 export default {
   name: 'App',
-  components: {TabBar}
- 
+  components: {Header,TabBar}
 }
 </script>
 

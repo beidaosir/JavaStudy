@@ -1,5 +1,28 @@
 <template>
   <div class="about">
-    <h1>我的</h1>
+    <van-cell center inset>
+      <!-- 使用 title 插槽来自定义标题 -->
+      <template #title>
+        <van-image
+          round
+          width="50px"
+          height="50px"
+          src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+        />
+        <span></span>
+      </template>
+      <template #label>
+        <span class="custom-title">用户321673127</span>
+      </template>
+    </van-cell>
+
+    <van-grid :border="false" :column-num="4">
+      <router-link to="/myaddress"><van-grid-item text="我的地址"  icon="location-o"></van-grid-item></router-link>
+      
+      <van-grid-item text="我的客服"  icon="service-o"></van-grid-item>
+      <van-grid-item text="关于" icon="description-o"></van-grid-item>
+      <van-grid-item text="用户隐私" icon="shield-o"></van-grid-item>
+      <van-grid-item text="规则中心" icon="warning-o"></van-grid-item>
+    </van-grid>
   </div>
 </template>
