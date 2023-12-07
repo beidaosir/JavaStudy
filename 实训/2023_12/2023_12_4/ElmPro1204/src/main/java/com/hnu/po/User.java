@@ -13,8 +13,6 @@ public class User {
 
     private Integer gender;
 
-    private Date birthday;
-
     public Integer getUserId() {
         return userId;
     }
@@ -55,11 +53,14 @@ public class User {
         this.gender = gender;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gender=" + gender +
+                '}';
     }
 }

@@ -40,4 +40,8 @@
     select addressId, name, phone, code, address, userId
     from t_address
   </select>
+  <select id="selectByUserId" resultType="Address">
+    select addressId, name, phone, code, address, userId from t_address where userId=#{userId}
+  </select>
+
 </mapper>

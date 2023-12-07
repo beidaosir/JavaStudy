@@ -2,38 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hnu.mapper.OrderDetailMapper">
   <resultMap id="BaseResultMap" type="com.hnu.po.OrderDetail">
-    <id column="detailId" jdbcType="INTEGER" property="detailId" />
     <result column="orderId" jdbcType="INTEGER" property="orderId" />
     <result column="foodId" jdbcType="INTEGER" property="foodId" />
     <result column="number" jdbcType="INTEGER" property="number" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_order_detail
-    where detailId = #{detailId,jdbcType=INTEGER}
-  </delete>
   <insert id="insert" parameterType="com.hnu.po.OrderDetail">
-    <selectKey keyProperty="detailId" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into t_order_detail (orderId, foodId, number
-      )
+    )
     values (#{orderId,jdbcType=INTEGER}, #{foodId,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}
-      )
+           )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.hnu.po.OrderDetail">
-    update t_order_detail
-    set orderId = #{orderId,jdbcType=INTEGER},
-      foodId = #{foodId,jdbcType=INTEGER},
-      number = #{number,jdbcType=INTEGER}
-    where detailId = #{detailId,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select detailId, orderId, foodId, number
-    from t_order_detail
-    where detailId = #{detailId,jdbcType=INTEGER}
-  </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select detailId, orderId, foodId, number
+    select orderId, foodId, number
     from t_order_detail
   </select>
 </mapper>

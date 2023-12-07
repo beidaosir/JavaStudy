@@ -1,8 +1,13 @@
 package com.hnu.po;
 
+import com.hnu.po.Address;
+import com.hnu.po.Business;
+import com.hnu.po.User;
+
 import java.util.Date;
 
 public class Order {
+
     private Long orderId;
 
     private Date createTime;
@@ -18,6 +23,14 @@ public class Order {
     private Integer userId;
 
     private Integer businessId;
+
+    private Integer addressId;
+
+    private User user;
+
+    private Business business;
+
+    private Address address;
 
     public Long getOrderId() {
         return orderId;
@@ -81,5 +94,37 @@ public class Order {
 
     public void setBusinessId(Integer businessId) {
         this.businessId = businessId;
+    }
+
+    public Integer getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Integer addressId) {
+        this.addressId = addressId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hnu.mapper.PcasMapper">
+
+    <select id="getByCondition" resultType="Pcas">
+        select code,name,parent,type from t_pcas
+        <where>
+            <if test="parentCode!=null and parentCode!=''">
+                and parent=#{parentCode}
+            </if>
+            and type = #{type}
+        </where>
+    </select>
+
+</mapper>

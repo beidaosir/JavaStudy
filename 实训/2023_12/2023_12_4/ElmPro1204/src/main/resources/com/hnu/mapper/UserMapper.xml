@@ -7,7 +7,6 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="phone" jdbcType="CHAR" property="phone" />
     <result column="gender" jdbcType="INTEGER" property="gender" />
-    <result column="birthday" jdbcType="DATE" property="birthday" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_user
@@ -17,27 +16,60 @@
     <selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_user (username, password, phone, 
-      gender, birthday)
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}, 
-      #{gender,jdbcType=INTEGER}, #{birthday,jdbcType=DATE})
+    insert into t_user (username, password, phone,
+    gender)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR},
+    #{gender,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.hnu.po.User">
     update t_user
     set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=CHAR},
-      gender = #{gender,jdbcType=INTEGER},
-      birthday = #{birthday,jdbcType=DATE}
+        password = #{password,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=CHAR},
+        gender = #{gender,jdbcType=INTEGER}
     where userId = #{userId,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select userId, username, password, phone, gender, birthday
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="User">
+    select userId, username, password, phone, gender
     from t_user
     where userId = #{userId,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select userId, username, password, phone, gender, birthday
+
+  <select id="selectAll" resultType="User">
+    select userId, username, password, phone, gender
     from t_user
   </select>
+
+  <select id="selectByUP" resultType="User">
+    select userId, username, password, phone, gender
+    from t_user where username=#{username} and password=#{password}
+  </select>
+
+  <select id="getCount" resultType="int">
+    select count(userId) from t_user
+    <where>
+      <if test="username!=null and username!=''">
+        and username like CONCAT('%',#{username},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="getByPage" resultType="User">
+    select userId, username, password, phone, gender
+    from t_user
+    <where>
+      <if test="username!=null and username!=''">
+        and username like CONCAT('%',#{username},'%')
+      </if>
+    </where>
+    order by userId desc
+    limit #{startIndex},#{pageNumber}
+  </select>
+
+  <select id="selectByPhone" resultType="User">
+    select userId, username
+    from t_user where phone=#{phone}
+  </select>
+
 </mapper>

@@ -4,6 +4,7 @@ import com.hnu.po.Address;
 import java.util.List;
 
 public interface AddressMapper {
+
     int deleteByPrimaryKey(Integer addressId);
 
     int insert(Address record);
@@ -13,4 +14,6 @@ public interface AddressMapper {
     List<Address> selectAll();
 
     int updateByPrimaryKey(Address record);
+
+    List<Address> selectByUserId(Integer userId);
 }
