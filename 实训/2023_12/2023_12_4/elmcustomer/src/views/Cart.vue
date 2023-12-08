@@ -53,6 +53,7 @@ export default {
         }
     },
     methods: {
+        /*************删除购物车项************* */
         delItem(item){
             showConfirmDialog({
                 title: '提示',
@@ -61,14 +62,16 @@ export default {
             })
             .then(() => {
                 
+                //点击确认发送删除请求
                 this.$axios({
                     method: 'delete',
                     url: '/cart/app/'+item.itemId
                 }).then(res=>{
                     if(res.data.code == 200){
+                        //删除成功   没有重新发起查询请求   直接从cartItems中剔除掉删除项就可以了
                        this.cartItems = this.cartItems.filter(elem=>{
                             return elem.itemId!=item.itemId
-                        })
+                       })
                     }
                 })
                 
@@ -77,7 +80,7 @@ export default {
                 
             });
         },
-        //餐品数量变化调用
+        //***********************餐品数量变化调用*****************/
         numberChange(item){
             console.log(item);
             const param = Object.assign({},item);
@@ -96,6 +99,7 @@ export default {
             console.log(foodId);
             this.$router.push('/foodDetail?id='+foodId);
         },
+        //***************查询餐车信息************** */
         onLoad(){
             this.$axios({
                 method: 'get',
@@ -120,6 +124,7 @@ export default {
         },
     },
     created(){
+        //获取传递的参数 businessId和userId
        const bu = history.state.bu;
        this.businessId = bu.businessId;
        this.userId = bu.userId;

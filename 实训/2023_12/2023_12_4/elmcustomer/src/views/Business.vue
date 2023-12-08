@@ -27,7 +27,7 @@
           @load="onLoad"
         >
           <!-- ***********列表中显示商家信息的卡片************** -->
-          <van-card  v-for="business in listData" :key="business.businessId"
+          <van-card  v-for="business in listData" :key="business.bid"
               :price="business.startPrice+'起送'"
               :desc="business.businessExplain"
               :title="business.businessName"
@@ -38,6 +38,7 @@
                 <van-tag plain type="primary">当地美食</van-tag>
               </template>
               <template #footer>
+                <van-button size="mini" @click="toCart(business.bid)" color="yellow"><van-icon name="shopping-cart-o" color="red"/></van-button>
                 <van-button size="mini" @click="toFood(business)">去点餐</van-button>
               </template>
           
@@ -52,6 +53,7 @@
 </template>
 
 <script>
+import { showConfirmDialog } from 'vant';
 export default{
   name:'Business',
   data() {
@@ -71,6 +73,31 @@ export default{
     }
   },
   methods: {
+    //去购物车
+    toCart(businessId){
+      console.log('businessId-----',businessId);
+      const user = localStorage.getItem('currentUser');
+      if(user){
+         const userId = JSON.parse(user).userId;
+         const bu = {businessId: businessId,userId: userId}
+         console.log('跳转到餐车传递的参数----',bu)
+         this.$router.push({path:'/cart',state: {bu}})
+      }else{
+        console.log('未登录')
+         //弹出确认框
+         showConfirmDialog({
+              title: '提示',
+              message:
+                  '您尚未登录，是否去登录页面',
+          })
+          .then(() => {
+              this.$router.push('/login')
+          })
+          .catch(() => {
+              // on cancel
+          });
+      }
+    },
     //**************跳转到餐品列表组件*************** */
     toFood(business){
       console.log(business)

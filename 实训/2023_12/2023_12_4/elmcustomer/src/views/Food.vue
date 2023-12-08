@@ -41,7 +41,7 @@ export default {
     name: 'Food',
     data() {
         return {
-            currentUser: {},
+            currentUser: {},  //当前登录上来的用户对象
             loading: false,
             finished: false,
             business: {},  //当前的商家对象
@@ -59,8 +59,9 @@ export default {
     methods: {
         //******************添加购物车*********************** */
         insertCart(food){
-            
+            //如果没登录
             if(!this.currentUser.userId){
+                //弹出确认框
                 showConfirmDialog({
                     title: '提示',
                     message:
@@ -86,6 +87,7 @@ export default {
             }).then(res=>{
                 if (res.data.code == 200) {
                    console.log(res);
+                   //添加购物车项成功 跳转到餐车组件  传递商家id和userId过去  查询餐车信息需要使用
                    const bu = {businessId: this.business.bid,userId: this.currentUser.userId}
                    this.$router.push({path:'/cart',state: {bu}})
                 }

@@ -57,6 +57,7 @@
       }
     },
     methods: {
+      //******************点击确认登录提交表单******************** */
       onSubmit (values) {
         console.log('submit', values)
         //发送登录请求  
@@ -69,7 +70,7 @@
           if (res.data.code == 200) {
             //登录成功存储currentUser
              localStorage.setItem('currentUser',JSON.stringify(res.data.data));
-             this.$router.back();
+             this.$router.back(); //比如点击加入购物车 发现没登录  登录完成需要跳转回去
           }
         })
       }
