@@ -51,6 +51,26 @@ const routes = [
     path: '/addaddress',
     name: 'addaddress',
     component: () => import('../views/AddAddress.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/phone',
+    name: 'phone',
+    component: () => import('../views/LoginPhone.vue')
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('../views/Register.vue')
+  },
+  {
+    path: '/info',
+    name: 'info',
+    component: () => import('../views/MyInfo.vue')
   }
 ]
 

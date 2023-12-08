@@ -7,19 +7,21 @@
             finished-text="没有更多了"
             @load="onLoad"
         >
-            <van-card v-for="food in list" :key="food.foodId"
-                :price="food.foodPrice"
-                :title="food.foodName"
-                :thumb="food.foodPic"
-                :num="food.number"
-                >
-                <template #footer>
-                    <span>小计：￥{{food.number*food.foodPrice}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <van-button size="mini" @click="jian(food)">-</van-button>
-                    <span>{{food.number}}</span>
-                    <van-button size="mini" @click="food.number++">+</van-button>
-                </template>
-            </van-card>
+        <van-card v-for="item in cartItems" :key="item.itemId"
+            :price="item.food.foodPrice"
+            :title="item.food.foodName"
+            :thumb="item.food.foodPic"
+            >
+            <template #tags>
+                <span>小计：￥{{item.number*item.food.foodPrice}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <van-stepper v-model="item.number" theme="round" button-size="22" disable-input
+                    @change="numberChange(item)"/>
+            </template>
+            <template #footer>
+                <van-button size="mini" type="danger" round  @click="delItem(item)" ><van-icon name="cross" /></van-button>
+            </template>
+        </van-card>
+            
         </van-list>
     </van-pull-refresh>
 
@@ -34,24 +36,7 @@ export default {
     components: {Address},
     data() {
         return {
-            list:[
-                {
-                    foodId:1,
-                    foodName:'酸汤水饺',
-                    foodExplain:'好吃',
-                    foodPrice: 13,
-                    foodPic: 'http://s4tdoh0lx.bkt.clouddn.com/305a9fbaf7ec4f79bfbce667a50acef8777777.png',
-                    number:1
-                },
-                {
-                    foodId:2,
-                    foodName:'酸汤水饺',
-                    foodExplain:'好吃',
-                    foodPrice: 13,
-                    foodPic: 'http://s4tdoh0lx.bkt.clouddn.com/305a9fbaf7ec4f79bfbce667a50acef8777777.png',
-                    number:1
-                }
-            ],
+            cartItems: [],
             loading: false,
             refreshing: false,
             finished: false
@@ -60,65 +45,85 @@ export default {
     computed: {
         sumPrice(){
             let sum = 0;
-            this.list.forEach(food=>{
-                sum += food.foodPrice*food.number
-                console.log(food.foodPrice*food.number,sum)
+            this.cartItems.forEach(item=>{
+                sum += item.food.foodPrice*item.number
+                console.log(item.food.foodPrice*item.number,sum)
             })
             return sum*100;
         }
     },
     methods: {
+        delItem(item){
+            showConfirmDialog({
+                title: '提示',
+                message:
+                    '您是要删除这一项吗？',
+            })
+            .then(() => {
+                
+                this.$axios({
+                    method: 'delete',
+                    url: '/cart/app/'+item.itemId
+                }).then(res=>{
+                    if(res.data.code == 200){
+                       this.cartItems = this.cartItems.filter(elem=>{
+                            return elem.itemId!=item.itemId
+                        })
+                    }
+                })
+                
+            })
+            .catch(() => {
+                
+            });
+        },
+        //餐品数量变化调用
+        numberChange(item){
+            console.log(item);
+            const param = Object.assign({},item);
+            this.$axios({
+                method: 'put',
+                url: '/cart/app',
+                data: param
+            }).then(res=>{
+                console.log(res);
+            })
+        },
         onSubmit(){
             this.$router.push("/order")
-        },
-        jian(food){
-            if(food.number-1<=0){
-                showConfirmDialog({
-                    title: '提示',
-                    message:
-                        '您是要删除这一项吗？',
-                })
-                .then(() => {
-                    this.list = this.list.filter(f=>{
-                       return f.foodId!=food.foodId
-                    })
-                })
-                .catch(() => {
-                    food.number = 1;
-                });
-            }
         },
         foodDetail(foodId){
             console.log(foodId);
             this.$router.push('/foodDetail?id='+foodId);
         },
         onLoad(){
-            // setTimeout(() => {
-            //     if (this.refreshing) {
-            //         this.list = [];
-            //         this.refreshing = false;
-            //     }
-
-            //     for (let i = 0; i < 10; i++) {
-            //         this.list.push(this.list.length + 1);
-            //     }
-            //     this.loading = false;
-
-            //     if (this.list.length >= 40) {
-            //         this.finished = true;
-            //     }
-            // }, 1000);
+            this.$axios({
+                method: 'get',
+                url:'/cart/app/'+this.businessId+'/'+this.userId
+            }).then(res=>{
+                console.log(res);
+                this.loading = false;
+                if(res.data.code == 200){
+                    this.cartItems = res.data.data.cartItems;
+                    this.finished = true
+                }
+            })
         },
         onRefresh(){
             // 清空列表数据
-            // this.finished = false;
+            this.finished = false;
 
             // 重新加载数据
             // 将 loading 设置为 true，表示处于加载状态
-            // this.loading = true;
-            // onLoad();
-        }
+            this.loading = true;
+            onLoad();
+        },
     },
+    created(){
+       const bu = history.state.bu;
+       this.businessId = bu.businessId;
+       this.userId = bu.userId;
+    }
 } 
 </script>
 

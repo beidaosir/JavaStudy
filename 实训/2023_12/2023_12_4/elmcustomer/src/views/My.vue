@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <van-cell center inset>
+    <van-cell center inset  v-if="currentUser.username">
       <!-- 使用 title 插槽来自定义标题 -->
       <template #title>
         <van-image
@@ -12,7 +12,13 @@
         <span></span>
       </template>
       <template #label>
-        <span class="custom-title">用户321673127</span>
+        <span class="custom-title">{{currentUser.username}}</span>
+      </template>
+    </van-cell>
+    <van-cell center inset  v-else>
+      <!-- 使用 title 插槽来自定义标题 -->
+      <template #title>
+        <van-button plain type="success" size="small"  to="/login">账号密码登录</van-button>
       </template>
     </van-cell>
 
@@ -26,3 +32,21 @@
     </van-grid>
   </div>
 </template>
+
+<script>
+export default{
+  name: 'My',
+  data() {
+    return {
+      currentUser: {}
+    }
+  },
+  mounted(){
+    const user = localStorage.getItem('currentUser');
+    if(user){
+      this.currentUser = JSON.parse(user);
+    }
+    
+  }
+}
+</script>
