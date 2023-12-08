@@ -1,6 +1,6 @@
 package com.hnu.po;
 
-public class Business {
+public class Business{
 
     private Integer bid;
     private String businessAccount;
@@ -10,6 +10,7 @@ public class Business {
     private String businessExplain;
     private Double startPrice;
     private Double deliveryPrice;
+    private String businessPic;
     private String role;
 
     public Business() {
@@ -97,6 +98,14 @@ public class Business {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getBusinessPic() {
+        return businessPic;
+    }
+
+    public void setBusinessPic(String businessPic) {
+        this.businessPic = businessPic;
     }
 
     @Override

@@ -1,36 +1,27 @@
 package com.hnu.po;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.List;
+
 public class Cart {
-    private Integer itemId;
-
-    private Integer foodId;
-
-    private Integer number;
 
     private Integer cartId;
 
-    public Integer getItemId() {
-        return itemId;
+    private Integer businessId; //关联的商品编号
+
+    private Integer userId; //关联的用户编号
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<CartItem> cartItems; //购物车项集合
+
+    public Cart() {
     }
 
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
-    }
-
-    public Integer getFoodId() {
-        return foodId;
-    }
-
-    public void setFoodId(Integer foodId) {
-        this.foodId = foodId;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
+    public Cart(Integer cartId, Integer businessId, Integer userId) {
+        this.cartId = cartId;
+        this.businessId = businessId;
+        this.userId = userId;
     }
 
     public Integer getCartId() {
@@ -39,5 +30,39 @@ public class Cart {
 
     public void setCartId(Integer cartId) {
         this.cartId = cartId;
+    }
+
+    public Integer getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(Integer businessId) {
+        this.businessId = businessId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cartId=" + cartId +
+                ", businessId=" + businessId +
+                ", userId=" + userId +
+                ", cartItems=" + cartItems +
+                '}';
     }
 }

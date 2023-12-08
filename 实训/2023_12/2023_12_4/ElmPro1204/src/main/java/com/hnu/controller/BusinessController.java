@@ -52,6 +52,13 @@ public class BusinessController {
 
     @PostMapping("/batch")
     public ResponseObj delBatch(@RequestBody Integer[] bids) throws Exception {
-        return businessService.delBatch(bids)?ResponseObj.SUCCESS():ResponseObj.ERROR(500,"批量删除失败");
+        return businessService.delBatch(bids)?
+                ResponseObj.SUCCESS():
+                ResponseObj.ERROR(500,"批量删除失败");
+    }
+
+    @PostMapping("/app/page")
+    public ResponseObj appPage(@RequestBody BusinessQuery businessQuery){
+        return ResponseObj.SUCCESS(businessService.getByPage(businessQuery));
     }
 }

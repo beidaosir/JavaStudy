@@ -16,17 +16,31 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_cart_item (foodId, number, cartId
-      )
+    )
     values (#{foodId,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, #{cartId,jdbcType=INTEGER}
-      )
+    )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.hnu.po.CartItem">
     update t_cart_item
-    set foodId = #{foodId,jdbcType=INTEGER},
-      number = #{number,jdbcType=INTEGER},
-      cartId = #{cartId,jdbcType=INTEGER}
+    <set>
+      <if test="foodId!=null">
+        foodId = #{foodId,jdbcType=INTEGER},
+      </if>
+      <if test="number!=null">
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="cartId!=null">
+        cartId = #{cartId,jdbcType=INTEGER}
+      </if>
+    </set>
     where itemId = #{itemId,jdbcType=INTEGER}
   </update>
+
+  <!--<update id="updateByPrimaryKey">
+    update t_cart_item set number = #{number} where itemId = #{itemId}
+  </update>-->
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select itemId, foodId, number, cartId
     from t_cart_item
@@ -35,5 +49,16 @@
   <select id="selectAll" resultMap="BaseResultMap">
     select itemId, foodId, number, cartId
     from t_cart_item
+  </select>
+
+  <resultMap id="itemMap" type="CartItem" autoMapping="true">
+    <association property="food" javaType="Food" autoMapping="true">
+      <id property="foodId" column="foodId"/>
+    </association>
+  </resultMap>
+
+  <select id="getByCartId" resultMap="itemMap">
+    SELECT ct.*,f.foodName,f.foodPrice,f.foodPic FROM t_cart_item ct,t_food f WHERE ct.foodId=f.foodId
+                                                                                AND cartId=#{cartId}
   </select>
 </mapper>

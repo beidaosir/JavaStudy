@@ -5,14 +5,14 @@
 <mapper namespace="com.hnu.mapper.BusinessMapper">
 
     <insert id="add" useGeneratedKeys="true" keyProperty="bid">
-        INSERT INTO t_business(businessAccount,`password`,businessName,businessAddress,businessExplain,startPrice,deliveryPrice,role)
-        VALUES(#{businessAccount},#{password},#{businessName},#{businessAddress},#{businessExplain},#{startPrice},#{deliveryPrice},#{role})
+        INSERT INTO t_business(businessAccount,`password`,businessName,businessAddress,businessExplain,startPrice,deliveryPrice,businessPic,role)
+        VALUES(#{businessAccount},#{password},#{businessName},#{businessAddress},#{businessExplain},#{startPrice},#{deliveryPrice},#{businessPic},#{role})
     </insert>
 
     <update id="update">
         update t_business set businessAccount=#{businessAccount},businessName=#{businessName},
                               businessAddress=#{businessAddress},businessExplain=#{businessExplain},
-                              startPrice=#{startPrice},deliveryPrice=#{deliveryPrice} where bid=#{bid}
+                              startPrice=#{startPrice},deliveryPrice=#{deliveryPrice},businessPic=#{businessPic} where bid=#{bid}
     </update>
 
     <delete id="del">
@@ -21,7 +21,8 @@
 
     <!-- 查询表的语句中都用到这一段  所以提取引用即可 -->
     <sql id="selSql">
-        select bid,businessAccount,`password`,businessName,businessAddress,businessExplain,startPrice,deliveryPrice,role
+        select bid,businessAccount,`password`,businessName,businessAddress,businessExplain,startPrice,deliveryPrice,
+               businessPic,role
         from t_business
     </sql>
 
@@ -60,7 +61,7 @@
 
     <select id="getByCondition" resultType="Business">
         <include refid="selSql"></include>
-        where businessAccount = #{businessAccount} and password = #{password}
+        where businessAccount=#{businessAccount} and password=#{password}
     </select>
 
 </mapper>

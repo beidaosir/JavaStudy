@@ -44,7 +44,7 @@
     所以我们需要编写resultMap
     -->
     <select id="getById" resultMap="foodMap">
-        select f.foodId,f.foodName,f.foodPrice,b.bid,b.businessName from t_food f,t_business b
+        select f.foodId,f.foodName,f.foodPrice,f.foodPic,f.foodExplain,b.bid,b.businessName from t_food f,t_business b
         where f.businessId=b.bid
           and f.foodId=#{foodId}
     </select>
@@ -74,7 +74,7 @@
     </select>
 
     <sql id="selCondition">
-        select f.foodId,f.foodName,f.foodPrice,b.bid,b.businessName from t_food f,t_business b
+        select f.foodId,f.foodName,f.foodPrice,f.foodPic,b.bid,b.businessName from t_food f,t_business b
         <where>
             f.businessId=b.bid
             <if test="businessId!=null">

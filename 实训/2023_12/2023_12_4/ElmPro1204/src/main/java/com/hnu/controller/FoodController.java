@@ -52,4 +52,10 @@ public class FoodController {
         return success;
     }
 
+
+    @PostMapping("/app/page")
+    public ResponseObj appPage(@RequestBody FoodQuery businessQuery){
+        return ResponseObj.SUCCESS(foodService.getByPage(businessQuery));
+    }
+
 }
