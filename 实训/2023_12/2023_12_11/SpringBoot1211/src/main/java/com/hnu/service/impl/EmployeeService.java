@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hnu.mapper.EmployeeMapper;
 import com.hnu.po.Employee;
-import com.hnu.query.BaseQuery;
 import com.hnu.query.EmployeeQuery;
 import com.hnu.service.IEmployeeService;
 import com.hnu.vo.PageBean;
@@ -35,12 +34,34 @@ public class EmployeeService implements IEmployeeService {
         //开始分页
         Page<Employee> page = PageHelper.startPage(query.getPageNow(), query.getPageSize());
 
-        employeeMapper.getAll();
+        employeeMapper.getByCondition(query);
 
         pageBean.setTotalRows((int)page.getTotal());
         pageBean.setTotalPages(page.getPages());
         pageBean.setData(page.getResult());
 
         return pageBean;
+    }
+
+    @Transactional
+    @Override
+    public int add(Employee employee) {
+        return employeeMapper.add(employee);
+    }
+
+    @Transactional
+    @Override
+    public boolean addBatch(List<Employee> employeeList) {
+
+        for (Employee employee: employeeList) {
+            int add = employeeMapper.add(employee);
+            if (add<=0){
+                return false;
+            }
+//            int i = 10/0;
+            System.out.println("自增主键："+employee.getEmpno());
+        }
+
+        return true;
     }
 }
