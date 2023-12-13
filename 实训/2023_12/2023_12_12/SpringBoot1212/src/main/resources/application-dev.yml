@@ -1,0 +1,22 @@
+#开发环境
+server:
+  port: 80
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/test
+    username: root
+    password: root
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      max-file-size: 2MB   #上传文件的最大为2MB
+      max-request-size: 12MB  #上传整个请求最大为12MB
+logging:
+  level:
+    cn.neusoft: trace
+
