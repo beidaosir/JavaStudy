@@ -1,0 +1,21 @@
+server:
+  port: 8899
+  servlet:
+    context-path: /elm
+mybatis-plus:
+  mapper-locations: classpath:cn/neusoft/mapper/*Mapper.xml
+  type-aliases-package: cn.neusoft.po
+  configuration:
+    map-underscore-to-camel-case: false  #关闭驼峰转换下划线
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/test
+    username: root
+    password: root
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+logging:
+  level:
+    cn.neusoft: trace

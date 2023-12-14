@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.neusoft.mapper.EmpMapper">
+
+    <resultMap id="empMap" type="Emp" autoMapping="true">
+        <association property="dept" javaType="Dept" autoMapping="true">
+            <id property="deptno" column="deptno"/>
+        </association>
+    </resultMap>
+
+    <select id="getById" resultMap="empMap">
+        SELECT e.*,d.dname FROM
+        (SELECT * FROM emp WHERE empno=#{empno}) e LEFT JOIN dept d ON e.deptno=d.deptno
+    </select>
+
+</mapper>
