@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.neusoft.mapper.FoodMapper">
+
+    <resultMap id="foodMap" type="Food" autoMapping="true">
+        <association property="business" javaType="Business" autoMapping="true">
+            <id column="bid" property="bid"/>
+        </association>
+    </resultMap>
+
+    <select id="getRefBusiness" resultMap="foodMap">
+        select f.foodId,f.foodName,f.foodPrice,f.foodPic,f.foodExplain,b.bid,b.businessName from t_food f,t_business b
+        <where>
+            f.businessId=b.bid
+            <if test="foodName!=null and foodName!=''">
+                and f.foodName like CONCAT('%',#{foodName},'%')
+            </if>
+        </where>
+        order by f.foodId
+    </select>
+
+</mapper>

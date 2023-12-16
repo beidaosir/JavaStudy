@@ -1,0 +1,7 @@
+cn\neusoft\controller\FoodController.class
+cn\neusoft\controller\UserController.class
+cn\neusoft\ManagerApplication.class
+cn\neusoft\config\SwaggerConfig.class
+cn\neusoft\controller\LogController.class
+cn\neusoft\controller\BusinessController.class
+cn\neusoft\handler\GlobalExceptionHandler.class
