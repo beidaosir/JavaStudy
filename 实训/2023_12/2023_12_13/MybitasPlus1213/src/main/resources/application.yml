@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /elm
+
+mybatis-plus:
+  mapper-locations: classpath:/com/hnu/mapper/*Mapper.xml
+  type-aliases-package: com.hnu.po
+  configuration:
+    map-underscore-to-camel-case: false
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: 11111
+
+logging:
+  level:
+    com.hnu: trace
