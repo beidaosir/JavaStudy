@@ -55,6 +55,25 @@
       <version>3.5.2</version>
     </dependency>
 
+    <!-- mybatis-plus-generator依赖（这里默认基于FreeMarker模板引擎） -->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-generator</artifactId>
+      <version>3.5.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>2.3.31</version>
+    </dependency>
+
+<!--    swagger的启动器-->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>3.0.0</version>
+    </dependency>
 
   </dependencies>
 </project>

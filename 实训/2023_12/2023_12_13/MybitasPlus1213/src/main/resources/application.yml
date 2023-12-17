@@ -16,6 +16,9 @@ spring:
     url: jdbc:mysql://localhost:3306/test
     username: root
     password: 11111
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 logging:
   level:
