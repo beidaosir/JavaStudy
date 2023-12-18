@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+mybatis-plus:
+  mapper-locations: classpath:/com/beidao/mapper/*Mapper.xml
+  type-aliases-package: com.beidao.po,com.beidao.vo
+  configuration:
+    map-underscore-to-camel-case: false #关闭驼峰转换下划线
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: 11111
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    com.hnu: trace
