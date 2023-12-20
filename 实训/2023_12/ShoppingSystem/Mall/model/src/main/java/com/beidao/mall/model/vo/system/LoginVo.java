@@ -8,7 +8,7 @@ import lombok.Data;
 public class LoginVo {
 
     @Schema(description = "令牌")
-    private String token ;
+    private String token ;//token标志用户的唯一标识
 
     @Schema(description = "刷新令牌,可以为空")
     private String refresh_token ;

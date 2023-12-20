@@ -1,6 +1,6 @@
 
 spring:
   application:
-    name: server-manager #应用名字
+    name: service-manager
   profiles:
-    active: dev # 激活dev
+    active: dev		# 激活的环境文件

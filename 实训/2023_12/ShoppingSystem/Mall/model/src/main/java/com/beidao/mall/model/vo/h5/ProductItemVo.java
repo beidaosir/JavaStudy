@@ -1,6 +1,7 @@
 package com.beidao.mall.model.vo.h5;
 
 import com.alibaba.fastjson.JSONArray;
+import com.beidao.mall.model.entity.product.Product;
 import com.beidao.mall.model.entity.product.ProductSku;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
