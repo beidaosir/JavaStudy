@@ -1,0 +1,6 @@
+
+spring:
+  application:
+    name: server-manager #应用名字
+  profiles:
+    active: dev # 激活dev
