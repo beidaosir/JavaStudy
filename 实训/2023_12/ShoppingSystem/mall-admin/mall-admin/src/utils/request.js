@@ -1,15 +1,3 @@
-/*
- 
- * @Descripttion:
- * @version:
- * @Date: 2021-04-20 11:06:21
- * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2022-09-27 18:17:20
- * @Author: huzhushan@126.com
- * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
- * @Github: https://github.com/huzhushan/vue3-element-admin
- * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
- */
 
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
@@ -25,9 +13,16 @@ const service = axios.create({
 // 拦截请求
 service.interceptors.request.use(
   config => {
-    const { authorization } = useApp()
+    const { authorization } = useApp()   // 从Pinia的app模块中获取登录成功以后的用户数据
     if (authorization) {
-      config.headers.Authorization = `Bearer ${authorization.token}`
+        
+      // 添加一个请求头Authorization ， 该请求头所对应的值为：Bearer token数据
+      //config.headers.Authorization = `Bearer ${authorization.token}`
+      
+      // 上传传递方式后端解析太麻烦，因此可以更改传递token方式为如下方式
+      //把token放在请求头里面
+      config.headers.token = `${authorization.token}`
+      
     }
     return config
   },
