@@ -1,10 +1,12 @@
 package com.beidao.mall.manager.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.beidao.mall.common.exception.BeidaoException;
 import com.beidao.mall.manager.mapper.SysUserMapper;
 import com.beidao.mall.manager.service.SysUserService;
 import com.beidao.mall.model.dto.system.LoginDto;
 import com.beidao.mall.model.entity.system.SysUser;
+import com.beidao.mall.model.vo.common.ResultCodeEnum;
 import com.beidao.mall.model.vo.system.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -35,9 +37,14 @@ public class SysUserServiceImpl implements SysUserService {
         SysUser sysUser = sysUserMapper.selectUserInfoByUserName(userName);
 
         //3.查询不到用户 用户不存在 返回错误信息
-        if(sysUser == null){
+       /* if(sysUser == null){
 
             throw new RuntimeException("用户名不存在");
+        }*/
+
+        //更改成自定义异常处理
+        if (sysUser == null){
+            throw new BeidaoException(ResultCodeEnum.LOGIN_ERROR);
         }
 
         //4.查询到信息  用户存在
@@ -53,8 +60,13 @@ public class SysUserServiceImpl implements SysUserService {
         String input_password = DigestUtils.md5DigestAsHex(loginDto.getPassword().getBytes());
 
         //比较
-        if (!input_password.equals(database_password)){
+        /*if (!input_password.equals(database_password)){
             throw new RuntimeException("密码错误");
+        }*/
+
+        //自定义异常替换
+        if (!input_password.equals(database_password)){
+            throw new BeidaoException(ResultCodeEnum.LOGIN_ERROR);
         }
 
 

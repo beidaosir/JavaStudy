@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Knife4jConfig {
 
+    //在启动器中加入 @ComponentScan(basePackages = {"com.beidao.mall"}) //确保所有这个包下的内容能够被扫描到
+    //保证配置生效
     @Bean
     public GroupedOpenApi adminApi() {      // 创建了一个api接口的分组
         return GroupedOpenApi.builder()
@@ -27,9 +29,9 @@ public class Knife4jConfig {
 
         return new OpenAPI()
                  .info(new Info()
-                 .title("Mall商城API接口文档")
+                 .title("Go享生活API接口文档")
                  .version("1.0")
-                 .description("Mall商城API接口文档")
+                 .description("Go享生活API接口文档")
                  .contact(new Contact().name("beidao"))); // 设定作者
     }
 
