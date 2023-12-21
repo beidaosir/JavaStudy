@@ -1,5 +1,6 @@
 package com.beidao.mall.manager.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.beidao.mall.common.exception.BeidaoException;
 import com.beidao.mall.manager.mapper.SysUserMapper;
@@ -30,6 +31,25 @@ public class SysUserServiceImpl implements SysUserService {
     //用户登录
     @Override
     public LoginVo login(LoginDto loginDto) {
+
+        // 1、获取输入验证码和存储到redis的key名称  loginDto获取到
+        String captcha = loginDto.getCaptcha();
+        String key = loginDto.getCodeKey();
+
+        // 2、根据获取的redis里面的key，查询redis里面存储验证码
+        //set 时 加了前缀  "user:validate"+key   取出来的时候也要加前缀
+        String redisCode = redisTemplate.opsForValue().get("user:validate" + key);
+
+        // 3、比较输入的验证码和redis存储验证码是否一致
+        // 4、如果不一样 提示验证码校验失败
+        //hutool 中的工具类 StrUtil判断字符串是否为空     验证码比较忽略大小写
+        //为空  或者 不一样 抛出自定义异常---枚举类中的验证码错误提示
+        if(StrUtil.isEmpty(redisCode) || !StrUtil.equalsIgnoreCase(redisCode,captcha)){
+            throw new BeidaoException(ResultCodeEnum.VALIDATECODE_ERROR);
+        }
+
+        //5、如果一致 删除redis中的验证码
+        redisTemplate.delete("user:validate" + key);
         //1.获取提交过来的用户名  loginDto获取
         String userName = loginDto.getUserName();
 
@@ -90,5 +110,22 @@ public class SysUserServiceImpl implements SysUserService {
         loginVo.setToken(token);
 
         return loginVo;
+    }
+
+    //获取当前登录用户信息
+    @Override
+    public SysUser getUserInfo(String token) {
+        String userJson = redisTemplate.opsForValue().get("user:login"+token);
+
+        //把json格式转成v字符串对象
+        SysUser sysUser = JSON.parseObject(userJson, SysUser.class);
+        return sysUser;
+    }
+
+
+    //用户退出
+    @Override
+    public void logout(String token) {
+        redisTemplate.delete("user:login"+token);
     }
 }

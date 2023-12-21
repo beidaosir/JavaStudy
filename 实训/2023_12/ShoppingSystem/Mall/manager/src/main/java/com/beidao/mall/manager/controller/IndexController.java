@@ -3,6 +3,7 @@ package com.beidao.mall.manager.controller;
 import com.beidao.mall.manager.service.SysUserService;
 import com.beidao.mall.manager.service.ValidateCodeService;
 import com.beidao.mall.model.dto.system.LoginDto;
+import com.beidao.mall.model.entity.system.SysUser;
 import com.beidao.mall.model.vo.common.Result;
 import com.beidao.mall.model.vo.common.ResultCodeEnum;
 import com.beidao.mall.model.vo.system.LoginVo;
@@ -40,5 +41,29 @@ public class IndexController {
     return Result.build(validateCodeVo,ResultCodeEnum.SUCCESS);
 
     }
+
+    //获取当前用户登录信息
+    @GetMapping(value = "/getUserInfo")
+    public Result<SysUser> getUserInfo(@RequestHeader(name = "token") String token) {
+        //方法二：@RequestHeader(name = "token") String token
+        //方法一：HttpServletRequest request
+
+        // 1.从请求头获取token
+        //String token = request.getHeader("token");
+
+        //2.根据token查询redis获取用户信息
+        SysUser sysUser = sysUserService.getUserInfo(token) ;
+        //3.用户信息返回
+        return Result.build(sysUser , ResultCodeEnum.SUCCESS) ;
+    }
+
+    //用户退出
+    @GetMapping(value = "/logout")
+    public Result logout(@RequestHeader(value = "token") String token) {
+        sysUserService.logout(token);
+        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
+
+
 
 }
