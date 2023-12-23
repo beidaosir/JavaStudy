@@ -8,6 +8,7 @@ import com.beidao.mall.model.vo.common.Result;
 import com.beidao.mall.model.vo.common.ResultCodeEnum;
 import com.beidao.mall.model.vo.system.LoginVo;
 import com.beidao.mall.model.vo.system.ValidateCodeVo;
+import com.beidao.mall.utils.AuthContextUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,13 @@ public class IndexController {
 
     //获取当前用户登录信息
     @GetMapping(value = "/getUserInfo")
+    public Result<SysUser> getUserInfo(){
+        return Result.build(AuthContextUtil.get(), ResultCodeEnum.SUCCESS) ;
+    }
+
+    //获取当前用户登录信息
+    //被优化咯
+/*    @GetMapping(value = "/getUserInfo")
     public Result<SysUser> getUserInfo(@RequestHeader(name = "token") String token) {
         //方法二：@RequestHeader(name = "token") String token
         //方法一：HttpServletRequest request
@@ -55,7 +63,7 @@ public class IndexController {
         SysUser sysUser = sysUserService.getUserInfo(token) ;
         //3.用户信息返回
         return Result.build(sysUser , ResultCodeEnum.SUCCESS) ;
-    }
+    }*/
 
     //用户退出
     @GetMapping(value = "/logout")
