@@ -51,7 +51,7 @@ manager会依赖：common-service
 | spring cloud | 2022.0.2 |
 | redis        | 7.0.10   |
 | mysql        | 8.0.30   |
-| idea         | 2023.2.2 |
+| idea         | 2023.2   |
 |              |          |
 
 
@@ -120,5 +120,71 @@ src						// 源代码目录，非常重要
     | main.js			// 入口js文件(非常重要)
     | permission.js		// 权限相关的js文件(路由前置守卫、路由后置守卫)
 vite.config.js			// vite的配置文件，可以在该配置文件中配置前端工程的端口号
+```
+
+
+
+
+
+### 数据库准备
+
+本地安装mysql数据库使用的是docker安装，对应的步骤如下所示：
+
+###### 部署mysql
+
+开发阶段也可以连接本地mysql服务
+
+```shell
+# 拉取镜像
+docker pull mysql:8.0.30
+
+# 创建容器
+docker run -d --name mysql -p 3306:3306 -v mysql_data:/var/lib/mysql -v mysql_conf:/etc/mysql --restart=always --privileged=true -e MYSQL_ROOT_PASSWORD=1234 mysql:8.0.30
+```
+
+docker安装完成mysql8，如果使用sqlyog或者navite连接，需要修改密码加密规则，因为低版本客户端工具不支持mysql8最新的加密规则。如果使用客户端连接，需要修改：
+
+* docker exec 进入mysql容器
+
+* mysql -uroot -p 登录你的 MySQL 数据库，然后 执行这条SQL：
+
+```sql
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '1234';
+```
+
+然后再重新配置SQLyog的连接，重新填写密码，则可连接成功了。
+
+
+
+### Redis准备
+
+###### 部署Redis
+
+使用docker部署Redis，具体的操作如下所示：
+
+开发阶段也可以连接本地redis服务
+
+```shell
+#1 拉取镜像
+docker pull redis:7.0.10
+
+#2 在宿主机的 /var/lib/docker/volumes/redis-config/_data/目录下创建一个redis的配置文件，
+vim redis.conf
+# 内容如下所示
+#开启持久化
+appendonly yes
+port 6379
+# requirepass 1234
+bind 0.0.0.0
+
+#3 如果/var/lib/docker/volumes没有redis-config，创建数据卷 
+docker volume create redis-config
+
+#4 创建容器
+docker run -d -p 6379:6379 --restart=always \
+-v redis-config:/etc/redis/config \
+-v redis-data:/data \
+--name redis redis \
+redis-server /etc/redis/config/redis.conf
 ```
 
