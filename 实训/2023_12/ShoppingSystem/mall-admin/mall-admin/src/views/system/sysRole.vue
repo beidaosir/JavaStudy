@@ -15,8 +15,24 @@
 
         <!-- 添加按钮 -->
         <div class="tools-div">
-            <el-button type="success" size="small">添 加</el-button>
+            <el-button type="success" size="small" @click="addShow">添 加</el-button>
         </div>
+
+        <!-- 添加角色表单对话框 -->
+        <el-dialog v-model="dialogVisible" title="添加或修改角色" width="30%">
+            <el-form label-width="120px">
+                <el-form-item label="角色名称">
+                    <el-input v-model="sysRole.roleName"/>
+                </el-form-item>
+                <el-form-item label="角色Code">
+                    <el-input v-model="sysRole.roleCode" />
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submit">提交</el-button>
+                    <el-button @click="dialogVisible = false">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
 
         <!--- 角色表格数据 -->
         <el-table :data="list" style="width: 100%">
@@ -38,7 +54,42 @@
 
 <script setup>
 import {ref,onMounted} from 'vue'
-import { GetSysRoleListByPage } from '@/api/sysRole'
+import { GetSysRoleListByPage,SaveSysRole } from '@/api/sysRole'
+import { ElMessage } from 'element-plus'
+
+//==============角色添加================
+
+const roleForm ={
+    id:"",
+    roleName:"",
+    roleCode:""
+}
+const sysRole = ref(roleForm)
+
+//弹框设置 true弹出  false关闭
+const dialogVisible = ref(false) //dialogVisible 默认关闭false  
+
+//点击添加弹出框
+const addShow = ()=>{
+    sysRole.value = {}
+    dialogVisible.value = true
+}
+
+//添加的方法
+const submit = async()=>{
+    const {code} = await SaveSysRole(sysRole.value)
+    if(code===200){
+        //关闭弹框
+        dialogVisible.value = false
+        //提示信息
+        ElMessage.success("操作成功")
+
+        //刷新页面
+        fetchData()
+    }
+}
+
+//==============角色列表================
 //定义数据模型
 let list = ref([]) //角色列表
 

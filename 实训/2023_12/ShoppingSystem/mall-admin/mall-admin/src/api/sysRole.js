@@ -12,3 +12,15 @@ export const GetSysRoleListByPage = (current,limit,queryDto) => {
     data: queryDto,//其他参数
   })
 }
+
+//角色添加
+export const SaveSysRole = (sysRole)=>{
+    return request({
+        //   ``模板字符串  es6写法
+        url: `${base_api}/saveSysRole`,//路径
+        method: 'post',//提交方式
+        //后端接口没有注解  前端使用params：名称
+        //后端 接口@RequestBody  前端data：名称  =》以json格式传递
+        data: sysRole,//其他参数
+      })
+}
