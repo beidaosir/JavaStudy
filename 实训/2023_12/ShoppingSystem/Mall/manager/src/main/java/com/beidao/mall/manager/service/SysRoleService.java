@@ -8,4 +8,8 @@ public interface SysRoleService {
 
     //角色列表方法，分页查询
     PageInfo<SysRole> findByPage(SysRoleDto sysRoleDto, Integer current, Integer limit);
+
+
+    //2.角色添加方法
+    void saveSysRole(SysRole sysRole);
 }

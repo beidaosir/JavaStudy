@@ -16,7 +16,14 @@ public class SysRoleController {
     @Autowired
     private SysRoleService sysRoleService;
 
-    //角色列表方法，分页查询
+    //2.角色添加方法
+    @PostMapping(value = "/saveSysRole")
+    public Result saveSysRole(@RequestBody SysRole sysRole){
+        sysRoleService.saveSysRole(sysRole);
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
+
+    //1.角色列表方法，分页查询
     //current 当前页  limit 每页显示记录数  SysRoleDto角色名称
     @PostMapping("/findByPage/{current}/{limit}")
     public Result findByPage(@PathVariable("current") Integer current,
