@@ -1,0 +1,14 @@
+import request from '@/utils/request'
+
+const base_api = '/admin/system/sysRole'
+// 角色列表                 这里加入后端参数
+export const GetSysRoleListByPage = (current,limit,queryDto) => {
+  return request({
+    //   ``模板字符串  es6写法
+    url: `${base_api}/findByPage/${current}/${limit}`,//路径
+    method: 'post',//提交方式
+    //后端接口没有注解  前端使用params：名称
+    //后端 接口@RequestBody  前端data：名称  =》以json格式传递
+    data: queryDto,//其他参数
+  })
+}
