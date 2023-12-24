@@ -22,7 +22,7 @@
         <el-dialog v-model="dialogVisible" title="添加或修改角色" width="30%">
             <el-form label-width="120px">
                 <el-form-item label="角色名称">
-                    <el-input v-model="sysRole.roleName"/>
+                    <el-input v-model="sysRole.roleName" />
                 </el-form-item>
                 <el-form-item label="角色Code">
                     <el-input v-model="sysRole.roleCode" />
@@ -39,8 +39,10 @@
             <el-table-column prop="roleName" label="角色名称" width="180" />
             <el-table-column prop="roleCode" label="角色code" width="180" />
             <el-table-column prop="createTime" label="创建时间" />
-            <el-table-column label="操作" align="center" width="280">
-                <el-button type="primary" size="small">修改</el-button>
+            <el-table-column label="操作" align="center" width="280" #default="scope">
+                <!-- #default="scope"  插槽    添加@click="editShow(scope.row)"-->
+                <el-button type="primary" size="small" @click="editShow(scope.row)">修改</el-button>
+
                 <el-button type="danger" size="small">删除</el-button>
             </el-table-column>
         </el-table>
@@ -53,40 +55,69 @@
 </template>
 
 <script setup>
-import {ref,onMounted} from 'vue'
-import { GetSysRoleListByPage,SaveSysRole } from '@/api/sysRole'
+import { ref, onMounted } from 'vue'
+import { GetSysRoleListByPage, SaveSysRole,UpdateSysRole } from '@/api/sysRole'
 import { ElMessage } from 'element-plus'
 
 //==============角色添加================
 
-const roleForm ={
-    id:"",
-    roleName:"",
-    roleCode:""
+const roleForm = {
+    id: "",
+    roleName: "",
+    roleCode: ""
 }
 const sysRole = ref(roleForm)
 
 //弹框设置 true弹出  false关闭
 const dialogVisible = ref(false) //dialogVisible 默认关闭false  
 
+//弹出框数据回显
+const editShow = (row)=>{
+    //对象拓展运算符  ...
+    sysRole.value = {...row}
+    dialogVisible.value = true
+}
+
+
 //点击添加弹出框
-const addShow = ()=>{
+const addShow = () => {
     sysRole.value = {}
     dialogVisible.value = true
 }
 
-//添加的方法
-const submit = async()=>{
-    const {code} = await SaveSysRole(sysRole.value)
-    if(code===200){
-        //关闭弹框
-        dialogVisible.value = false
-        //提示信息
-        ElMessage.success("操作成功")
+//添加和修改的方法
+//判断SysRole包含id值就是修改  不包含id就是添加操作
+const submit = async () => {
 
-        //刷新页面
-        fetchData()
+    if(!sysRole.value.id){
+        //不包含id值  添加操作
+        const { code } = await SaveSysRole(sysRole.value)
+        if (code === 200) {
+            //关闭弹框
+            dialogVisible.value = false
+            //提示信息
+            ElMessage.success("操作成功")
+
+            //刷新页面
+            fetchData()
+        }
+
+    }else{
+        //有id值  修改操作
+        const {code} = await UpdateSysRole(sysRole.value)
+        if(code===200){
+            //关闭弹框
+            dialogVisible.value = false
+            //提示信息
+            ElMessage.success("操作成功")
+
+            //刷新页面
+            fetchData()
+        }
+
     }
+
+    
 }
 
 //==============角色列表================
@@ -101,38 +132,38 @@ const pageParamsForms = {
 }
 const pageParams = ref(pageParamsForms)
 
-const queryDto = ref({"roleName":""})//条件封装数据
+const queryDto = ref({ "roleName": "" })//条件封装数据
 
 //钩子函数
-onMounted(()=>{
+onMounted(() => {
     fetchData() //调用列表方法
 })
 
 
 //操作方法：列表方法  搜索方法
 //列表方法：axios请求调用接口得到列表数据   async异步操作
-const fetchData = async()=>{
+const fetchData = async () => {
     //data,code,message 与后端Result中返回保持一致
-    const {data,code,message} = await GetSysRoleListByPage(pageParams.value.page,pageParams.value.limit,queryDto.value)
+    const { data, code, message } = await GetSysRoleListByPage(pageParams.value.page, pageParams.value.limit, queryDto.value)
     list.value = data.list
     total.value = data.total
 }
 
 //搜索方法
-const searchSysRole = ()=>{
+const searchSysRole = () => {
     fetchData()
 }
 
 // 重置方法
 const resetData = () => {
-  // 清空搜索条件
-  queryDto.value.roleName = ''
+    // 清空搜索条件
+    queryDto.value.roleName = ''
 
-  // 重置分页参数
-  pageParams.value = { ...pageParamsForms }
+    // 重置分页参数
+    pageParams.value = { ...pageParamsForms }
 
-  // 触发重新获取数据
-  fetchData()
+    // 触发重新获取数据
+    fetchData()
 }
 
 </script>
