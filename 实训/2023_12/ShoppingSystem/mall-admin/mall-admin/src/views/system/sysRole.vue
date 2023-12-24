@@ -72,6 +72,18 @@ const searchSysRole = ()=>{
     fetchData()
 }
 
+// 重置方法
+const resetData = () => {
+  // 清空搜索条件
+  queryDto.value.roleName = ''
+
+  // 重置分页参数
+  pageParams.value = { ...pageParamsForms }
+
+  // 触发重新获取数据
+  fetchData()
+}
+
 </script>
 
 <style scoped>
