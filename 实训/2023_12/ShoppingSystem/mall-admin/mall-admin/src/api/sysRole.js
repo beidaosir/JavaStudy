@@ -37,5 +37,15 @@ export const UpdateSysRole = (sysRole)=>{
       })
 }
 
+//角色删除
+export const DeleteSysRole = (roleId)=>{
+  return request({
+      //   ``模板字符串  es6写法
+      url: `${base_api}/deleteById/${roleId}`,//路径
+      method: 'delete',//提交方式
+    })
+}
+
+
 
 

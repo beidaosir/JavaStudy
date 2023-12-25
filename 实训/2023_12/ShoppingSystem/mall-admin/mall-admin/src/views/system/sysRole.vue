@@ -43,7 +43,7 @@
                 <!-- #default="scope"  插槽    添加@click="editShow(scope.row)"-->
                 <el-button type="primary" size="small" @click="editShow(scope.row)">修改</el-button>
 
-                <el-button type="danger" size="small">删除</el-button>
+                <el-button type="danger" size="small" @click="deleteById(scope.row)">删除</el-button>
             </el-table-column>
         </el-table>
 
@@ -56,10 +56,28 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { GetSysRoleListByPage, SaveSysRole,UpdateSysRole } from '@/api/sysRole'
-import { ElMessage } from 'element-plus'
+import { GetSysRoleListByPage, SaveSysRole,UpdateSysRole,DeleteSysRole } from '@/api/sysRole'
+import { ElMessage,ElMessageBox } from 'element-plus'
 
-//==============角色添加================
+//==============角色删除====================
+const deleteById = (row)=>{
+    //弹出确认框 element组件
+    ElMessageBox.confirm('此操作将永久删除该记录, 是否继续?', 'Warning', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+    }).then(async () => {
+       const {code} = await DeleteSysRole(row.id)
+       if(code === 200) {
+            ElMessage.success('删除成功')
+            pageParams.value.page = 1
+            fetchData()
+       }
+    })
+}
+
+
+//==============角色添加/修改================
 
 const roleForm = {
     id: "",

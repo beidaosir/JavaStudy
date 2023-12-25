@@ -45,6 +45,11 @@ public class SysRoleServiceImpl implements SysRoleService {
         sysRoleMapper.update(sysRole);
     }
 
+    //4.角色删除的方法-逻辑删除
+    @Override
+    public void deleteById(Long roleId) {
+        sysRoleMapper.delete(roleId);
+    }
 
 
 }
