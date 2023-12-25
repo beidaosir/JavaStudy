@@ -6,14 +6,18 @@ import com.beidao.mall.common.exception.BeidaoException;
 import com.beidao.mall.manager.mapper.SysUserMapper;
 import com.beidao.mall.manager.service.SysUserService;
 import com.beidao.mall.model.dto.system.LoginDto;
+import com.beidao.mall.model.dto.system.SysUserDto;
 import com.beidao.mall.model.entity.system.SysUser;
 import com.beidao.mall.model.vo.common.ResultCodeEnum;
 import com.beidao.mall.model.vo.system.LoginVo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -127,5 +131,51 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void logout(String token) {
         redisTemplate.delete("user:login"+token);
+    }
+
+    //1、用户条件分页查询接口
+    @Override
+    public PageInfo<SysUser> findByPage(Integer pageNum, Integer pageSize, SysUserDto sysUserDto) {
+        //设置参数
+        PageHelper.startPage(pageNum,pageSize);
+
+        List<SysUser> list = sysUserMapper.findByPage(sysUserDto);
+        PageInfo<SysUser> pageInfo = new PageInfo<>(list);
+
+        return pageInfo;
+    }
+
+    //2、用户添加
+    @Override
+    public void saveSysUser(SysUser sysUser) {
+        //1、判断用户名是否重复  用户名不可以重复
+        String userName = sysUser.getUserName();
+        SysUser dbSysUser = sysUserMapper.selectUserInfoByUserName(userName);
+        if (dbSysUser != null){
+            throw new BeidaoException(ResultCodeEnum.USER_NAME_IS_EXISTS);
+        }
+
+        //2、输入密码进行加密
+        String md5_password =DigestUtils.md5DigestAsHex(sysUser.getPassword().getBytes());
+        sysUser.setPassword(md5_password);
+
+        //设置status值   1表示可用
+        sysUser.setStatus(1);
+
+        sysUserMapper.save(sysUser);
+    }
+
+    //3、用户修改
+    @Override
+    public void updateSysUser(SysUser sysUser) {
+        //修改时也要做用户名重复判断  此处就不做判断了
+        //此处密码暂不提供修改   后面在其他方式实现
+        sysUserMapper.update(sysUser);
+    }
+
+    //4、用户删除
+    @Override
+    public void deleteById(Long userId) {
+        sysUserMapper.delete(userId);
     }
 }
