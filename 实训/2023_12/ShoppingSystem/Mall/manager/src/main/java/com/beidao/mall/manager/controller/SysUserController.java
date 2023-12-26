@@ -1,6 +1,7 @@
 package com.beidao.mall.manager.controller;
 
 import com.beidao.mall.manager.service.SysUserService;
+import com.beidao.mall.model.dto.system.AssginRoleDto;
 import com.beidao.mall.model.dto.system.SysUserDto;
 import com.beidao.mall.model.entity.system.SysUser;
 import com.beidao.mall.model.vo.common.Result;
@@ -43,6 +44,16 @@ public class SysUserController {
     @DeleteMapping("/deleteById/{userId}")
     public Result deleById(@PathVariable("userId") Long userId){
         sysUserService.deleteById(userId);
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
+
+
+    //用户分配角色
+    //保存分配的数据
+    @PostMapping("/doAssign")
+    public Result doAssign(@RequestBody AssginRoleDto assginRoleDto){
+
+        sysUserService.doAssign(assginRoleDto);
         return Result.build(null,ResultCodeEnum.SUCCESS);
     }
 

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.beidao.mall.common.exception.BeidaoException;
 import com.beidao.mall.manager.mapper.SysUserMapper;
 import com.beidao.mall.manager.service.SysUserService;
+import com.beidao.mall.model.dto.system.AssginRoleDto;
 import com.beidao.mall.model.dto.system.LoginDto;
 import com.beidao.mall.model.dto.system.SysUserDto;
 import com.beidao.mall.model.entity.system.SysUser;
@@ -177,5 +178,11 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void deleteById(Long userId) {
         sysUserMapper.delete(userId);
+    }
+
+    //用户分配角色
+    @Override
+    public void doAssign(AssginRoleDto assginRoleDto) {
+
     }
 }

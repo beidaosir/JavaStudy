@@ -1,6 +1,7 @@
 package com.beidao.mall.manager.service;
 
 
+import com.beidao.mall.model.dto.system.AssginRoleDto;
 import com.beidao.mall.model.dto.system.LoginDto;
 import com.beidao.mall.model.dto.system.SysUserDto;
 import com.beidao.mall.model.entity.system.SysUser;
@@ -30,4 +31,7 @@ public interface SysUserService {
 
     //4、用户删除
     void deleteById(Long userId);
+
+    //用户分配角色
+    void doAssign(AssginRoleDto assginRoleDto);
 }
