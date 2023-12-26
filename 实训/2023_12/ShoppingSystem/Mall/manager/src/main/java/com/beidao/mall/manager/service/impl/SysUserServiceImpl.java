@@ -3,6 +3,7 @@ package com.beidao.mall.manager.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.beidao.mall.common.exception.BeidaoException;
+import com.beidao.mall.manager.mapper.SysRoleUserMapper;
 import com.beidao.mall.manager.mapper.SysUserMapper;
 import com.beidao.mall.manager.service.SysUserService;
 import com.beidao.mall.model.dto.system.AssginRoleDto;
@@ -28,6 +29,9 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired //寻找一个匹配的bean并将其注入到该字段中。
     private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private SysRoleUserMapper sysRoleUserMapper;
 
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
@@ -183,6 +187,17 @@ public class SysUserServiceImpl implements SysUserService {
     //用户分配角色
     @Override
     public void doAssign(AssginRoleDto assginRoleDto) {
+
+        //1、根据userId删除用户之前分配角色数据
+        sysRoleUserMapper.deleteByUserId(assginRoleDto.getUserId());
+
+        //2、重新分配资源
+        List<Long> roleIdList = assginRoleDto.getRoleIdList();
+
+        //遍历得到每一个角色id
+        for(Long roleId:roleIdList){
+            sysRoleUserMapper.doAssign(assginRoleDto.getUserId(),roleId);
+        }
 
     }
 }
