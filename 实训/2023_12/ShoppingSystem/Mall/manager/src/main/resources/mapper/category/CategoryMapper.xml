@@ -12,6 +12,15 @@
     </sql>
 
 
+    <!--  //2、调用mapper方法查询所有分类 返回list集合  -->
+    <select id="findAll" resultMap="categoryMap">
+        select <include refid="columns"/>
+        from category
+        where is_deleted=0
+        order by id
+    </select>
+
+
     <!-- 判断每个分类是否有下一层分类-->
     <select id="selectCountByParentId" resultType="Integer">
         select count(*)
