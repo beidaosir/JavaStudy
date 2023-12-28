@@ -1,39 +1,41 @@
 <template>
     <div class="search-div">
         <el-form label-width="70px" size="small">
-        <el-row>
-            <el-col :span="12">
-            <el-form-item label="品牌">
-                <el-select
-                class="m-2"
-                placeholder="选择品牌"
-                size="small"
-                style="width: 100%"
-                >
-                <el-option
-                    v-for="item in brandList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                />
-                </el-select>
-            </el-form-item>
-            </el-col>
-            <el-col :span="12">
-            <el-form-item label="分类">
-                <el-cascader
-                :props="categoryProps"
-                style="width: 100%"
-                />
-            </el-form-item>
-            </el-col>
-        </el-row>
-        <el-row style="display:flex">
-            <el-button type="primary" size="small">
-            搜索
-            </el-button>
-            <el-button size="small">重置</el-button>
-        </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="品牌">
+                        <el-select
+                                class="m-2"
+                                placeholder="选择品牌"
+                                size="small"
+                                style="width: 100%"
+                                v-model="queryDto.brandId"
+                                >
+                            <el-option
+                                    v-for="item in brandList"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id"
+                                    />
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="分类">
+                        <el-cascader
+                                    :props="categoryProps"
+                                    style="width: 100%"
+                                    v-model="searchCategoryIdList"
+                                    />
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row style="display:flex">
+                <el-button type="primary" size="small" @click="fetchData()">
+                    搜索
+                </el-button>
+                <el-button size="small" @click="resetData">重置</el-button>
+            </el-row>
         </el-form>
     </div>
 
@@ -59,94 +61,96 @@
     </el-table>
 
     <el-pagination
+        v-model:current-page="pageParams.page"
+        v-model:page-size="pageParams.limit"
         :page-sizes="[10, 20, 50, 100]"
         layout="total, sizes, prev, pager, next"
         :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
     />
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
-// ================数据模型定义  start ===============================================
-// 定义搜索表单数据模型
-const brandList = ref([
-    {
-        "id": 2,
-        "createTime": "2023-05-06 09:31:19",
-        "name": "华为",
-        "logo": "http://139.198.127.41:9000/sph/20230506/华为.png"
-    },
-    {
-        "id": 1,
-        "createTime": "2023-05-06 09:30:27",
-        "name": "小米",
-        "logo": "http://139.198.127.41:9000/sph/20230506/小米.png"
-    }
-])
-
+import { ref , onMounted } from 'vue'
+import { FindAllBrand } from '@/api/brand.js'
+import { FindCategoryByParentId } from '@/api/category.js'
+import { GetCategoryBrandPageList } from '@/api/categoryBrand.js'
+    
 const props = {
   lazy: true,
   value: 'id',
   label: 'name',
   leaf: 'leaf',
-  lazyLoad(node, resolve) {   // 加载数据的方法
-    const data = [
-        {
-            "id": 643,
-            "createTime": "2023-05-22 15:31:18",
-            "name": "玩具乐器",
-            "imageUrl": "https://lilishop-oss.oss-cn-beijing.aliyuncs.com/0f423fb60f084b2caade164fae25a9a0.png",
-            "parentId": 0,
-            "status": 1,
-            "orderNum": 10,
-            "hasChildren": true,
-            "children": null
-        },
-        {
-            "id": 576,
-            "createTime": "2023-05-22 15:31:13",
-            "name": "汽车用品",
-            "imageUrl": "https://lilishop-oss.oss-cn-beijing.aliyuncs.com/665dd952b54e4911b99b5e1eba4b164f.png",
-            "parentId": 0,
-            "status": 1,
-            "orderNum": 10,
-            "hasChildren": true,
-            "children": null
-        },
-    ]
-    resolve(data)  // 返回数据
+  async lazyLoad(node, resolve) {   // 加载数据的方法
+    if (typeof node.value == 'undefined') node.value = 0
+    const { data } = await FindCategoryByParentId(node.value)
+    data.forEach(function(item) {       //hasChildren判断是否有子节点
+      item.leaf = !item.hasChildren
+    })
+    resolve(data)  // 返回数据  
   }
 };
+
 const categoryProps = ref(props)
 
-// 定义表格数据模型
-const list = ref([
-  {
-    "id": 2,
-    "createTime": "2023-05-24 15:19:24",
-    "brandId": 1,
-    "categoryId": 99,
-    "categoryName": "定制服务",
-    "brandName": "小米",
-    "logo": "http://139.198.127.41:9000/sph/20230506/小米.png"
-  },
-  {
-    "id": 1,
-    "createTime": "2023-05-06 10:59:08",
-    "brandId": 2,
-    "categoryId": 76,
-    "categoryName": "UPS电源\t",
-    "brandName": "华为",
-    "logo": "http://139.198.127.41:9000/sph/20230506/华为.png"
-  }
-])
+//查询所有品牌
+const selectAllBrandList = async () => {
+    const { data } = await FindAllBrand()
+    brandList.value = data
+}
 
+// 定义搜索表单数据模型
+const brandList = ref([])
+// 定义表格数据模型
+const list = ref([])
 // 分页条数据模型
 const total = ref(0)
+// 搜索表单数据模型
+const queryDto = ref({ brandId: '', categoryId: '' })
+const searchCategoryIdList = ref([])
+//分页条数据模型
+const pageParamsForm = {
+  page: 1,   // 页码
+  limit: 2, // 每页记录数
+}
+const pageParams = ref(pageParamsForm)    
+    
+// onMounted钩子函数
+onMounted(() => {
+    selectAllBrandList() // 查询所有的品牌数据
+    fetchData()
+})
+    
+//重置
+const resetData = () => {
+  queryDto.value = { brandId: '', categoryId: '' }
+  searchCategoryIdList.value = []
+  fetchData()
+}
 
-//======   数据模型定义end========================================================
+//分页变化
+const handleSizeChange = size => {
+  pageParams.value.limit = size
+  fetchData()
+}
+const handleCurrentChange = number => {
+  pageParams.value.page = number
+  fetchData()
+}
+
+// 分页列表查询
+const fetchData = async () => {
+  if (searchCategoryIdList.value.length == 3) {
+    //searchCategoryIdList.value[2]  第三层分类
+     queryDto.value.categoryId = searchCategoryIdList.value[2]
+  }
+  const { data } = await GetCategoryBrandPageList( pageParams.value.page, pageParams.value.limit, queryDto.value)
+  list.value = data.list
+  total.value = data.total
+}
 </script>
+
 <style scoped>
 .search-div {
   margin-bottom: 10px;

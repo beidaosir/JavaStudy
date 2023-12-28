@@ -11,6 +11,16 @@
     </sql>
 
 
+    <!--//查询所有品牌-->
+    <select id="findAll" resultMap="brandMap">
+        select <include refid="columns" />
+        from brand
+        where is_deleted = 0
+        order by id desc
+    </select>
+
+
+
     <!--   //品牌列表  -->
     <select id="findByPage" resultMap="brandMap">
         select <include refid="columns"/>
@@ -18,6 +28,21 @@
         where is_deleted=0
         order by id desc
     </select>
+
+
+    <!-- 修改-->
+    <update id="updateById" >
+        update brand set
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        <if test="logo != null and logo != ''">
+            logo = #{logo},
+        </if>
+        update_time =  now()
+        where
+        id = #{id}
+    </update>
 
 
     <!-- //添加-->
@@ -38,5 +63,14 @@
                      0
                  )
     </insert>
+
+
+    <!--删除-->
+    <update id="deleteById">
+        update brand
+        set update_time = now() ,is_deleted = 1
+        where id = #{id}
+    </update>
+
 
 </mapper>
