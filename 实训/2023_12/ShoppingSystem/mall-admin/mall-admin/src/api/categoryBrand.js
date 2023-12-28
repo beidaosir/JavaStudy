@@ -10,3 +10,29 @@ export const GetCategoryBrandPageList = (page, limit, searchObj) => {
         params: searchObj,
     })
 }
+
+// 保存信息
+export const SaveCategoryBrand = categoryBrand => {
+    return request({
+      url: `${api_name}/save`,
+      method: 'post',
+      data: categoryBrand,
+    })
+}
+
+// 修改信息
+export const UpdateCategoryBrandById = categoryBrand => {
+    return request({
+        url: `${api_name}/updateById`,
+        method: 'put',
+        data: categoryBrand,
+    })
+}
+
+// 根据id删除数据
+export const DeleteCategoryBrandById = id => {
+    return request({
+      url: `${api_name}/deleteById/${id}`,
+      method: 'delete',
+    })
+}
