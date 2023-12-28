@@ -2,6 +2,7 @@ package com.beidao.mall.manager.service.impl;
 
 import com.alibaba.excel.EasyExcel;
 import com.beidao.mall.common.exception.BeidaoException;
+import com.beidao.mall.manager.listener.ExcelListener;
 import com.beidao.mall.manager.mapper.CategoryMapper;
 import com.beidao.mall.manager.service.CategoryService;
 import com.beidao.mall.model.entity.product.Category;
@@ -12,7 +13,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -100,5 +103,21 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
 
+    }
+
+    //导入功能
+    @Override
+    public void importData(MultipartFile file) {
+
+        //监听器     每次读取都创建一个新的对象 防止并发问题
+        ExcelListener<CategoryExcelVo> excelListener = new ExcelListener(categoryMapper);
+        try {
+            EasyExcel.read(file.getInputStream(), CategoryExcelVo.class, excelListener)
+                    .sheet().doRead();
+
+        }catch (IOException e){
+            e.printStackTrace();
+            throw new BeidaoException(ResultCodeEnum.DATA_ERROR);
+        }
     }
 }

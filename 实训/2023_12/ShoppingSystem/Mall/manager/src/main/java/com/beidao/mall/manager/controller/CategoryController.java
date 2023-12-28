@@ -6,10 +6,8 @@ import com.beidao.mall.model.vo.common.Result;
 import com.beidao.mall.model.vo.common.ResultCodeEnum;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,6 +17,18 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+
+    //导入功能
+    @PostMapping("/importData")
+    public Result importData(MultipartFile file){
+        //获取上传文件   注意命名file
+        categoryService.importData(file);
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+
+    }
+
+
 
     //导出功能
     @GetMapping("/exportData")
