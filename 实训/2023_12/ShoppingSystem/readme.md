@@ -245,3 +245,15 @@ docker run \
 </dependency>
 ```
 
+
+
+
+
+### Nacos启动
+
+```
+nacos bin>startup.cmd -m standalone
+http://localhost:8848/nacos                                                                                                                                                                              
+
+```
+
