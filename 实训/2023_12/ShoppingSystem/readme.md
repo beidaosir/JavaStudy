@@ -188,6 +188,17 @@ docker run -d -p 6379:6379 --restart=always \
 redis-server /etc/redis/config/redis.conf
 ```
 
+```shell
+#进入到redis
+docker exec -it redis redis-cli
+
+#清除
+flushdb
+
+#查看存储
+keys *
+```
+
 
 
 
