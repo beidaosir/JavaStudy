@@ -1,16 +1,24 @@
 package com.beidao.mall.user.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.beidao.mall.common.exception.BeidaoException;
+import com.beidao.mall.model.dto.h5.UserLoginDto;
 import com.beidao.mall.model.dto.h5.UserRegisterDto;
 import com.beidao.mall.model.entity.user.UserInfo;
 import com.beidao.mall.model.vo.common.ResultCodeEnum;
+import com.beidao.mall.model.vo.h5.UserInfoVo;
 import com.beidao.mall.user.mapper.UserInfoMapper;
 import com.beidao.mall.user.service.UserInfoService;
+import com.beidao.mall.utils.AuthContextUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -77,5 +85,77 @@ public class UserInfoServiceImpl implements UserInfoService {
         //5、从redis中删除发送的验证码
         redisTemplate.delete(username);
 
+    }
+
+
+    //用户登录
+    @Override
+    public Object login(UserLoginDto userLoginDto) {
+
+        //1、userLoginDto获取用户名和密码
+        String username = userLoginDto.getUsername();
+        String password = userLoginDto.getPassword();
+
+        //校验参数
+        if(StringUtils.isEmpty(username) ||
+                StringUtils.isEmpty(password)) {
+            throw new BeidaoException(ResultCodeEnum.DATA_ERROR);
+        }
+
+        //2、根据用户名查询数据库  得到用户信息
+        UserInfo userInfo = userInfoMapper.selectByUserName(username);
+
+        if(null == userInfo) {
+            throw new BeidaoException(ResultCodeEnum.LOGIN_ERROR);
+        }
+
+        //3、比较密码是否一致
+        String database_password = userInfo.getPassword();
+        String md5_password = DigestUtils.md5DigestAsHex(password.getBytes());
+        if (!database_password.equals(md5_password)){
+            throw new BeidaoException(ResultCodeEnum.LOGIN_ERROR);
+
+        }
+
+        //4、校验用户是否禁用
+        if(userInfo.getStatus() == 0) {
+            throw new BeidaoException(ResultCodeEnum.ACCOUNT_STOP);
+        }
+
+        //5、生成token
+        String token = UUID.randomUUID().toString().replaceAll("-","");
+
+        //6、把用户信息放到redis中
+
+        redisTemplate.opsForValue().set("user:mall"+token,JSON.toJSONString(userInfo),
+                30, TimeUnit.DAYS);
+
+
+        return token;
+    }
+
+
+    //获取当前登录的用户信息
+    @Override
+    public UserInfoVo getCurrentUserInfo(String token) {
+
+        //从redis根据token获取用户信息
+//        String userJson = redisTemplate.opsForValue().get("user:mall"+token);
+//        if(!StringUtils.hasText(userJson)){
+//
+//            throw new BeidaoException(ResultCodeEnum.LOGIN_AUTH);
+//        }
+//
+//        UserInfo userInfo = JSON.parseObject(userJson,UserInfo.class);
+
+
+        //从threadLocal中获取当前信息
+        UserInfo userInfo = AuthContextUtil.getUserInfo();
+
+        //userInfo--->userInfoVO
+        UserInfoVo userInfoVo = new UserInfoVo();
+        BeanUtils.copyProperties(userInfo,userInfoVo);
+
+        return userInfoVo;
     }
 }
