@@ -2,6 +2,7 @@ package com.beidao.mall.product.service;
 
 import com.beidao.mall.model.dto.h5.ProductSkuDto;
 import com.beidao.mall.model.entity.product.ProductSku;
+import com.beidao.mall.model.vo.h5.ProductItemVo;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -13,4 +14,8 @@ public interface ProductService {
 
     //分页查询
     PageInfo<ProductSku> findByPage(Integer page, Integer limit, ProductSkuDto productSkuDto);
+
+
+    //商品详情
+    ProductItemVo item(Long skuId);
 }

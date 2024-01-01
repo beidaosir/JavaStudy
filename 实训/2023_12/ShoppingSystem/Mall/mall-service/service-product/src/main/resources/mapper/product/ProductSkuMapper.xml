@@ -12,6 +12,27 @@
     </sql>
 
 
+<!--            //根据商品id获取所有sku列表-->
+    <select id="findByProductId" resultMap="productSkuMap">
+        select <include refid="columns" />
+        from product_sku
+        where
+        product_id = #{productId}
+    </select>
+
+
+
+
+    <!--      //2、根据skuid获取sku信息-->
+    <select id="getById" resultMap="productSkuMap">
+        select <include refid="columns" />
+        from product_sku
+        where
+        id = #{id}
+    </select>
+
+
+
 <!--    //分页查询-->
     <select id="findByPage" resultMap="productSkuMap">
         select

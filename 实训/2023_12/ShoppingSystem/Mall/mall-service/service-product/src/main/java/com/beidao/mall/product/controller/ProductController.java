@@ -5,6 +5,7 @@ import com.beidao.mall.model.dto.h5.ProductSkuDto;
 import com.beidao.mall.model.entity.product.ProductSku;
 import com.beidao.mall.model.vo.common.Result;
 import com.beidao.mall.model.vo.common.ResultCodeEnum;
+import com.beidao.mall.model.vo.h5.ProductItemVo;
 import com.beidao.mall.product.service.ProductService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +24,18 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+
+    //商品详情
+    @Operation(summary = "商品详情")
+    @GetMapping("item/{skuId}")
+    public Result item(@PathVariable Long skuId){
+
+        ProductItemVo productItemVo = productService.item(skuId);
+        return Result.build(productItemVo , ResultCodeEnum.SUCCESS);
+    }
+
+
 
     @Operation(summary = "分页查询")
     @GetMapping(value = "/{page}/{limit}")

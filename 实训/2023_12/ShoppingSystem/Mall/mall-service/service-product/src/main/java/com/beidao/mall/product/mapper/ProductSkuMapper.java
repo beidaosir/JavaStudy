@@ -17,4 +17,12 @@ public interface ProductSkuMapper {
 
     //分页查询
     List<ProductSku> findByPage(ProductSkuDto productSkuDto);
+
+
+
+    //2、根据skuid获取sku信息
+    ProductSku getById(Long skuId);
+
+    //根据商品id获取所有sku列表
+    List<ProductSku> findByProductId(Long productId);
 }
