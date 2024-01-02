@@ -33,4 +33,9 @@ public interface CartService {
 
     //选中的购物车
     List<CartInfo> getAllCkecked();
+
+
+
+    //远程调用：删除生成订单的购物车商品
+    void deleteChecked();
 }

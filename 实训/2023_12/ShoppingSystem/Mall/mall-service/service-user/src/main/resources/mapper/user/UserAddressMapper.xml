@@ -20,4 +20,15 @@
         where
         user_id = #{userId}
     </select>
+
+<!--     //根据id获取收获地址信息-->
+    <select id="getUserAddress" resultMap="userAddressMap">
+        select <include refid="columns" />
+        from user_address
+        where
+        id = #{id}
+    </select>
+
+
+
 </mapper>

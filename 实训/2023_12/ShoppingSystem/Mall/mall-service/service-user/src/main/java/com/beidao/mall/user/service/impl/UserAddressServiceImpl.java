@@ -28,4 +28,12 @@ public class UserAddressServiceImpl implements UserAddressService {
         return userAddressMapper.findUserAddressList(userId);
 
     }
+
+
+
+    //根据id获取收获地址信息
+    @Override
+    public UserAddress getUserAddress(Long id) {
+        return userAddressMapper.getUserAddress(id);
+    }
 }
