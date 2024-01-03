@@ -11,6 +11,16 @@
         id,user_id,nick_name,order_no,coupon_id,total_amount,coupon_amount,original_total_amount,feight_fee,pay_type,order_status,receiver_name,receiver_phone,receiver_tag_name,receiver_province,receiver_city,receiver_district,receiver_address,payment_time,delivery_time,receive_time,remark,cancel_time,cancel_reason,create_time,update_time,is_deleted
     </sql>
 
+
+<!--    // //获取订单信息-->
+    <select id="getById" resultMap="orderInfoMap">
+        select <include refid="columns" />
+        from order_info
+        where
+        id = #{id}
+    </select>
+
+
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into order_info (
             id,

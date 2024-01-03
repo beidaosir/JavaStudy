@@ -1,6 +1,7 @@
 package com.beidao.mall.order.controller;
 
 import com.beidao.mall.model.dto.h5.OrderInfoDto;
+import com.beidao.mall.model.entity.order.OrderInfo;
 import com.beidao.mall.model.vo.common.Result;
 import com.beidao.mall.model.vo.common.ResultCodeEnum;
 import com.beidao.mall.model.vo.h5.TradeVo;
@@ -37,5 +38,22 @@ public class OrderInfoController {
       TradeVo tradeVo = orderInfoService.getTrade();
       return Result.build(tradeVo, ResultCodeEnum.SUCCESS);
    }
+
+   @Operation(summary = "获取订单信息")
+   @GetMapping("auth/{orderId}")
+   public Result<OrderInfo> getOrderInfo(@PathVariable Long orderId) {
+      OrderInfo orderInfo = orderInfoService.getOrderInfo(orderId);
+      return Result.build(orderInfo, ResultCodeEnum.SUCCESS);
+   }
+
+
+   @Operation(summary = "立即购买")
+   @GetMapping("auth/buy/{skuId}")
+   public Result<TradeVo> buy(@PathVariable Long skuId) {
+      TradeVo tradeVo = orderInfoService.buy(skuId);
+      return Result.build(tradeVo, ResultCodeEnum.SUCCESS);
+   }
+
+
 
 }
