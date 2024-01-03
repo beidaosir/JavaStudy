@@ -19,6 +19,8 @@ import com.beidao.mall.order.mapper.OrderItemMapper;
 import com.beidao.mall.order.mapper.OrderLogMapper;
 import com.beidao.mall.order.service.OrderInfoService;
 import com.beidao.mall.utils.AuthContextUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -206,5 +208,26 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         tradeVo.setTotalAmount(productSku.getSalePrice());
 
         return tradeVo;
+    }
+
+
+    //获取订单分页列表
+    @Override
+    public PageInfo<OrderInfo> findUserPage(Integer page, Integer limit, Integer orderStatus) {
+
+        PageHelper.startPage(page, limit);
+
+        //查询订单信息
+        Long userId = AuthContextUtil.getUserInfo().getId();
+        List<OrderInfo> orderInfoList = orderInfoMapper.findUserPage(userId, orderStatus);
+
+
+        //订单里面所有订单项
+        orderInfoList.forEach(orderInfo -> {
+            List<OrderItem> orderItem = orderItemMapper.findByOrderId(orderInfo.getId());
+            orderInfo.setOrderItemList(orderItem);
+        });
+
+        return new PageInfo<>(orderInfoList);
     }
 }

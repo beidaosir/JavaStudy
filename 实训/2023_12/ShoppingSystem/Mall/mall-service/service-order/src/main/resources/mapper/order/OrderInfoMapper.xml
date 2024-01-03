@@ -12,6 +12,24 @@
     </sql>
 
 
+<!--    //查询订单信息-->
+    <select id="findUserPage" resultMap="orderInfoMap">
+        select <include refid="columns" />
+        from order_info
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="orderStatus != null">
+                and order_status = #{orderStatus}
+            </if>
+            and is_deleted = 0
+        </where>
+        order by id desc
+    </select>
+
+
+
 <!--    // //获取订单信息-->
     <select id="getById" resultMap="orderInfoMap">
         select <include refid="columns" />
@@ -21,6 +39,7 @@
     </select>
 
 
+<!--     //添加数据到orderInfo表-->
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into order_info (
             id,
