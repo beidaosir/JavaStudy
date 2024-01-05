@@ -23,10 +23,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -118,8 +120,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         //4、添加数据到orderInfo表
         //封装orderInfo对象
         //远程调用：获取用户收获地址
-        OrderInfo orderInfo = new OrderInfo();
         UserInfo userInfo = AuthContextUtil.getUserInfo();
+        OrderInfo orderInfo = new OrderInfo();
+
 
         //订单编号
         orderInfo.setOrderNo(String.valueOf(System.currentTimeMillis()));
@@ -129,7 +132,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         orderInfo.setNickName(userInfo.getNickName());
 
         //封装用户收货地址信息
-        Long userAddressId = orderInfoDto.getUserAddressId();
+        //Long userAddressId = orderInfoDto.getUserAddressId();
         // 远程调用：根据收获地址id  获取用户收获地址
         //UserAddress userAddress = null;
         UserAddress userAddress = userFeignClient.getUserAddress(orderInfoDto.getUserAddressId());
@@ -190,8 +193,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Override
     public TradeVo buy(Long skuId) {
         //封装订单项集合
-        List<OrderItem> orderItemList = new ArrayList<>();
+
         ProductSku productSku = productFeignClient.getBySkuId(skuId);
+        List<OrderItem> orderItemList = new ArrayList<>();
 
         OrderItem orderItem = new OrderItem();
         orderItem.setSkuId(skuId);
@@ -202,10 +206,11 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
         orderItemList.add(orderItem);
 
+        BigDecimal totalAmount = productSku.getSalePrice();
         TradeVo tradeVo = new TradeVo();
 
+        tradeVo.setTotalAmount(totalAmount);
         tradeVo.setOrderItemList(orderItemList);
-        tradeVo.setTotalAmount(productSku.getSalePrice());
 
         return tradeVo;
     }
@@ -229,5 +234,41 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         });
 
         return new PageInfo<>(orderInfoList);
+    }
+
+
+    //远程调用：根据订单编号获取订单信息
+    @Override
+    public OrderInfo getByOrderNo(String orderNo) {
+
+        OrderInfo orderInfo = orderInfoMapper.getByOrderNo(orderNo);
+
+        List<OrderItem> orderItemList = orderItemMapper.findByOrderId(orderInfo.getId());
+        orderInfo.setOrderItemList(orderItemList);
+
+        return orderInfo;
+    }
+
+
+    //更新订单状态
+
+    @Override
+    public void updateOrderStatus(String orderNo,Integer orderStatus) {
+
+        OrderInfo orderInfo = orderInfoMapper.getByOrderNo(orderNo);
+
+        orderInfo.setOrderStatus(1);
+        orderInfo.setPayType(orderStatus);
+        orderInfo.setPaymentTime(new Date());
+
+        orderInfoMapper.updateById(orderInfo);
+
+        //记录日志
+        OrderLog orderLog = new OrderLog();
+        orderLog.setOrderId(orderInfo.getId());
+        orderLog.setProcessStatus(1);
+        orderLog.setNote("支付宝支付成功");
+        orderLogMapper.save(orderLog);
+
     }
 }

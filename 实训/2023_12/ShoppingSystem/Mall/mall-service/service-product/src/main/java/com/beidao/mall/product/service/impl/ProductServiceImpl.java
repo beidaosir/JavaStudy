@@ -2,6 +2,7 @@ package com.beidao.mall.product.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.beidao.mall.model.dto.h5.ProductSkuDto;
+import com.beidao.mall.model.dto.product.SkuSaleDto;
 import com.beidao.mall.model.entity.product.Product;
 import com.beidao.mall.model.entity.product.ProductDetails;
 import com.beidao.mall.model.entity.product.ProductSku;
@@ -14,6 +15,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -50,6 +52,43 @@ public class ProductServiceImpl implements ProductService {
 
     //商品详情
     @Override
+    public ProductItemVo item(String skuId) {
+        //1、创建vo对象，封装最终的数据
+        ProductItemVo productItemVo = new ProductItemVo();
+
+        //2、根据skuid获取当前sku信息
+        ProductSku productSku = productSkuMapper.getById(Long.valueOf(skuId));
+
+        //3、根据第二步获取sku，从sku获取productId，获取当前商品信息
+        Product product = productMapper.getById(productSku.getProductId());
+
+        //4、获取商品详情信息
+        ProductDetails productDetails = productDetailsMapper.getByProductId(productSku.getProductId());
+
+        //5、封装map集合
+        Map<String,Object> skuSpecValueMap = new HashMap<>();
+        //建立sku规格与skuId对应关系
+        List<ProductSku> productSkuList = productSkuMapper.findByProductId(productSku.getProductId());
+        productSkuList.forEach(item -> {
+            skuSpecValueMap.put(item.getSkuSpec(), item.getId());
+        });
+
+        productItemVo.setProductSku(productSku);
+        productItemVo.setProduct(product);
+        productItemVo.setSkuSpecValueMap(skuSpecValueMap);
+
+        productItemVo.setDetailsImageUrlList(Arrays.asList(productDetails.getImageUrls().split(",")));
+
+        //轮播图list集合
+        productItemVo.setSliderUrlList(Arrays.asList(product.getSliderUrls().split(",")));
+        //商品规格信息
+        productItemVo.setSpecValueList(JSON.parseArray(product.getSpecValue()));
+
+        return productItemVo;
+    }
+
+
+   /* @Override
     public ProductItemVo item(Long skuId) {
 
         //1、创建vo对象 用于封装最终数据
@@ -98,7 +137,7 @@ public class ProductServiceImpl implements ProductService {
 
         return productItemVo;
     }
-
+*/
 
     //根据skuId返回sku信息
     @Override
@@ -106,5 +145,16 @@ public class ProductServiceImpl implements ProductService {
 
         ProductSku productSku = productSkuMapper.getById(skuId);
         return productSku;
+    }
+
+    //更新商品sku销量
+    @Override
+    public Boolean updateSkuSaleNum(List<SkuSaleDto> skuSaleDtoList) {
+        if(!CollectionUtils.isEmpty(skuSaleDtoList)) {
+            for(SkuSaleDto skuSaleDto : skuSaleDtoList) {
+                productSkuMapper.updateSale(skuSaleDto.getSkuId(), skuSaleDto.getNum());
+            }
+        }
+        return true;
     }
 }
