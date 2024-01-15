@@ -122,5 +122,20 @@ class UserMapperTest {
     }
 
 
+    @Test
+    void testCustomSqlUpdate(){
+
+        //1、更新条件
+        List<Long> ids = List.of(1L,2L,3L);
+        int amount = 200;
+
+        //2、定义条件
+        QueryWrapper<User> wrapper = new QueryWrapper<User>()
+                .in("id",ids);
+
+        //3、调用自定义sql方法
+        userMapper.updateBalanceByIds(wrapper,amount);
+
+    }
 
 }
