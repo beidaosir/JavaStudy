@@ -9,5 +9,8 @@ logging:
     com.itheima: debug
   pattern:
     dateformat: HH:mm:ss
-mybatis:
-  mapper-locations: classpath*:mapper/*.xml
+mybatis-plus:
+  type-aliases-package: com.itheima.mp.domain.po
+  global-config:
+    db-config:
+      id-type: assign_id
