@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class IUserServiceTest {
@@ -41,5 +40,5 @@ class IUserServiceTest {
 
         users.forEach(System.out::println);
     }
-    
+
 }
