@@ -66,7 +66,7 @@ public class UserController {
 
 
     @GetMapping("/list")
-    @ApiOperation("根据id集合查询用户")
+    @ApiOperation("==根据id集合查询用户==")
     public List<UserVO> queryUsers(UserQuery query){
         // 1.组织条件
         String username = query.getName();
