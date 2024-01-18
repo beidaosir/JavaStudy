@@ -41,10 +41,8 @@ public class UserController {
     @GetMapping("/{id}")
     @ApiOperation("根据id查询用户")
     public UserVO queryUserById(@PathVariable("id") Long userId){
-        // 1.查询用户
-        User user = userService.getById(userId);
-        // 2.处理vo
-        return BeanUtil.copyProperties(user, UserVO.class);
+
+        return userService.queryUserAndAddressById(userId);
     }
 
     @GetMapping
