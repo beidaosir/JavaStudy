@@ -14,6 +14,10 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: assign_id
+      logic-delete-field: deleted #配置逻辑删除字段
+
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
 
 
 knife4j:
