@@ -123,7 +123,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         Integer status = query.getStatus();
 
         //1.构建分页条件
-        //1.1.分页条件
+        Page<User> page = query.toMpPageDefaultSortUpdateTime();
+
+
+        /*//1.1.分页条件
         Page<User> page = Page.of(query.getPageNo(), query.getPageSize());
         //1.2.排序条件
         if (StrUtil.isNotBlank(query.getSortBy())){
@@ -132,7 +135,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }else {
             //为空  默认按照创建时间排序
             page.addOrder(new OrderItem("update_time",false));
-        }
+        }*/
 
         //2.分页条件
         Page<User> p = lambdaQuery()
@@ -142,7 +145,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
 
         //3.封装vo结果
-        PageDTO<UserVO> dto = new PageDTO<>();
+        return PageDTO.of(p, UserVO.class);
+
+
+        /*PageDTO<UserVO> dto = new PageDTO<>();
         //3.1总条数
         dto.setTotal(p.getTotal());
         //3.2总页数
@@ -159,7 +165,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         dto.setList(vos);
 
         //4.返回
-        return dto;
+        return dto;*/
     }
 
 
