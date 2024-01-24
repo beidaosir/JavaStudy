@@ -142,7 +142,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
 
         //3.封装vo结果
-        return PageDTO.of(p, user -> BeanUtil.copyProperties(user,UserVO.class));
+        //return PageDTO.of(p, user -> BeanUtil.copyProperties(user,UserVO.class));
+        return PageDTO.of(p, user ->{
+            //1.拷贝基础属性
+                    UserVO vo = BeanUtil.copyProperties(user, UserVO.class);
+
+                    //2.处理特殊逻辑
+                    vo.setUsername(vo.getUsername().substring(0,vo.getUsername().length()-2)+"**");
+
+                    return vo;
+        });
 
 
         /*PageDTO<UserVO> dto = new PageDTO<>();
