@@ -2,8 +2,6 @@ package com.itheima.mp.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
@@ -16,7 +14,6 @@ import com.itheima.mp.domain.vo.UserVO;
 import com.itheima.mp.enums.UserStatus;
 import com.itheima.mp.mapper.UserMapper;
 import com.itheima.mp.service.IUserService;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -145,7 +142,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
 
         //3.封装vo结果
-        return PageDTO.of(p, UserVO.class);
+        return PageDTO.of(p, user -> BeanUtil.copyProperties(user,UserVO.class));
 
 
         /*PageDTO<UserVO> dto = new PageDTO<>();
