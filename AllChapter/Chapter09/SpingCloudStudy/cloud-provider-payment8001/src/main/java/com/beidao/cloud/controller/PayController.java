@@ -50,7 +50,7 @@ public class PayController {
 
         return payService.getById(id);
     }
-    
+
 
     @GetMapping("/pay/all")
     public List<Pay> getAll() {
