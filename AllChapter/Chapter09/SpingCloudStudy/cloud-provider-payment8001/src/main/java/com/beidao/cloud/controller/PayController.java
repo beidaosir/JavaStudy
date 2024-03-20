@@ -29,7 +29,7 @@ public class PayController {
     }
 
 
-    @DeleteMapping(value = "/pay/del{id}")
+    @DeleteMapping(value = "/pay/del/{id}")
     public Integer deletePay(@PathVariable("id") Integer id){
 
         return payService.delete(id);
