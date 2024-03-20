@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/controller/PayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,7 +89,7 @@
       <updated>1710853388895</updated>
       <workItem from="1710853389892" duration="7041000" />
       <workItem from="1710942738246" duration="124000" />
-      <workItem from="1710942876392" duration="2634000" />
+      <workItem from="1710942876392" duration="2968000" />
     </task>
     <servers />
   </component>
