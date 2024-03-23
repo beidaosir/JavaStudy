@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/resp/ResultData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/controller/PayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/controller/PayController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +73,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="应用程序.ReturnCodeEnum">
+  <component name="RunManager" selected="Spring Boot.Main8001">
     <configuration name="ReturnCodeEnum" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.beidao.cloud.resp.ReturnCodeEnum" />
       <module name="cloud-provider-payment8001" />
@@ -127,7 +127,7 @@
       <workItem from="1711030969054" duration="1984000" />
       <workItem from="1711032978117" duration="713000" />
       <workItem from="1711117163866" duration="2491000" />
-      <workItem from="1711201684442" duration="598000" />
+      <workItem from="1711201684442" duration="1239000" />
     </task>
     <servers />
   </component>
