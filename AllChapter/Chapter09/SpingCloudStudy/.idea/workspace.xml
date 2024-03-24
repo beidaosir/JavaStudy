@@ -5,12 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/config/RestTemplateConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/controller/OrderController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/entities/PayDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/resp/ResultData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/resp/ReturnCodeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloud-api-commons/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-consumer-order80/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/entities/PayDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-api-commons/src/main/java/com/beidao/cloud/entities/PayDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/resp/ResultData.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-api-commons/src/main/java/com/beidao/cloud/resp/ResultData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/resp/ReturnCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-api-commons/src/main/java/com/beidao/cloud/resp/ReturnCodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-provider-payment8001/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-provider-payment8001/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/controller/PayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/controller/PayController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/entities/PayDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/exp/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-api-commons/src/main/java/com/beidao/cloud/exp/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/resp/ResultData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/resp/ReturnCodeEnum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,11 +67,12 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/02CS/java_code/JavaStudy/AllChapter/Chapter09/SpingCloudStudy/cloud-consumer-order80/src/main/java/com/beidao/cloud",
+    "last_opened_file_path": "D:/02CS/java_code/JavaStudy/AllChapter/Chapter09/SpingCloudStudy/cloud-api-commons/src/main/java/com/beidao/cloud",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "onboarding.tips.debug.path": "D:/02CS/java_code/JavaStudy/AllChapter/Chapter09/SpingCloudStudy/cloud-api-commons/src/main/java/com/beidao/cloud/Main.java",
     "project.structure.last.edited": "模块",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2137931",
@@ -80,10 +88,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\02CS\java_code\JavaStudy\AllChapter\Chapter09\SpingCloudStudy\cloud-api-commons\src\main\java\com\beidao\cloud" />
       <recent name="D:\02CS\java_code\JavaStudy\AllChapter\Chapter09\SpingCloudStudy\cloud-consumer-order80\src\main\java\com\beidao\cloud" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.Main80">
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.Main8001">
     <configuration name="ReturnCodeEnum" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.beidao.cloud.resp.ReturnCodeEnum" />
       <module name="cloud-provider-payment8001" />
@@ -152,7 +168,7 @@
       <workItem from="1711032978117" duration="713000" />
       <workItem from="1711117163866" duration="2491000" />
       <workItem from="1711201684442" duration="3697000" />
-      <workItem from="1711287637530" duration="3734000" />
+      <workItem from="1711287637530" duration="5493000" />
     </task>
     <servers />
   </component>
