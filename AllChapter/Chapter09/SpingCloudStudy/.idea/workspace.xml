@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="" />
+    <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-consumer-order80/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/Main80.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/Main80.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/config/RestTemplateConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/config/RestTemplateConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-provider-payment8001/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-provider-payment8001/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/Main8001.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/java/com/beidao/cloud/Main8001.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-provider-payment8001/src/main/resources/application.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,7 +73,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2137931",
     "settings.editor.selected.configurable": "cn.yiiguxing.plugin.translate",
-    "spring.configuration.checksum": "388b4a7d5fcbdba570be09ea453724db",
+    "spring.configuration.checksum": "7872f6c6726122eae9c52b9d703645c2",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -85,7 +95,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Main8001">
+  <component name="RunManager" selected="Spring Boot.Main80">
     <configuration name="ReturnCodeEnum" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.beidao.cloud.resp.ReturnCodeEnum" />
       <module name="cloud-provider-payment8001" />
@@ -155,6 +165,7 @@
       <workItem from="1711117163866" duration="2491000" />
       <workItem from="1711201684442" duration="3697000" />
       <workItem from="1711287637530" duration="5870000" />
+      <workItem from="1711545348182" duration="4028000" />
     </task>
     <servers />
   </component>
