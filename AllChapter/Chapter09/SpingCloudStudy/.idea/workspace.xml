@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/config/RestTemplateConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/config/RestTemplateConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +66,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2137931",
     "settings.editor.selected.configurable": "MavenSettings",
-    "spring.configuration.checksum": "7872f6c6726122eae9c52b9d703645c2",
+    "spring.configuration.checksum": "4d4ee6f3c1ccf699d6c76200078d2c99",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -148,8 +149,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.Main80" />
         <item itemvalue="Spring Boot.Main8002" />
+        <item itemvalue="Spring Boot.Main80" />
         <item itemvalue="应用程序.ReturnCodeEnum" />
       </list>
     </recent_temporary>
@@ -175,7 +176,8 @@
       <workItem from="1711545348182" duration="4948000" />
       <workItem from="1711720909290" duration="3587000" />
       <workItem from="1711807340799" duration="688000" />
-      <workItem from="1712152636275" duration="4683000" />
+      <workItem from="1712152636275" duration="5218000" />
+      <workItem from="1712241232905" duration="640000" />
     </task>
     <servers />
   </component>
