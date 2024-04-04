@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/config/RestTemplateConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-consumer-order80/src/main/java/com/beidao/cloud/config/RestTemplateConfig.java" afterDir="false" />
-    </list>
+    <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -177,7 +174,7 @@
       <workItem from="1711720909290" duration="3587000" />
       <workItem from="1711807340799" duration="688000" />
       <workItem from="1712152636275" duration="5218000" />
-      <workItem from="1712241232905" duration="640000" />
+      <workItem from="1712241232905" duration="1463000" />
     </task>
     <servers />
   </component>
