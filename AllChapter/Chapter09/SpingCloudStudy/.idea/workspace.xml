@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/cloud-api-commons/src/main/java/com/beidao/cloud/apis/PayFeignApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cloud-consumer-feign-order80/src/main/java/com/beidao/cloud/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-api-commons/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-api-commons/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b9a00b6c-6bd1-46d1-a010-42b300a261d2" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -191,7 +184,7 @@
       <workItem from="1711807340799" duration="688000" />
       <workItem from="1712152636275" duration="5218000" />
       <workItem from="1712241232905" duration="2196000" />
-      <workItem from="1712324117851" duration="2129000" />
+      <workItem from="1712324117851" duration="2727000" />
     </task>
     <servers />
   </component>
