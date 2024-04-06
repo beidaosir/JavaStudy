@@ -1,5 +1,6 @@
 package com.beidao.cloud.config;
 
+import feign.Logger;
 import feign.Retryer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,4 +13,13 @@ public class FeignConfig
     {
         return Retryer.NEVER_RETRY; //Feign默认配置是不走重试策略的
     }
+
+
+    //配置日志bean
+    @Bean
+    Logger.Level feignLoggerLevel() {
+        return Logger.Level.FULL;
+    }
+
+
 }
