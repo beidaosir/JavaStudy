@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="module5" />
         <module name="module4" />
+        <module name="module6" />
         <module name="module3" />
         <module name="module2" />
       </profile>
@@ -18,6 +19,7 @@
       <module name="module3" options="-parameters" />
       <module name="module4" options="-parameters" />
       <module name="module5" options="-parameters" />
+      <module name="module6" options="-parameters" />
     </option>
   </component>
 </project>
